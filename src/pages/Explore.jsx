@@ -1,10 +1,10 @@
 import React from 'react';
 import Header from '../components/Header';
 
-function Perfil() {
+function Explore() {
   return (
-    <Header title="Perfil" />
+    <Header title="Explorar" />
   );
 }
 
-export default Perfil;
+export default Explore;
