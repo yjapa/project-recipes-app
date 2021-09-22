@@ -4,6 +4,7 @@ import Login from './pages/Login';
 import Foods from './pages/Foods';
 import Drinks from './pages/Drinks';
 import Perfil from './pages/Perfil';
+import Explore from './pages/Explore';
 
 function Routes() {
   return (
@@ -12,6 +13,8 @@ function Routes() {
       <Route exact path="/comidas" component={ Foods } />
       <Route exact path="/bebidas" component={ Drinks } />
       <Route exact path="/perfil" component={ Perfil } />
+      <Route exact path="/explorar" component={ Explore } />
+
     </Switch>
   );
 }

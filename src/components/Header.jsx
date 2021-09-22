@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
+import HeaderInput from './HeaderInputs';
 
 function Header({ title, searchIcone }) {
   const [showFilter, setFilter] = useState(false);
@@ -31,10 +32,7 @@ function Header({ title, searchIcone }) {
       </Link>
       <h1 data-testid="page-title">{title}</h1>
       { searchIcone && renderSearchBar() }
-      { showFilter && <input
-        type="text"
-        data-testid="search-input"
-      />}
+      { showFilter && <HeaderInput />}
     </header>
   );
 }

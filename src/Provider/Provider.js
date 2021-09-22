@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import MyContext from '../context/myContext';
-import queryFoodsApi from '../services';
+import { queryIngredient, queryName, queryFirstLetter } from '../services';
 
 function Provider({ children }) {
   const [data, setData] = useState([]);
@@ -9,12 +9,10 @@ function Provider({ children }) {
   const contextValue = {
     ...data,
     setData,
-    queryFoodsApi,
+    queryFirstLetter,
+    queryIngredient,
+    queryName,
   };
-
-  useEffect(() => {
-    setData(queryFoodsApi());
-  }, []);
 
   return (
     <MyContext.Provider value={ contextValue }>
