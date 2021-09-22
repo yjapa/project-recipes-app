@@ -1,16 +1,20 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import MyContext from '../context/myContext';
+import queryFoodsApi from '../services';
 
 function Provider({ children }) {
-  const [user, setUser] = useState({});
+  const [data, setData] = useState([]);
 
   const contextValue = {
-    userInformation: {
-      user,
-      setUser,
-    },
+    ...data,
+    setData,
+    queryFoodsApi,
   };
+
+  useEffect(() => {
+    setData(queryFoodsApi());
+  }, []);
 
   return (
     <MyContext.Provider value={ contextValue }>
