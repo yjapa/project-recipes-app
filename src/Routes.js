@@ -14,7 +14,6 @@ function Routes() {
       <Route exact path="/bebidas" component={ Drinks } />
       <Route exact path="/perfil" component={ Perfil } />
       <Route exact path="/explorar" component={ Explore } />
-
     </Switch>
   );
 }

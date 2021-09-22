@@ -6,6 +6,7 @@ function HeaderInput() {
   const [recipe, setRecipe] = useState('');
 
   const {
+    setLoading,
     queryIngredient,
     queryName,
     queryFirstLetter,
@@ -13,18 +14,30 @@ function HeaderInput() {
 
   const handleClick = async () => {
     const { recipeFilter, searchRecipe } = recipe;
-    if (recipeFilter === 'ingredient') {
-      const resultApi = await queryIngredient(searchRecipe);
+    setLoading(true);
+    let resultApi;
+    switch (recipeFilter) {
+    case 'ingredient':
+      resultApi = await queryIngredient(searchRecipe);
       setData(resultApi);
-      console.log(resultApi);
-    } else if (recipeFilter === 'name') {
-      const resultApi = await queryName(searchRecipe);
+      setLoading(false);
+      break;
+    case 'name':
+      resultApi = await queryName(searchRecipe);
       setData(resultApi);
-      console.log(resultApi);
-    } else {
-      const resultApi = await queryFirstLetter(searchRecipe);
-      setData(resultApi);
-      console.log(resultApi);
+      setLoading(false);
+      break;
+    case 'firstLetter':
+      if (searchRecipe.length > 1) {
+        global.alert('Sua busca deve conter somente 1 (um) caracter');
+      } else {
+        resultApi = await queryFirstLetter(searchRecipe);
+        setData(resultApi);
+        setLoading(false);
+      }
+      break;
+    default:
+      break;
     }
   };
 
@@ -36,7 +49,6 @@ function HeaderInput() {
   };
 
   return (
-
     <div>
       <label htmlFor="search-input">
         <input
