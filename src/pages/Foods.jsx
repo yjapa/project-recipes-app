@@ -1,10 +1,10 @@
 import React, { useContext } from 'react';
 import Header from '../components/Header';
 import MyContext from '../context/myContext';
+import Footer from '../components/Footer';
 
 function Foods() {
   const { meals, loading } = useContext(MyContext);
-  console.log(meals);
   const isLoading = () => <p>loading...</p>;
   return (
     <div>
@@ -23,6 +23,7 @@ function Foods() {
           </div>
         );
       })}
+      <Footer />
     </div>
   );
 }
