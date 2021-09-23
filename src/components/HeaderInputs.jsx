@@ -1,39 +1,63 @@
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import React, { useContext, useState } from 'react';
+// import { propTypes } from 'react-bootstrap/esm/Image';
+import { useLocation } from 'react-router-dom';
+import { withRouter } from 'react-router';
 import MyContext from '../context/myContext';
 
 function HeaderInput() {
   const [recipe, setRecipe] = useState('');
+  const location = useLocation();
 
   const {
+    recipesApi: {
+      queryIngredient,
+      queryName,
+      queryFirstLetter,
+    },
+    drinksApi: {
+      queryIngredientDrink,
+      queryNameDrink,
+      queryFirstLetterDrink,
+    },
     setLoading,
-    queryIngredient,
-    queryName,
-    queryFirstLetter,
-    setData } = useContext(MyContext);
+    setData,
+    setDataDrinks,
+  } = useContext(MyContext);
+
+  const updateStates = (resultApiForMeals, resultApiForDrinks) => {
+    if ((location.pathname) === '/comidas') {
+      setData(resultApiForMeals);
+    }
+    if ((location.pathname) === '/bebidas') {
+      setDataDrinks(resultApiForDrinks);
+    }
+    setLoading(false);
+  };
 
   const handleClick = async () => {
     const { recipeFilter, searchRecipe } = recipe;
     setLoading(true);
     let resultApi;
+    let resultApiDrinks;
     switch (recipeFilter) {
     case 'ingredient':
       resultApi = await queryIngredient(searchRecipe);
-      setData(resultApi);
-      setLoading(false);
+      resultApiDrinks = await queryIngredientDrink(searchRecipe);
+      updateStates(resultApi, resultApiDrinks);
       break;
     case 'name':
       resultApi = await queryName(searchRecipe);
-      setData(resultApi);
-      setLoading(false);
+      resultApiDrinks = await queryNameDrink(searchRecipe);
+      updateStates(resultApi, resultApiDrinks);
       break;
     case 'firstLetter':
       if (searchRecipe.length > 1) {
         global.alert('Sua busca deve conter somente 1 (um) caracter');
       } else {
         resultApi = await queryFirstLetter(searchRecipe);
-        setData(resultApi);
-        setLoading(false);
+        resultApiDrinks = await queryFirstLetterDrink(searchRecipe);
+        updateStates(resultApi, resultApiDrinks);
       }
       break;
     default:
@@ -103,8 +127,8 @@ function HeaderInput() {
   );
 }
 
-// HeaderInput.propTypes = {
+HeaderInput.propTypes = {
+  pathname: PropTypes.func,
+}.isRequired;
 
-// }.isRequired;
-
-export default HeaderInput;
+export default withRouter(HeaderInput);

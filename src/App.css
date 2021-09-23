@@ -1,11 +1,13 @@
 body {
-  background-color: #541554
+  background-color: #541554;
 }
-@media screen and (max-width: 360px) and (max-height: 640px) {
+
+/* @media screen and (max-width: 360px) and (max-height: 640px) {
+
   body {
     background-color: lightgreen;
   }
-}
+} */
 
 .footer-fixed {
   border-top: 1px solid #333;

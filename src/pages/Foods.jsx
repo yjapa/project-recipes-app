@@ -4,7 +4,6 @@ import MyContext from '../context/myContext';
 
 function Foods() {
   const { meals, loading } = useContext(MyContext);
-  console.log(meals);
   const isLoading = () => <p>loading...</p>;
   return (
     <div>
