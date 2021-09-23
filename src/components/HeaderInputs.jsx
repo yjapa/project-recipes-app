@@ -16,7 +16,7 @@ function HeaderInput() {
       queryFirstLetter,
     },
     drinksApi: {
-      queryIngredientDrink,
+      queryIngredientDrink, // Está com erro no alert
       queryNameDrink,
       queryFirstLetterDrink,
     },
@@ -25,42 +25,68 @@ function HeaderInput() {
     setDataDrinks,
   } = useContext(MyContext);
 
+  const updateDataMeals = (resultApiForMeals) => {
+    setData(resultApiForMeals);
+    setLoading(false);
+  };
+
+  const updateDataDrinks = (resultApiForDrinks) => {
+    setDataDrinks(resultApiForDrinks);
+    setLoading(false);
+  };
+
+  const displayAlertNotFoundList = () => {
+    setLoading(false);
+    global.alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
+  };
+
   const updateStates = (resultApiForMeals, resultApiForDrinks) => {
+    const { drinks } = resultApiForDrinks;
+    const { meals } = resultApiForMeals;
+    // const { searchRecipe } = recipe;
     if ((location.pathname) === '/comidas') {
-      setData(resultApiForMeals);
+      console.log(meals);
+      return (meals === null) ? displayAlertNotFoundList()
+        : updateDataMeals(resultApiForMeals);
     }
     if ((location.pathname) === '/bebidas') {
-      setDataDrinks(resultApiForDrinks);
+      return (drinks === null) ? displayAlertNotFoundList()
+        : updateDataDrinks(resultApiForDrinks);
     }
-    setLoading(false);
   };
 
   const handleClick = async () => {
     const { recipeFilter, searchRecipe } = recipe;
-    setLoading(true);
     let resultApi;
     let resultApiDrinks;
     switch (recipeFilter) {
     case 'ingredient':
-      resultApi = await queryIngredient(searchRecipe);
-      resultApiDrinks = await queryIngredientDrink(searchRecipe);
-      updateStates(resultApi, resultApiDrinks);
+      if (recipeFilter && searchRecipe) {
+        console.log('entrou no case ingredient');
+        setLoading(true);
+        resultApi = await queryIngredient(searchRecipe);
+        resultApiDrinks = await queryIngredientDrink(searchRecipe);
+        updateStates(resultApi, resultApiDrinks);
+      }
       break;
     case 'name':
+      setLoading(true);
       resultApi = await queryName(searchRecipe);
       resultApiDrinks = await queryNameDrink(searchRecipe);
       updateStates(resultApi, resultApiDrinks);
       break;
     case 'firstLetter':
-      if (searchRecipe.length > 1) {
+      if (!searchRecipe || searchRecipe.length > 1) {
         global.alert('Sua busca deve conter somente 1 (um) caracter');
       } else {
+        setLoading(true);
         resultApi = await queryFirstLetter(searchRecipe);
         resultApiDrinks = await queryFirstLetterDrink(searchRecipe);
         updateStates(resultApi, resultApiDrinks);
       }
       break;
     default:
+      setLoading(false);
       break;
     }
   };
