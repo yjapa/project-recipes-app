@@ -4,9 +4,9 @@ import Footer from '../components/Footer';
 
 function Perfil() {
   return (
-    <div>    
-    <Header title="Perfil" />
-    <Footer />
+    <div>
+      <Header title="Perfil" />
+      <Footer />
     </div>
   );
 }
