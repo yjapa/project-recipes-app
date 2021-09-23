@@ -67,6 +67,8 @@ function HeaderInput() {
         resultApi = await queryIngredient(searchRecipe);
         resultApiDrinks = await queryIngredientDrink(searchRecipe);
         updateStates(resultApi, resultApiDrinks);
+      } else {
+        displayAlertNotFoundList();
       }
       break;
     case 'name':

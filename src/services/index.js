@@ -27,12 +27,16 @@ export const queryFirstLetter = async (firstLetter) => {
 // Api's para as bebidas
 // ===========================
 
-// export const queryIngredientDrink = async (ingredient) => {
-//   const url = `https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${ingredient}`;
-//   const request = await fetch(url);
-//   const results = request.json();
-//   return results;
-// };
+export const queryIngredientDrink = async (ingredient) => {
+  try {
+    const url = `https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${ingredient}`;
+    const request = await fetch(url);
+    const results = request.json();
+    return results;
+  } catch (error) {
+    global.alert('Deu ruim', error);
+  }
+};
 
 export const queryNameDrink = async (name) => {
   const url = `https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${name}`;
@@ -46,14 +50,4 @@ export const queryFirstLetterDrink = async (firstLetter) => {
   const request = await fetch(url);
   const results = request.json();
   return results;
-};
-
-export const queryIngredientDrink = async (ingredient) => {
-  const url = `https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${ingredient}`;
-  try {
-    const request = await fetch(url);
-    return request.json();
-  } catch (error) {
-    console.log(error.message);
-  }
 };

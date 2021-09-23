@@ -14,6 +14,11 @@ function Provider({ children }) {
   const [dataDrinks, setDataDrinks] = useState([]);
   const [loading, setLoading] = useState(false);
 
+  const fetchDataMeals = async () => {
+    const dataToOpen = await queryFirstLetter('a');
+    setData(dataToOpen);
+  };
+
   const contextValue = {
     ...data, // fiquei na dúvida quanto a utilização desse spread operator
     dataDrinks,
@@ -21,6 +26,7 @@ function Provider({ children }) {
     setDataDrinks,
     loading,
     setLoading,
+    fetchDataMeals,
     recipesApi: {
       queryFirstLetter,
       queryIngredient,
