@@ -43,9 +43,7 @@ function HeaderInput() {
   const updateStates = (resultApiForMeals, resultApiForDrinks) => {
     const { drinks } = resultApiForDrinks;
     const { meals } = resultApiForMeals;
-    // const { searchRecipe } = recipe;
     if ((location.pathname) === '/comidas') {
-      console.log(meals);
       return (meals === null) ? displayAlertNotFoundList()
         : updateDataMeals(resultApiForMeals);
     }
@@ -62,7 +60,6 @@ function HeaderInput() {
     switch (recipeFilter) {
     case 'ingredient':
       if (recipeFilter && searchRecipe) {
-        console.log('entrou no case ingredient');
         setLoading(true);
         resultApi = await queryIngredient(searchRecipe);
         resultApiDrinks = await queryIngredientDrink(searchRecipe);
@@ -79,7 +76,7 @@ function HeaderInput() {
       break;
     case 'firstLetter':
       if (!searchRecipe || searchRecipe.length > 1) {
-        global.alert('Sua busca deve conter somente 1 (um) caracter');
+        global.alert('Sua busca deve conter somente 1 (um) carácter');
       } else {
         setLoading(true);
         resultApi = await queryFirstLetter(searchRecipe);

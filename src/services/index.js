@@ -23,6 +23,27 @@ export const queryFirstLetter = async (firstLetter) => {
   return results;
 };
 
+export const queryDefaultMeals = async () => {
+  const url = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
+  const request = await fetch(url);
+  const results = request.json();
+  return results;
+};
+
+export const categoriesMeals = async () => {
+  const url = 'https://www.themealdb.com/api/json/v1/1/list.php?c=list';
+  const request = await fetch(url);
+  const results = request.json();
+  return results;
+};
+
+export const fetchCategoryMeal = async (strCategory) => {
+  const url = `https://www.themealdb.com/api/json/v1/1/filter.php?c=${strCategory}`;
+  const request = await fetch(url);
+  const results = request.json();
+  return results;
+};
+
 // ===========================
 // Api's para as bebidas
 // ===========================
@@ -47,6 +68,27 @@ export const queryNameDrink = async (name) => {
 
 export const queryFirstLetterDrink = async (firstLetter) => {
   const url = `https://www.thecocktaildb.com/api/json/v1/1/search.php?f=${firstLetter}`;
+  const request = await fetch(url);
+  const results = request.json();
+  return results;
+};
+
+export const queryDefaultDrinks = async () => {
+  const url = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
+  const request = await fetch(url);
+  const results = request.json();
+  return results;
+};
+
+export const categoriesDrinks = async () => {
+  const url = 'https://www.thecocktaildb.com/api/json/v1/1/list.php?c=list';
+  const request = await fetch(url);
+  const results = request.json();
+  return results;
+};
+
+export const fetchCategoryDrink = async (strCategory) => {
+  const url = `https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=${strCategory}`;
   const request = await fetch(url);
   const results = request.json();
   return results;
