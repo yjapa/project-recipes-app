@@ -25,7 +25,7 @@ function Provider({ children }) {
 
   const arrayFiltered = (arr) => {
     if (arr && arr.length > maxNumberIt) {
-      return arr.filter((item, index) => (
+      return arr.filter((_, index) => (
         index < maxNumberIt
       ));
     }

@@ -1,4 +1,4 @@
-import React, { useEffect, useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import MyContext from '../context/myContext';
 import shareIcon from '../images/shareIcon.svg';
@@ -6,27 +6,11 @@ import blackHeartIcon from '../images/blackHeartIcon.svg';
 
 function FoodsDetails() {
   const { mealId } = useParams();
+  const { meals } = useContext(MyContext);
 
-  const [state, setState] = useState();
-  useEffect(() => {
-    async function fetchFood() {
-      await fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${mealId}`)
-        .then((response) => response.json();
-         const dataFood = response;
-          setState(foodData);
-          console.log(foodData);
-          return (foodData);
-        });
-    }
-    fetchFood();
-  }, []);
-
-  const { meals, loading } = useContext(MyContext);
-  const isLoading = () => <p>loading...</p>;
-  console.log(mealId);
   return (
     <main>
-      {loading ? isLoading() : meals && state.map((item, index) => {
+      {meals && meals.map((item, index) => {
         const {
           idMeal,
           strMeal,
@@ -36,7 +20,7 @@ function FoodsDetails() {
           strInstructions,
           // strTags,
           strYoutube,
-          strIngredient1,
+          // strIngredient1,
         } = item;
         if (idMeal === mealId) {
           return (
@@ -78,15 +62,6 @@ function FoodsDetails() {
                   </button>
                 </section>
                 <section>
-                  {strIngredient1.map((itemIng, indexIng) => (
-                    <ol key={ indexIng }>
-                      <li
-                        data-testid={ `${indexIng}-ingredient-name-and-measure` }
-                      >
-                        {itemIng}
-                      </li>
-                    </ol>
-                  ))}
                   <p
                     data-testid="instructions"
                   >
