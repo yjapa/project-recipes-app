@@ -81,7 +81,7 @@ function FoodsDetails() {
                     type="button"
                   // onClick=""
                   >
-                    Inicar Receita
+                    IniciarReceita
                   </button>
                 </section>
               </div>

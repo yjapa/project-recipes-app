@@ -46,7 +46,7 @@ function Provider({ children }) {
   };
 
   // ========================================================================================================
-  // Fetch para atuar nos toogles buttons disponíveis no Header através do Componente "Categories"
+  // Fetch para atuar nos toggles buttons disponíveis no Header através do Componente "Categories"
 
   const fetchDataMealsByCategory = async (strCategory) => {
     const dataToOpen = await arrayFiltered(fetchCategoryMeal(strCategory));
