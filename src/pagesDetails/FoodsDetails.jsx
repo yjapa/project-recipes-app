@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useEffect, useContext, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import MyContext from '../context/myContext';
 import shareIcon from '../images/shareIcon.svg';
@@ -7,12 +7,26 @@ import blackHeartIcon from '../images/blackHeartIcon.svg';
 function FoodsDetails() {
   const { mealId } = useParams();
 
+  const [state, setState] = useState();
+  useEffect(() => {
+    async function fetchFood() {
+      await fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${mealId}`)
+        .then((response) => response.json();
+         const dataFood = response;
+          setState(foodData);
+          console.log(foodData);
+          return (foodData);
+        });
+    }
+    fetchFood();
+  }, []);
+
   const { meals, loading } = useContext(MyContext);
   const isLoading = () => <p>loading...</p>;
-  console.log(meals);
+  console.log(mealId);
   return (
     <main>
-      {loading ? isLoading() : meals && meals.map((item, index) => {
+      {loading ? isLoading() : meals && state.map((item, index) => {
         const {
           idMeal,
           strMeal,
