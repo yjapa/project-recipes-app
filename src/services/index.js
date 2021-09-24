@@ -28,10 +28,14 @@ export const queryFirstLetter = async (firstLetter) => {
 // ===========================
 
 export const queryIngredientDrink = async (ingredient) => {
-  const url = `https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${ingredient}`;
-  const request = await fetch(url);
-  const results = request.json();
-  return results;
+  try {
+    const url = `https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${ingredient}`;
+    const request = await fetch(url);
+    const results = request.json();
+    return results;
+  } catch (error) {
+    global.alert('Deu ruim', error);
+  }
 };
 
 export const queryNameDrink = async (name) => {
