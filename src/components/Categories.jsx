@@ -48,9 +48,11 @@ function Categories() {
 
   const defaultRecipes = async (strCategory) => {
     if (strCategory === category && location.pathname === '/comidas') {
+      setCategory('');
       return fetchDataMeals();
     }
     if (strCategory === category && location.pathname === '/bebidas') {
+      setCategory('');
       return fetchDataDrinks();
     }
   };

@@ -3,10 +3,17 @@ import { useParams } from 'react-router-dom';
 import MyContext from '../context/myContext';
 import shareIcon from '../images/shareIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
+// import queryRecipeByID from '../services/index';
 
 function FoodsDetails() {
   const { mealId } = useParams();
   const { meals } = useContext(MyContext);
+
+  // useEffect(() => {
+  //   // const recipeDetails = queryRecipeByID(mealId);
+  //   console.log(recipeDetails);
+  //   return recipeDetails;
+  // }, []);
 
   return (
     <main>

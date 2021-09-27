@@ -55,6 +55,13 @@ export const fetchCategoryMeal = async (strCategory) => {
   return results;
 };
 
+// export const queryRecipeByID = async (idDaReceita) => {
+//   const url = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${idDaReceita}`;
+//   const request = await fetch(url);
+//   const results = request.json();
+//   return results;
+// };
+
 // ===========================
 // Api's para as bebidas
 // ===========================
@@ -104,3 +111,10 @@ export const fetchCategoryDrink = async (strCategory) => {
   const results = request.json();
   return results;
 };
+
+// export const queryDrinkByID = async (idDaReceita) => {
+//   const url = `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${idDaReceita}`;
+//   const request = await fetch(url);
+//   const results = request.json();
+//   return results;
+// };

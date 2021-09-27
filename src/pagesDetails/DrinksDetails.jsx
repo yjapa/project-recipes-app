@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import MyContext from '../context/myContext';
 import shareIcon from '../images/shareIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
+// import queryDrinkByID from '../services/index';
 
 function DrinksDetails() {
   const { drinkId } = useParams();
