@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types';
 import React, { useContext, useState } from 'react';
-// import { propTypes } from 'react-bootstrap/esm/Image';
 import { useLocation } from 'react-router-dom';
 import { withRouter } from 'react-router';
 import MyContext from '../context/myContext';
@@ -16,7 +15,7 @@ function HeaderInput() {
       queryFirstLetter,
     },
     drinksApi: {
-      queryIngredientDrink, // Está com erro no alert
+      queryIngredientDrink,
       queryNameDrink,
       queryFirstLetterDrink,
     },
@@ -29,12 +28,10 @@ function HeaderInput() {
     setData(resultApiForMeals);
     setLoading(false);
   };
-
   const updateDataDrinks = (resultApiForDrinks) => {
     setDataDrinks(resultApiForDrinks);
     setLoading(false);
   };
-
   const displayAlertNotFoundList = () => {
     setLoading(false);
     global.alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
@@ -59,14 +56,10 @@ function HeaderInput() {
     let resultApiDrinks;
     switch (recipeFilter) {
     case 'ingredient':
-      if (recipeFilter && searchRecipe) {
-        setLoading(true);
-        resultApi = await queryIngredient(searchRecipe);
-        resultApiDrinks = await queryIngredientDrink(searchRecipe);
-        updateStates(resultApi, resultApiDrinks);
-      } else {
-        displayAlertNotFoundList();
-      }
+      setLoading(true);
+      resultApi = await queryIngredient(searchRecipe);
+      resultApiDrinks = await queryIngredientDrink(searchRecipe);
+      updateStates(resultApi, resultApiDrinks);
       break;
     case 'name':
       setLoading(true);

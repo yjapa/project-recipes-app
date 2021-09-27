@@ -88,7 +88,7 @@ function FoodsDetails() {
             </section>
           );
         }
-        return ('Error');
+        return ('');
       })}
     </main>
   );

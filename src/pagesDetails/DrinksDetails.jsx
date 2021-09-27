@@ -79,7 +79,7 @@ function DrinksDetails() {
             </section>
           );
         }
-        return ('Error');
+        return ('');
       })}
     </main>
   );

@@ -5,7 +5,6 @@ import MyContext from '../context/myContext';
 import Footer from '../components/Footer';
 
 function Foods() {
-  // const [newData, setNewData] = useState([]);
   const {
     meals,
     loading,
@@ -14,6 +13,8 @@ function Foods() {
   } = useContext(MyContext);
   const isLoading = () => <p>loading...</p>;
 
+  // Outra maneira para filtrar array
+  // ===========================
   // useEffect(() => {
   //   const newArray = [];
   //   const MAX_FOODS = 12;
@@ -27,6 +28,7 @@ function Foods() {
   //     setNewData(newArray);
   //   }
   // }, [meals]);
+  // ===========================
 
   useEffect(() => {
     const fetchData = async () => fetchDataMeals();

@@ -20,7 +20,6 @@ function Drinks() {
       {loading ? isLoading()
         : arrayFiltered(drinks) && arrayFiltered(drinks).map((item, index) => {
           const { strDrink, strDrinkThumb, idDrink } = item;
-          console.log(item);
           return (
             <Link to={ `/bebidas/${idDrink}` } key={ index }>
               <div key={ index } data-testid={ `${index}-recipe-card` }>

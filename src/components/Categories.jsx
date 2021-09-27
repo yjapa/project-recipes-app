@@ -18,7 +18,6 @@ function Categories() {
 
   const [categories, setCategories] = useState([]);
   const [category, setCategory] = useState([]);
-  const [toggle, setToggle] = useState(false);
   const location = useLocation();
 
   const MAX_BUTTONS = 5;
@@ -39,31 +38,46 @@ function Categories() {
     fetchData();
   }, []);
 
-  const procedureToUpdateFoodsPage = async (strCategory) => (
-    toggle === false
-      ? fetchDataMeals() : fetchDataMealsByCategory(strCategory));
-
-  const procedureToUpdateDrinksPage = async (strCategory) => (toggle === false
-    ? fetchDataDrinks() : fetchDataDrinksByCategory(strCategory));
-
-  useEffect(() => {
+  const toggleButtons = async (strCategory) => {
     if (location.pathname === '/comidas') {
-      procedureToUpdateFoodsPage(category);
+      fetchDataMealsByCategory(strCategory);
     } else {
-      procedureToUpdateDrinksPage(category);
+      fetchDataDrinksByCategory(strCategory);
     }
-  }, [toggle]);
+  };
+
+  const defaultRecipes = async (strCategory) => {
+    if (strCategory === category && location.pathname === '/comidas') {
+      return fetchDataMeals();
+    }
+    if (strCategory === category && location.pathname === '/bebidas') {
+      return fetchDataDrinks();
+    }
+  };
+
+  const handleClickDefault = () => ((location.pathname === '/comidas')
+    ? fetchDataMeals() : fetchDataDrinks());
 
   const handleClick = (strCategory) => {
-    setToggle(!toggle);
     setCategory(strCategory);
+    toggleButtons(strCategory);
+    defaultRecipes(strCategory);
   };
 
   return (
     <div>
+      <button
+        type="button"
+        data-testid="All-category-filter"
+        onClick={ () => handleClickDefault() }
+      >
+        All
+      </button>
       {categories && categories.slice(0, MAX_BUTTONS).map(({ strCategory }, index) => (
         <div key={ index }>
+
           <button
+            id={ index }
             data-testid={ `${strCategory}-category-filter` }
             type="button"
             onClick={ () => handleClick(strCategory) }
