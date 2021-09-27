@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
+import Categories from './Categories';
 import HeaderInput from './HeaderInputs';
 
 function Header({ title, searchIcone }) {
@@ -33,6 +34,7 @@ function Header({ title, searchIcone }) {
       <h1 data-testid="page-title">{title}</h1>
       { searchIcone && renderSearchBar() }
       { showFilter && <HeaderInput />}
+      <Categories />
     </header>
   );
 }

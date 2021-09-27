@@ -1,42 +1,84 @@
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import React, { useContext, useState } from 'react';
+import { useLocation } from 'react-router-dom';
+import { withRouter } from 'react-router';
 import MyContext from '../context/myContext';
 
 function HeaderInput() {
   const [recipe, setRecipe] = useState('');
+  const location = useLocation();
 
   const {
+    recipesApi: {
+      queryIngredient,
+      queryName,
+      queryFirstLetter,
+    },
+    drinksApi: {
+      queryIngredientDrink,
+      queryNameDrink,
+      queryFirstLetterDrink,
+    },
     setLoading,
-    queryIngredient,
-    queryName,
-    queryFirstLetter,
-    setData } = useContext(MyContext);
+    setData,
+    setDataDrinks,
+  } = useContext(MyContext);
+
+  const updateDataMeals = (resultApiForMeals) => {
+    setData(resultApiForMeals);
+    setLoading(false);
+  };
+  const updateDataDrinks = (resultApiForDrinks) => {
+    setDataDrinks(resultApiForDrinks);
+    setLoading(false);
+  };
+  const displayAlertNotFoundList = () => {
+    setLoading(false);
+    global.alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
+  };
+
+  const updateStates = (resultApiForMeals, resultApiForDrinks) => {
+    const { drinks } = resultApiForDrinks;
+    const { meals } = resultApiForMeals;
+    if ((location.pathname) === '/comidas') {
+      return (meals === null) ? displayAlertNotFoundList()
+        : updateDataMeals(resultApiForMeals);
+    }
+    if ((location.pathname) === '/bebidas') {
+      return (drinks === null) ? displayAlertNotFoundList()
+        : updateDataDrinks(resultApiForDrinks);
+    }
+  };
 
   const handleClick = async () => {
     const { recipeFilter, searchRecipe } = recipe;
-    setLoading(true);
     let resultApi;
+    let resultApiDrinks;
     switch (recipeFilter) {
     case 'ingredient':
+      setLoading(true);
       resultApi = await queryIngredient(searchRecipe);
-      setData(resultApi);
-      setLoading(false);
+      resultApiDrinks = await queryIngredientDrink(searchRecipe);
+      updateStates(resultApi, resultApiDrinks);
       break;
     case 'name':
+      setLoading(true);
       resultApi = await queryName(searchRecipe);
-      setData(resultApi);
-      setLoading(false);
+      resultApiDrinks = await queryNameDrink(searchRecipe);
+      updateStates(resultApi, resultApiDrinks);
       break;
     case 'firstLetter':
-      if (searchRecipe.length > 1) {
-        global.alert('Sua busca deve conter somente 1 (um) caracter');
+      if (!searchRecipe || searchRecipe.length > 1) {
+        global.alert('Sua busca deve conter somente 1 (um) carácter');
       } else {
+        setLoading(true);
         resultApi = await queryFirstLetter(searchRecipe);
-        setData(resultApi);
-        setLoading(false);
+        resultApiDrinks = await queryFirstLetterDrink(searchRecipe);
+        updateStates(resultApi, resultApiDrinks);
       }
       break;
     default:
+      setLoading(false);
       break;
     }
   };
@@ -103,8 +145,8 @@ function HeaderInput() {
   );
 }
 
-// HeaderInput.propTypes = {
+HeaderInput.propTypes = {
+  pathname: PropTypes.func,
+}.isRequired;
 
-// }.isRequired;
-
-export default HeaderInput;
+export default withRouter(HeaderInput);
