@@ -34,11 +34,10 @@ button:hover {
   background-color: aliceblue;
 }
 
-.btn-disabled {
-  display: none;
-}
-
 .btn-style {
-  width: 150px;
+  background-color: rgb(159, 182, 182);
+  bottom: 0;
   padding: 20px;
+  position: fixed;
+  width: 150px;
 }

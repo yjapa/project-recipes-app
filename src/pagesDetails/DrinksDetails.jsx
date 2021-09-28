@@ -1,14 +1,16 @@
 import React, { useEffect, useContext } from 'react';
-import { useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import { useHistory } from 'react-router';
 import shareIcon from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import MyContext from '../context/myContext';
 
 function DrinksDetails() {
+  const { pathname } = useLocation();
   const { drinkId } = useParams();
   const { listIngredients, drinksById,
-    drinksApi: { fetchDataByIdDrink } } = useContext(MyContext);
+    drinksApi: { fetchDataByIdDrink },
+    startButton, setStartButton } = useContext(MyContext);
   const { drinks } = drinksById;
   const history = useHistory();
   const ingredients = [];
@@ -18,7 +20,47 @@ function DrinksDetails() {
     fetchDataByIdDrink(drinkId);
   }, []);
 
-  const handleClick = (idDrink) => history.push(`/bebidas/${idDrink}/in-progress`);
+  const handleClick = (idDrink) => {
+    setStartButton(false);
+    (history.push(`/bebidas/${idDrink}/in-progress`));
+  };
+
+  const renderButton = () => {
+    if (startButton) {
+      return (
+        <button
+          id="btn-start"
+          className="btn-style"
+          data-testid="start-recipe-btn"
+          type="button"
+          onClick={ () => handleClick(drinkId) }
+        >
+          Iniciar Receita
+        </button>);
+    }
+    return (
+      <button
+        id="btn-continue"
+        className="btn-style"
+        data-testid="start-recipe-btn"
+        type="button"
+        onClick={ () => handleClick(drinkId) }
+      >
+        Continuar Receita
+      </button>
+    );
+  };
+
+  // referencia: https://blog.dadops.co/2021/03/17/copy-and-paste-in-a-react-app/
+  function copyUrl() {
+    const inviUrl = document.createElement('input');
+    inviUrl.value = `localhost:3000${pathname}`;
+    document.body.appendChild(inviUrl);
+    inviUrl.select();
+    document.execCommand('copy');
+    document.body.removeChild(inviUrl);
+    global.alert('Link copiado!');
+  }
 
   return (
     <main>
@@ -26,7 +68,7 @@ function DrinksDetails() {
         const {
           strDrink,
           strDrinkThumb,
-          strCategory,
+          strAlcoholic,
           // strArea,
           strInstructions,
           // strTags,
@@ -35,7 +77,9 @@ function DrinksDetails() {
         // if (idDrink === drinkId) {
         return (
           <section key={ index }>
-            <div>
+            <div
+              id="div-top"
+            >
               <img
                 src={ strDrinkThumb }
                 alt={ strDrink }
@@ -50,11 +94,12 @@ function DrinksDetails() {
                 <h3
                   data-testid="recipe-category"
                 >
-                  {strCategory}
+                  {strAlcoholic}
                 </h3>
                 <button
                   type="button"
                   data-testid="share-btn"
+                  onClick={ copyUrl }
                 >
                   <img
                     src={ shareIcon }
@@ -76,7 +121,12 @@ function DrinksDetails() {
                   <h2>Ingredients</h2>
                   {ingredients.map((ingredient, indexIng) => (
                     <ul key={ indexIng }>
-                      <li>{ingredient}</li>
+                      <li
+                        data-testid={ `${indexIng}-ingredient-name-and-measure` }
+                      >
+                        {ingredient}
+
+                      </li>
                     </ul>
                   ))}
                 </div>
@@ -88,15 +138,14 @@ function DrinksDetails() {
                     {strInstructions}
                   </p>
                 </div>
-                <button
-                  data-testid="start-recipe-btn"
-                  type="button"
-                  onClick={ () => handleClick(drinkId) }
-                >
-                  Iniciar Receita
-                </button>
+                { renderButton() }
               </section>
             </div>
+            <span
+              data-testid="0-recomendation-card"
+            >
+              Teste
+            </span>
           </section>
         );
       })}

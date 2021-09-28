@@ -24,6 +24,7 @@ function Provider({ children }) {
   const [mealsDataById, setMealsDataById] = useState([]);
   const [drinksById, setDrinksById] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [startButton, setStartButton] = useState(true);
 
   const maxNumberIt = 12;
 
@@ -101,6 +102,8 @@ function Provider({ children }) {
     drinksById,
     loading,
     setLoading,
+    startButton,
+    setStartButton,
     fetchDataMeals,
     fetchDataDrinks,
     recipesApi: {

@@ -1,13 +1,16 @@
 import React, { useEffect, useContext } from 'react';
-import { useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import { useHistory } from 'react-router';
 import shareIcon from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import MyContext from '../context/myContext';
 
 function FoodsDetails() {
+  
+  const { pathname } = useLocation();
   const { listIngredients,
-    recipesApi: { fetchDataByIdMeal }, mealsDataById } = useContext(MyContext);
+    recipesApi: { fetchDataByIdMeal },
+    mealsDataById, startButton, setStartButton } = useContext(MyContext);
   const { mealId } = useParams();
   const history = useHistory();
   const { meals } = mealsDataById;
@@ -19,16 +22,46 @@ function FoodsDetails() {
   }, []);
 
   const handleClick = (idMeal) => {
-    const buttonStart = document.querySelector('#btn-start');
-    const buttonContinue = document.querySelector('#btn-continue');
-    buttonStart.classList.remove('btn-style');
-    buttonStart.classList.add('btn-disabled');
-    buttonContinue.classList.remove('btn-disabled');
-    buttonContinue.classList.add('btn-style');
-    if (buttonContinue.classList.contains('btn-style')) {
-      return (history.push(`/comidas/${idMeal}/in-progress`));
-    }
+    setStartButton(false);
+    (history.push(`/comidas/${idMeal}/in-progress`));
   };
+
+  const renderButton = () => {
+    if (startButton) {
+      return (
+        <button
+          id="btn-start"
+          className="btn-style"
+          data-testid="start-recipe-btn"
+          type="button"
+          onClick={ () => handleClick(mealId) }
+        >
+          Iniciar Receita
+        </button>);
+    }
+    return (
+      <button
+        id="btn-continue"
+        className="btn-style"
+        data-testid="start-recipe-btn"
+        type="button"
+        onClick={ () => handleClick(mealId) }
+      >
+        Continuar Receita
+      </button>
+    );
+  };
+
+  // referencia: https://blog.dadops.co/2021/03/17/copy-and-paste-in-a-react-app/
+  function copyUrl() {
+    const inviUrl = document.createElement('input');
+    inviUrl.value = `localhost:3000${pathname}`;
+    document.body.appendChild(inviUrl);
+    inviUrl.select();
+    document.execCommand('copy');
+    document.body.removeChild(inviUrl);
+    global.alert('Link copiado!');
+  }
 
   return (
     <main>
@@ -65,6 +98,7 @@ function FoodsDetails() {
                 <button
                   type="button"
                   data-testid="share-btn"
+                  onClick={ copyUrl }
                 >
                   <img
                     src={ shareIcon }
@@ -86,7 +120,12 @@ function FoodsDetails() {
                   <h2>Ingredients</h2>
                   {ingredients.map((ingredient, indexIng) => (
                     <ul key={ indexIng }>
-                      <li>{ingredient}</li>
+                      <li
+                        data-testid={ `${indexIng}-ingredient-name-and-measure` }
+                      >
+                        {ingredient}
+
+                      </li>
                     </ul>
                   ))}
                 </div>
@@ -98,7 +137,10 @@ function FoodsDetails() {
                     {strInstructions}
                   </p>
                 </div>
-                <video src={ strYoutube }>
+                <video
+                  src={ strYoutube }
+                  data-testid="video"
+                >
                   <track
                     default
                     kind="captions"
@@ -106,25 +148,13 @@ function FoodsDetails() {
                   />
                   Video
                 </video>
-                <button
-                  id="btn-start"
-                  className="btn-style"
-                  data-testid="start-recipe-btn"
-                  type="button"
-                  onClick={ () => handleClick(mealId) }
-                >
-                  Iniciar Receita
-                </button>
-                <button
-                  id="btn-continue"
-                  className="btn-disabled"
-                  data-testid="start-recipe-btn"
-                  type="button"
-                  onClick={ () => handleClick(mealId) }
-                >
-                  Continuar Receita
-                </button>
+                { renderButton() }
               </section>
+              <span
+                data-testid="0-recomendation-card"
+              >
+                Teste
+              </span>
             </div>
           </section>
         );
