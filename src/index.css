@@ -11,3 +11,34 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+header {
+  background-color: rgb(146, 146, 146);
+}
+
+.top-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.category-buttons {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: flex-end;
+}
+
+button:hover {
+  background-color: aliceblue;
+}
+
+.btn-disabled {
+  display: none;
+}
+
+.btn-style {
+  width: 150px;
+  padding: 20px;
+}

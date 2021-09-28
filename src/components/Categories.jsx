@@ -68,7 +68,7 @@ function Categories() {
   };
 
   return (
-    <div>
+    <div className="category-buttons">
       <button
         type="button"
         data-testid="All-category-filter"

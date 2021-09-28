@@ -2,7 +2,7 @@ import React, { useEffect, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import { useHistory } from 'react-router';
 import shareIcon from '../images/shareIcon.svg';
-import blackHeartIcon from '../images/blackHeartIcon.svg';
+import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import MyContext from '../context/myContext';
 
 function DrinksDetails() {
@@ -66,7 +66,7 @@ function DrinksDetails() {
                   type="button"
                 >
                   <img
-                    src={ blackHeartIcon }
+                    src={ whiteHeartIcon }
                     alt="Favoritar"
                   />
                 </button>
@@ -81,7 +81,7 @@ function DrinksDetails() {
                   ))}
                 </div>
                 <div>
-                  <h2>instructions</h2>
+                  <h2>Instructions</h2>
                   <p
                     data-testid="instructions"
                   >

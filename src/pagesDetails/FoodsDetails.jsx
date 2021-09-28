@@ -2,7 +2,7 @@ import React, { useEffect, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import { useHistory } from 'react-router';
 import shareIcon from '../images/shareIcon.svg';
-import blackHeartIcon from '../images/blackHeartIcon.svg';
+import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import MyContext from '../context/myContext';
 
 function FoodsDetails() {
@@ -18,7 +18,17 @@ function FoodsDetails() {
     fetchDataByIdMeal(mealId);
   }, []);
 
-  const handleClick = (idMeal) => history.push(`/comidas/${idMeal}/in-progress`);
+  const handleClick = (idMeal) => {
+    const buttonStart = document.querySelector('#btn-start');
+    const buttonContinue = document.querySelector('#btn-continue');
+    buttonStart.classList.remove('btn-style');
+    buttonStart.classList.add('btn-disabled');
+    buttonContinue.classList.remove('btn-disabled');
+    buttonContinue.classList.add('btn-style');
+    if (buttonContinue.classList.contains('btn-style')) {
+      return (history.push(`/comidas/${idMeal}/in-progress`));
+    }
+  };
 
   return (
     <main>
@@ -66,7 +76,7 @@ function FoodsDetails() {
                   type="button"
                 >
                   <img
-                    src={ blackHeartIcon }
+                    src={ whiteHeartIcon }
                     alt="Favoritar"
                   />
                 </button>
@@ -97,11 +107,22 @@ function FoodsDetails() {
                   Video
                 </video>
                 <button
+                  id="btn-start"
+                  className="btn-style"
                   data-testid="start-recipe-btn"
                   type="button"
                   onClick={ () => handleClick(mealId) }
                 >
                   Iniciar Receita
+                </button>
+                <button
+                  id="btn-continue"
+                  className="btn-disabled"
+                  data-testid="start-recipe-btn"
+                  type="button"
+                  onClick={ () => handleClick(mealId) }
+                >
+                  Continuar Receita
                 </button>
               </section>
             </div>
