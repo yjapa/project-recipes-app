@@ -14,7 +14,7 @@ function DrinksProgress() {
 
   useEffect(() => {
     fetchDataByIdDrink(drinkId);
-  });
+  }, []);
   return (
     <div>
       {drinks && drinks.map((item, index) => {

@@ -27,10 +27,7 @@ function DrinksDetails() {
           strDrink,
           strDrinkThumb,
           strCategory,
-          // strArea,
           strInstructions,
-          // strTags,
-          // strIngredient1,
         } = item;
         return (
           <section key={ index }>

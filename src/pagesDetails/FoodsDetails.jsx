@@ -27,11 +27,8 @@ function FoodsDetails() {
           strMeal,
           strMealThumb,
           strCategory,
-          // strArea,
           strInstructions,
-          // strTags,
           strYoutube,
-          // strIngredient1,
         } = item;
         return (
           <section key={ index }>

@@ -1,8 +1,9 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import MyContext from '../context/myContext';
 import shareIcon from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
+import '../index.css';
 
 function FoodsProgress() {
   const { mealId } = useParams();
@@ -14,10 +15,15 @@ function FoodsProgress() {
 
   useEffect(() => {
     fetchDataByIdMeal(mealId);
-  });
+  }, []);
 
-  const handleStrickOut = () => {
-
+  const handleScratchedIngredient = (event, i) => {
+    const scratched = document.querySelectorAll('.teste')[i];
+    if (scratched.classList.contains('risk')) {
+      scratched.classList.remove('risk');
+    } else {
+      scratched.classList.add('risk');
+    }
   };
 
   return (
@@ -48,10 +54,19 @@ function FoodsProgress() {
             </button>
             <section>
               <h3>Ingredients</h3>
-              {ingredients.map((ingredient, indexad) => (
-                <div key={ indexad }>
-                  <label key={ indexad } htmlFor={ indexad }>
-                    <input type="checkbox" name="ingredient" id={ indexad } />
+              {ingredients.map((ingredient, i) => (
+                <div key={ i }>
+                  <label
+                    htmlFor={ i }
+                    key={ i }
+                    className="teste"
+                  >
+                    <input
+                      type="checkbox"
+                      id={ i }
+                      value={ ingredient }
+                      onChange={ (event) => handleScratchedIngredient(event, i) }
+                    />
                     {`${ingredient}`}
                   </label>
                 </div>
