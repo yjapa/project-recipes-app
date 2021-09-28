@@ -1,30 +1,19 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { useParams } from 'react-router-dom';
+import { useHistory } from 'react-router';
 import shareIcon from '../images/shareIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
 import { queryDrinkByID } from '../services';
 import MyContext from '../context/myContext';
 
-const listDetails = (DataDetails, ingredients) => {
-  const number = 20;
-  if (DataDetails && DataDetails.length !== 0) {
-    for (let i = 1; i <= number; i += 1) {
-      if (DataDetails[0][`strIngredient${i}`]) {
-        const ing = `${DataDetails[0][`strIngredient${i}`]}`;
-        const mes = `${DataDetails[0][`strMeasure${i}`]}`;
-        ingredients.push(`${ing} ${(mes === 'null') ? '' : mes}`);
-      } else break;
-    }
-  }
-};
-
 function DrinksDetails() {
   const { drinkId } = useParams();
   const [drinksById, setDrinksById] = useState([]);
   const { drinks } = drinksById;
-  const { displayIngredientsAndMeasures } = useContext(MyContext);
+  const history = useHistory();
+  const { listIngredients } = useContext(MyContext);
   const ingredients = [];
-  listDetails(drinks, ingredients);
+  listIngredients(drinks, ingredients);
 
   const fetchDataByID = async () => {
     const dados = await queryDrinkByID(drinkId);
@@ -35,9 +24,10 @@ function DrinksDetails() {
     fetchDataByID();
   }, []);
 
+  const handleClick = (idDrink) => history.push(`/bebidas/${idDrink}/in-progress`);
+
   return (
     <main>
-
       {drinks && drinks.map((item, index) => {
         const {
           strDrink,
@@ -107,9 +97,9 @@ function DrinksDetails() {
                 <button
                   data-testid="start-recipe-btn"
                   type="button"
-                  // onClick=""
+                  onClick={ () => handleClick(drinkId) }
                 >
-                  IniciarReceita
+                  Iniciar Receita
                 </button>
               </section>
             </div>

@@ -4,8 +4,6 @@ import MyContext from '../context/myContext';
 import shareIcon from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 
-// https://github.com/tryber/sd-013-a-project-recipes-app/pull/9/files referência grupo 24!
-
 function FoodsProgress() {
   const { meals, listIngredients } = useContext(MyContext);
   const { mealId } = useParams();

@@ -5,22 +5,6 @@ import shareIcon from '../images/shareIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
 import { queryRecipeByID } from '../services';
 import MyContext from '../context/myContext';
-<<<<<<< HEAD
-=======
-
-// const listDetails = (DataDetails, ingredients) => {
-//   const number = 20;
-//   if (DataDetails && DataDetails.length !== 0) {
-//     for (let i = 1; i <= number; i += 1) {
-//       if (DataDetails[0][`strIngredient${i}`]) {
-//         const ing = `${DataDetails[0][`strIngredient${i}`]}`;
-//         const mes = `${DataDetails[0][`strMeasure${i}`]}`;
-//         ingredients.push(`${ing} ${(mes === 'null') ? '' : mes}`);
-//       } else break;
-//     }
-//   }
-// };
->>>>>>> bf60cabb89af5efaadcf5c978a046c1187b0af58
 
 function FoodsDetails() {
   const { listIngredients } = useContext(MyContext);
@@ -28,7 +12,6 @@ function FoodsDetails() {
   const history = useHistory();
   const [mealsDataById, setMealsDataById] = useState([]);
   const { meals } = mealsDataById;
-  const { displayIngredientsAndMeasures } = useContext(MyContext);
   const ingredients = [];
   listIngredients(meals, ingredients);
 
