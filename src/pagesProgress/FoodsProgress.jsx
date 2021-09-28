@@ -3,11 +3,25 @@ import { useParams } from 'react-router-dom';
 import MyContext from '../context/myContext';
 import shareIcon from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
+// https://github.com/tryber/sd-013-a-project-recipes-app/pull/9/files referência grupo 24!
+const listDetails = (DataDetails, ingredients) => {
+  const number = 20;
+  if (DataDetails && DataDetails.length !== 0) {
+    for (let i = 1; i <= number; i += 1) {
+      if (DataDetails[0][`strIngredient${i}`]) {
+        const ing = `${DataDetails[0][`strIngredient${i}`]}`;
+        const mes = `${DataDetails[0][`strMeasure${i}`]}`;
+        ingredients.push(`${ing} ${(mes === 'null') ? '' : mes}`);
+      } else break;
+    }
+  }
+};
 
 function FoodsProgress() {
   const { meals } = useContext(MyContext);
   const { mealId } = useParams();
-
+  const ingredients = [];
+  listDetails(meals, ingredients);
   return (
     <div>
       {meals && meals.map((item, index) => {
@@ -18,44 +32,6 @@ function FoodsProgress() {
           strCategory,
           strInstructions,
         } = item;
-        const renderIngredients = () => {
-          const mealsFilter = meals.find((itemMeal) => itemMeal.idMeal === mealId);
-          console.log(mealsFilter);
-          const ingredients = Object.values(mealsFilter).slice(9, 29);
-          return ingredients.map((itemIng, indexIng) => {
-            if (itemIng) {
-              return (
-                <label htmlFor={ indexIng } key={ indexIng }>
-                  <input
-                    type="checkbox"
-                    data-testid={ `${indexIng}-ingredient-step` }
-                  />
-                  {` - ${itemIng}`}
-                </label>
-              );
-            }
-            return ('');
-          });
-        };
-
-        const renderMeasure = () => {
-          const measureFilter = meals.find((itemMeal) => itemMeal.idMeal === mealId);
-          const measure = Object.values(measureFilter).slice(29, 48);
-          return measure.map((itemMea, indexMea) => {
-            if (itemMea.trim()) {
-              return (
-                <label htmlFor={ indexMea } key={ indexMea }>
-                  <input
-                    type="checkbox"
-                    data-testid={ `${indexMea}-ingredient-step` }
-                  />
-                  {` - ${itemMea}`}
-                </label>
-              );
-            }
-            return ('');
-          });
-        };
         if (idMeal === mealId) {
           return (
             <div key={ index }>
@@ -76,11 +52,15 @@ function FoodsProgress() {
               </button>
               <section>
                 <h3>Ingredients</h3>
-                {renderIngredients()}
-                {renderMeasure()}
+                {ingredients.map((ingredient, indexad) => (
+                  <label key={ indexad } htmlFor={ indexad }>
+                    <input type="checkbox" name="ingredient" id={ indexad } />
+                    {` - ${ingredient}`}
+                  </label>
+                ))}
               </section>
               <section>
-                <h1 data-testid="instructions">Instruções</h1>
+                <h3 data-testid="instructions">Instructions</h3>
                 <p data-testid="instructions">{strInstructions}</p>
               </section>
 
