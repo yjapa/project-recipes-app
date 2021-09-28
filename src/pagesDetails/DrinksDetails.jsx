@@ -88,24 +88,6 @@ function DrinksDetails() {
                 </button>
               </section>
               <section>
-<<<<<<< HEAD
-                <ul>
-                  {
-                    drinks
-                      ? displayIngredientsAndMeasures(
-                        drinks,
-                        'strIngredient',
-                        'strMeasure',
-                      )
-                      : null
-                  }
-                </ul>
-                <p
-                  data-testid="instructions"
-                >
-                  {strInstructions}
-                </p>
-=======
                 <div>
                   <h2>Ingredients</h2>
                   {ingredients.map((ingredient, indexIng) => (
@@ -122,7 +104,6 @@ function DrinksDetails() {
                     {strInstructions}
                   </p>
                 </div>
->>>>>>> bf60cabb89af5efaadcf5c978a046c1187b0af58
                 <button
                   data-testid="start-recipe-btn"
                   type="button"
