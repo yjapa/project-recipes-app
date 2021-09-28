@@ -32,7 +32,6 @@ function DrinksDetails() {
           // strTags,
           // strIngredient1,
         } = item;
-        // if (idDrink === drinkId) {
         return (
           <section key={ index }>
             <div>
