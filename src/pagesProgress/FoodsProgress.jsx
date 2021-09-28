@@ -3,25 +3,15 @@ import { useParams } from 'react-router-dom';
 import MyContext from '../context/myContext';
 import shareIcon from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
+
 // https://github.com/tryber/sd-013-a-project-recipes-app/pull/9/files referência grupo 24!
-const listDetails = (DataDetails, ingredients) => {
-  const number = 20;
-  if (DataDetails && DataDetails.length !== 0) {
-    for (let i = 1; i <= number; i += 1) {
-      if (DataDetails[0][`strIngredient${i}`]) {
-        const ing = `${DataDetails[0][`strIngredient${i}`]}`;
-        const mes = `${DataDetails[0][`strMeasure${i}`]}`;
-        ingredients.push(`${ing} ${(mes === 'null') ? '' : mes}`);
-      } else break;
-    }
-  }
-};
 
 function FoodsProgress() {
-  const { meals } = useContext(MyContext);
+  const { meals, listIngredients } = useContext(MyContext);
   const { mealId } = useParams();
   const ingredients = [];
-  listDetails(meals, ingredients);
+  listIngredients(meals, ingredients);
+
   return (
     <div>
       {meals && meals.map((item, index) => {
@@ -53,10 +43,12 @@ function FoodsProgress() {
               <section>
                 <h3>Ingredients</h3>
                 {ingredients.map((ingredient, indexad) => (
-                  <label key={ indexad } htmlFor={ indexad }>
-                    <input type="checkbox" name="ingredient" id={ indexad } />
-                    {` - ${ingredient}`}
-                  </label>
+                  <div key={ indexad }>
+                    <label key={ indexad } htmlFor={ indexad }>
+                      <input type="checkbox" name="ingredient" id={ indexad } />
+                      {`${ingredient}`}
+                    </label>
+                  </div>
                 ))}
               </section>
               <section>

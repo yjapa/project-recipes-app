@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import { useParams } from 'react-router-dom';
 import MyContext from '../context/myContext';
 import {
   queryDefaultMeals,
@@ -20,6 +21,8 @@ function Provider({ children }) {
   const [data, setData] = useState([]);
   const [dataDrinks, setDataDrinks] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [renderIngredients, setRenderIngredient] = useState([]);
+  const { mealId } = useParams();
 
   const maxNumberIt = 12;
 
@@ -30,6 +33,22 @@ function Provider({ children }) {
       ));
     }
     return arr;
+  };
+
+  // ========================================================================================================
+  // Função para juntar os Ingredientes com as Medidas
+
+  const listIngredients = (DataDetails, ingredients) => {
+    const number = 20;
+    if (DataDetails && DataDetails.length !== 0) {
+      for (let i = 1; i <= number; i += 1) {
+        if (DataDetails[0][`strIngredient${i}`]) {
+          const ing = `${DataDetails[0][`strIngredient${i}`]}`;
+          const mes = `${DataDetails[0][`strMeasure${i}`]}`;
+          ingredients.push(`${ing} ${(mes === 'null') ? '' : mes}`);
+        } else break;
+      }
+    }
   };
 
   // ========================================================================================================
@@ -85,6 +104,8 @@ function Provider({ children }) {
       fetchDataDrinksByCategory,
     },
     arrayFiltered,
+    listIngredients,
+    renderIngredients,
   };
 
   return (

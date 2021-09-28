@@ -1,30 +1,32 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import { useHistory } from 'react-router';
 import shareIcon from '../images/shareIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
 import { queryRecipeByID } from '../services';
+import MyContext from '../context/myContext';
 
-const listDetails = (DataDetails, ingredients) => {
-  const number = 20;
-  if (DataDetails && DataDetails.length !== 0) {
-    for (let i = 1; i <= number; i += 1) {
-      if (DataDetails[0][`strIngredient${i}`]) {
-        const ing = `${DataDetails[0][`strIngredient${i}`]}`;
-        const mes = `${DataDetails[0][`strMeasure${i}`]}`;
-        ingredients.push(`${ing} ${(mes === 'null') ? '' : mes}`);
-      } else break;
-    }
-  }
-};
+// const listDetails = (DataDetails, ingredients) => {
+//   const number = 20;
+//   if (DataDetails && DataDetails.length !== 0) {
+//     for (let i = 1; i <= number; i += 1) {
+//       if (DataDetails[0][`strIngredient${i}`]) {
+//         const ing = `${DataDetails[0][`strIngredient${i}`]}`;
+//         const mes = `${DataDetails[0][`strMeasure${i}`]}`;
+//         ingredients.push(`${ing} ${(mes === 'null') ? '' : mes}`);
+//       } else break;
+//     }
+//   }
+// };
 
 function FoodsDetails() {
+  const { listIngredients } = useContext(MyContext);
   const { mealId } = useParams();
   const history = useHistory();
   const [mealsDataById, setMealsDataById] = useState([]);
   const { meals } = mealsDataById;
   const ingredients = [];
-  listDetails(meals, ingredients);
+  listIngredients(meals, ingredients);
 
   const fetchDataByID = async () => {
     const dados = await queryRecipeByID(mealId);
