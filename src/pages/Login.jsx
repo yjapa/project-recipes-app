@@ -1,10 +1,8 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import '../App.css';
-// import MyContext from '../context/myC
 
 const Login = () => {
-  // const { setUser } = useContext(MyContext);
   const history = useHistory();
 
   const [loginState, setLoginState] = useState({

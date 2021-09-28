@@ -1,15 +1,36 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { useParams } from 'react-router-dom';
+import { useHistory } from 'react-router';
 import shareIcon from '../images/shareIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
 import { queryRecipeByID } from '../services';
 import MyContext from '../context/myContext';
+<<<<<<< HEAD
+=======
+
+// const listDetails = (DataDetails, ingredients) => {
+//   const number = 20;
+//   if (DataDetails && DataDetails.length !== 0) {
+//     for (let i = 1; i <= number; i += 1) {
+//       if (DataDetails[0][`strIngredient${i}`]) {
+//         const ing = `${DataDetails[0][`strIngredient${i}`]}`;
+//         const mes = `${DataDetails[0][`strMeasure${i}`]}`;
+//         ingredients.push(`${ing} ${(mes === 'null') ? '' : mes}`);
+//       } else break;
+//     }
+//   }
+// };
+>>>>>>> bf60cabb89af5efaadcf5c978a046c1187b0af58
 
 function FoodsDetails() {
+  const { listIngredients } = useContext(MyContext);
   const { mealId } = useParams();
+  const history = useHistory();
   const [mealsDataById, setMealsDataById] = useState([]);
   const { meals } = mealsDataById;
   const { displayIngredientsAndMeasures } = useContext(MyContext);
+  const ingredients = [];
+  listIngredients(meals, ingredients);
 
   const fetchDataByID = async () => {
     const dados = await queryRecipeByID(mealId);
@@ -20,9 +41,10 @@ function FoodsDetails() {
     fetchDataByID();
   }, []);
 
+  const handleClick = (idMeal) => history.push(`/comidas/${idMeal}/in-progress`);
+
   return (
     <main>
-
       {meals && meals.map((item, index) => {
         const {
           strMeal,
@@ -34,8 +56,6 @@ function FoodsDetails() {
           strYoutube,
           // strIngredient1,
         } = item;
-        // return (
-          // if (idMeal === mealId) {
         return (
           <section key={ index }>
             <div>
@@ -75,22 +95,22 @@ function FoodsDetails() {
                 </button>
               </section>
               <section>
-                <ul>
-                  {
-                    meals
-                      ? displayIngredientsAndMeasures(
-                        meals,
-                        'strIngredient',
-                        'strMeasure',
-                      )
-                      : null
-                  }
-                </ul>
-                <p
-                  data-testid="instructions"
-                >
-                  {strInstructions}
-                </p>
+                <div>
+                  <h2>Ingredients</h2>
+                  {ingredients.map((ingredient, indexIng) => (
+                    <ul key={ indexIng }>
+                      <li>{ingredient}</li>
+                    </ul>
+                  ))}
+                </div>
+                <div>
+                  <h2>Instructions</h2>
+                  <p
+                    data-testid="instructions"
+                  >
+                    {strInstructions}
+                  </p>
+                </div>
                 <video src={ strYoutube }>
                   <track
                     default
@@ -99,20 +119,18 @@ function FoodsDetails() {
                   />
                   Video
                 </video>
-
                 <button
                   data-testid="start-recipe-btn"
                   type="button"
-                  // onClick=""
+                  onClick={ () => handleClick(mealId) }
                 >
-                  IniciarReceita
+                  Iniciar Receita
                 </button>
               </section>
             </div>
           </section>
         );
       })}
-      {/* )}; */}
     </main>
   );
 }

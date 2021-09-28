@@ -12,6 +12,7 @@ function Drinks() {
   useEffect(() => {
     const fetchData = async () => fetchDataDrinks();
     fetchData();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
