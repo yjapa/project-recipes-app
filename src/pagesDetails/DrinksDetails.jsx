@@ -1,13 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import shareIcon from '../images/shareIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
 import { queryDrinkByID } from '../services';
+import MyContext from '../context/myContext';
 
 function DrinksDetails() {
   const { drinkId } = useParams();
   const [drinksById, setDrinksById] = useState([]);
   const { drinks } = drinksById;
+  const { displayIngredientsAndMeasures } = useContext(MyContext);
 
   const fetchDataByID = async () => {
     const dados = await queryDrinkByID(drinkId);
@@ -71,6 +73,17 @@ function DrinksDetails() {
                 </button>
               </section>
               <section>
+                <ul>
+                  {
+                    drinks
+                      ? displayIngredientsAndMeasures(
+                        drinks,
+                        'strIngredient',
+                        'strMeasure',
+                      )
+                      : null
+                  }
+                </ul>
                 <p
                   data-testid="instructions"
                 >

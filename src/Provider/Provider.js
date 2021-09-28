@@ -59,6 +59,34 @@ function Provider({ children }) {
   };
   // ========================================================================================================
 
+  // =====================================================================
+  // Source: https://masteringjs.io/tutorials/fundamentals/filter-key
+  // Versão adaptada:
+
+  const filterObjectByKeyValue = (objToFilter, strToSearch) => {
+    const obj = objToFilter[0]; // Sempre o primeiro índice do array (que é um objeto).
+    return Object.keys(obj)
+      .filter((key) => key.includes(strToSearch))
+      .reduce((curr, key) => (({ ...curr, [key]: obj[key] })), {});
+  };
+
+  // =====================================================================
+
+  const displayIngredientsAndMeasures = (arr, stringOne, stringTwo) => {
+    const objIngredients = filterObjectByKeyValue(arr, stringOne);
+    const objMeasures = filterObjectByKeyValue(arr, stringTwo);
+    const arrIngredients = Object.entries(objIngredients).filter((item) => item[1]);
+    console.log('arrIngredients', arrIngredients);
+    const arrMeasures = Object.entries(objMeasures).filter((item) => item[1]);
+    console.log('arrMeasures', arrMeasures);
+    const listItens = arrIngredients.map((_, index) => (
+      <li key={ index } data-testid={ `${index}-ingredient-name-and-measure` }>
+        {`${arrIngredients[index][1]} - ${arrMeasures[index][1]}`}
+      </li>
+    ));
+    return listItens;
+  };
+
   const contextValue = {
     ...data,
     dataDrinks,
@@ -85,6 +113,8 @@ function Provider({ children }) {
       fetchDataDrinksByCategory,
     },
     arrayFiltered,
+    filterObjectByKeyValue,
+    displayIngredientsAndMeasures,
   };
 
   return (
