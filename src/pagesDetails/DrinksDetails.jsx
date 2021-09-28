@@ -4,10 +4,25 @@ import shareIcon from '../images/shareIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
 import { queryDrinkByID } from '../services';
 
+const listDetails = (DataDetails, ingredients) => {
+  const number = 20;
+  if (DataDetails && DataDetails.length !== 0) {
+    for (let i = 1; i <= number; i += 1) {
+      if (DataDetails[0][`strIngredient${i}`]) {
+        const ing = `${DataDetails[0][`strIngredient${i}`]}`;
+        const mes = `${DataDetails[0][`strMeasure${i}`]}`;
+        ingredients.push(`${ing} ${(mes === 'null') ? '' : mes}`);
+      } else break;
+    }
+  }
+};
+
 function DrinksDetails() {
   const { drinkId } = useParams();
   const [drinksById, setDrinksById] = useState([]);
   const { drinks } = drinksById;
+  const ingredients = [];
+  listDetails(drinks, ingredients);
 
   const fetchDataByID = async () => {
     const dados = await queryDrinkByID(drinkId);
@@ -71,11 +86,22 @@ function DrinksDetails() {
                 </button>
               </section>
               <section>
-                <p
-                  data-testid="instructions"
-                >
-                  {strInstructions}
-                </p>
+                <div>
+                  <h2>Ingredients</h2>
+                  {ingredients.map((ingredient, indexIng) => (
+                    <ul key={ indexIng }>
+                      <li>{ingredient}</li>
+                    </ul>
+                  ))}
+                </div>
+                <div>
+                  <h2>instructions</h2>
+                  <p
+                    data-testid="instructions"
+                  >
+                    {strInstructions}
+                  </p>
+                </div>
                 <button
                   data-testid="start-recipe-btn"
                   type="button"

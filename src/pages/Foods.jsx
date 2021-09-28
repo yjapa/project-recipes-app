@@ -33,6 +33,7 @@ function Foods() {
   useEffect(() => {
     const fetchData = async () => fetchDataMeals();
     fetchData();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

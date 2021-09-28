@@ -7,6 +7,8 @@ import Perfil from './pages/Perfil';
 import Explore from './pages/Explore';
 import FoodsDetails from './pagesDetails/FoodsDetails';
 import DrinksDetails from './pagesDetails/DrinksDetails';
+import FoodsProgress from './pagesProgress/FoodsProgress';
+import DrinksProgress from './pagesProgress/DrinksProgress';
 
 function Routes() {
   return (
@@ -16,6 +18,16 @@ function Routes() {
       <Route exact path="/comidas/:mealId" component={ FoodsDetails } />
       <Route exact path="/bebidas" component={ Drinks } />
       <Route exact path="/bebidas/:drinkId" component={ DrinksDetails } />
+      <Route
+        exact
+        path="/comidas/:mealId/in-progress"
+        component={ FoodsProgress }
+      />
+      <Route
+        exact
+        path="/comidas/:drinkId/in-progress"
+        component={ DrinksProgress }
+      />
       <Route exact path="/perfil" component={ Perfil } />
       <Route exact path="/explorar" component={ Explore } />
     </Switch>
