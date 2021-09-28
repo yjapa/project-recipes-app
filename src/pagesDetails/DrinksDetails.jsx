@@ -1,27 +1,21 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import { useHistory } from 'react-router';
 import shareIcon from '../images/shareIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
-import { queryDrinkByID } from '../services';
 import MyContext from '../context/myContext';
 
 function DrinksDetails() {
   const { drinkId } = useParams();
-  const [drinksById, setDrinksById] = useState([]);
+  const { listIngredients, drinksById,
+    drinksApi: { fetchDataByIdDrink } } = useContext(MyContext);
   const { drinks } = drinksById;
   const history = useHistory();
-  const { listIngredients } = useContext(MyContext);
   const ingredients = [];
   listIngredients(drinks, ingredients);
 
-  const fetchDataByID = async () => {
-    const dados = await queryDrinkByID(drinkId);
-    setDrinksById(dados);
-  };
-
   useEffect(() => {
-    fetchDataByID();
+    fetchDataByIdDrink(drinkId);
   }, []);
 
   const handleClick = (idDrink) => history.push(`/bebidas/${idDrink}/in-progress`);
