@@ -71,21 +71,19 @@ function DrinksDetails() {
           strAlcoholic,
           // strArea,
           strInstructions,
-          // strTags,
-          // strIngredient1,
         } = item;
-        // if (idDrink === drinkId) {
         return (
           <section key={ index }>
-            <div
-              id="div-top"
-            >
+            <div>
               <img
                 src={ strDrinkThumb }
                 alt={ strDrink }
+                style={ { width: '200px' } }
                 data-testid="recipe-photo"
               />
-              <section>
+              <section
+                id="sec-top"
+              >
                 <h1
                   data-testid="recipe-title"
                 >

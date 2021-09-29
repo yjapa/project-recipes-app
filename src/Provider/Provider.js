@@ -25,6 +25,7 @@ function Provider({ children }) {
   const [drinksById, setDrinksById] = useState([]);
   const [loading, setLoading] = useState(false);
   const [startButton, setStartButton] = useState(true);
+  // const [startedRecipes, setStartRecipe] = useState([]);
 
   const maxNumberIt = 12;
 
@@ -38,7 +39,7 @@ function Provider({ children }) {
   };
 
   // ========================================================================================================
-  // Função para juntar os Ingredientes com as Medidas
+  // Função para juntar os Ingredientes com as Medidas - referencia grupo 24;
 
   const listIngredients = (DataDetails, ingredients) => {
     const number = 20;
@@ -104,6 +105,8 @@ function Provider({ children }) {
     setLoading,
     startButton,
     setStartButton,
+    // startedRecipes,
+    // setStartRecipe,
     fetchDataMeals,
     fetchDataDrinks,
     recipesApi: {

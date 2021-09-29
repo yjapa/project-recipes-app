@@ -6,25 +6,42 @@ import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import MyContext from '../context/myContext';
 
 function FoodsDetails() {
-  
   const { pathname } = useLocation();
   const { listIngredients,
     recipesApi: { fetchDataByIdMeal },
-    mealsDataById, startButton, setStartButton } = useContext(MyContext);
+    mealsDataById, startButton,
+    setStartButton } = useContext(MyContext);
   const { mealId } = useParams();
   const history = useHistory();
   const { meals } = mealsDataById;
   const ingredients = [];
   listIngredients(meals, ingredients);
 
-  useEffect(() => {
-    fetchDataByIdMeal(mealId);
-  }, []);
+  const startedRecipes = [];
 
   const handleClick = (idMeal) => {
+    console.log(startedRecipes);
+    startedRecipes.push(Number(idMeal));
     setStartButton(false);
     (history.push(`/comidas/${idMeal}/in-progress`));
   };
+
+  const checkRecipe = () => {
+    startedRecipes.map((item) => {
+      if (item === mealId) {
+        setStartButton(false);
+      } return (setStartButton(true));
+    });
+  };
+
+  const continueClick = (idMeal) => {
+    (history.push(`/comidas/${idMeal}/in-progress`));
+  };
+
+  useEffect(() => {
+    fetchDataByIdMeal(mealId);
+    checkRecipe();
+  }, []);
 
   const renderButton = () => {
     if (startButton) {
@@ -45,23 +62,26 @@ function FoodsDetails() {
         className="btn-style"
         data-testid="start-recipe-btn"
         type="button"
-        onClick={ () => handleClick(mealId) }
+        onClick={ () => continueClick(mealId) }
       >
         Continuar Receita
       </button>
     );
   };
 
-  // referencia: https://blog.dadops.co/2021/03/17/copy-and-paste-in-a-react-app/
-  function copyUrl() {
-    const inviUrl = document.createElement('input');
-    inviUrl.value = `localhost:3000${pathname}`;
-    document.body.appendChild(inviUrl);
-    inviUrl.select();
-    document.execCommand('copy');
-    document.body.removeChild(inviUrl);
-    global.alert('Link copiado!');
-  }
+  // // referencia: https://blog.dadops.co/2021/03/17/copy-and-paste-in-a-react-app/
+  // function copyUrl() {
+  //   const section = document.getElementById('sec-top');
+  //   const inviUrl = document.createElement('input');
+  //   const advise = document.createElement('span');
+  //   advise.innerText = 'Link copiado!';
+  //   inviUrl.value = `localhost:3000${pathname}`;
+  //   document.body.appendChild(inviUrl);
+  //   inviUrl.select();
+  //   document.execCommand('copy');
+  //   document.body.removeChild(inviUrl);
+  //   section.appendChild(advise);
+  // }
 
   return (
     <main>
@@ -70,11 +90,8 @@ function FoodsDetails() {
           strMeal,
           strMealThumb,
           strCategory,
-          // strArea,
           strInstructions,
-          // strTags,
           strYoutube,
-          // strIngredient1,
         } = item;
         return (
           <section key={ index }>
@@ -82,9 +99,12 @@ function FoodsDetails() {
               <img
                 src={ strMealThumb }
                 alt={ strMeal }
+                style={ { width: '200px' } }
                 data-testid="recipe-photo"
               />
-              <section>
+              <section
+                id="sec-top"
+              >
                 <h1
                   data-testid="recipe-title"
                 >
@@ -98,7 +118,7 @@ function FoodsDetails() {
                 <button
                   type="button"
                   data-testid="share-btn"
-                  onClick={ copyUrl }
+                  onClick=""
                 >
                   <img
                     src={ shareIcon }

@@ -40,4 +40,8 @@ button:hover {
   padding: 20px;
   position: fixed;
   width: 150px;
+  left: 0%;
+}
+.risk {
+  text-decoration: line-through;
 }
