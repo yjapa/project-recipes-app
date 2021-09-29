@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import MyContext from '../context/myContext';
 import shareIcon from '../images/shareIcon.svg';
@@ -7,6 +7,7 @@ import '../css/pageProgress.css';
 
 function DrinksProgress() {
   const { drinkId } = useParams();
+  const [checkboxSave, setCheckboxSave] = useState([]);
   const { listIngredients,
     drinksApi: { fetchDataByIdDrink }, drinksById } = useContext(MyContext);
   const { drinks } = drinksById;
@@ -19,6 +20,31 @@ function DrinksProgress() {
       scratched.classList.remove('risk');
     } else {
       scratched.classList.add('risk');
+    }
+  };
+
+  const saveIngredientChecked = (event, i) => {
+    const checkbox = document.querySelectorAll('input[type=checkbox]')[i];
+    const eve = event.target.value;
+    const saveDrinksLS = {
+      cocktails: { [drinkId]: [...checkboxSave, eve] },
+    };
+    const removeDrinksLS = {
+      cocktails: { [drinkId]: checkboxSave },
+    };
+    if (checkbox.checked) {
+      setCheckboxSave([
+        ...checkboxSave,
+        eve,
+      ]);
+      console.log(checkboxSave);
+      localStorage.inProgressRecipes = JSON.stringify(saveDrinksLS);
+    } else {
+      checkboxSave.splice(checkboxSave.indexOf(event.target.value), 1);
+      setCheckboxSave([
+        ...checkboxSave,
+      ]);
+      localStorage.inProgressRecipes = JSON.stringify(removeDrinksLS);
     }
   };
 
@@ -68,7 +94,9 @@ function DrinksProgress() {
                     <input
                       type="checkbox"
                       id={ indexad }
-                      onChange={ (event) => handleScratchedIngredient(event, indexad) }
+                      value={ ingredient }
+                      onChange={ (event) => saveIngredientChecked(event, indexad) }
+                      onClick={ (event) => handleScratchedIngredient(event, indexad) }
                     />
                     {ingredient}
                   </label>

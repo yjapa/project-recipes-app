@@ -70,7 +70,7 @@ function FoodsProgress() {
                       type="checkbox"
                       id={ i }
                       value={ ingredient }
-                      onChange={ (event) => handleScratchedIngredient(event, i) }
+                      onClick={ (event) => handleScratchedIngredient(event, i) }
                     />
                     {ingredient}
                   </label>
