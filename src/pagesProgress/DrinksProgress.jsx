@@ -27,7 +27,7 @@ function DrinksProgress() {
     const checkbox = document.querySelectorAll('input[type=checkbox]')[i];
     const eve = event.target.value;
     const saveDrinksLS = {
-      cocktails: { [drinkId]: checkboxSave },
+      cocktails: { [drinkId]: [...checkboxSave, eve] },
     };
     const removeDrinksLS = {
       cocktails: { [drinkId]: checkboxSave },
