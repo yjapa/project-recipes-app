@@ -53,13 +53,16 @@ function DrinksDetails() {
 
   // referencia: https://blog.dadops.co/2021/03/17/copy-and-paste-in-a-react-app/
   function copyUrl() {
+    const section = document.getElementById('sec-top');
     const inviUrl = document.createElement('input');
-    inviUrl.value = `localhost:3000${pathname}`;
+    const advise = document.createElement('span');
+    advise.innerText = 'Link copiado!';
+    inviUrl.value = `http://localhost:3000${pathname}`;
     document.body.appendChild(inviUrl);
     inviUrl.select();
     document.execCommand('copy');
     document.body.removeChild(inviUrl);
-    global.alert('Link copiado!');
+    section.appendChild(advise);
   }
 
   return (

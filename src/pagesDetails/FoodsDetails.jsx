@@ -21,16 +21,22 @@ function FoodsDetails() {
 
   const handleClick = (idMeal) => {
     console.log(startedRecipes);
-    startedRecipes.push(Number(idMeal));
+    startedRecipes.push([Number(mealId)]);
     setStartButton(false);
     (history.push(`/comidas/${idMeal}/in-progress`));
   };
 
   const checkRecipe = () => {
+    console.log(startedRecipes[0]);
+    console.log(mealId);
     startedRecipes.map((item) => {
       if (item === mealId) {
         setStartButton(false);
-      } return (setStartButton(true));
+      } else {
+        console.log(mealId);
+        console.log(item);
+        setStartButton(true);
+      }
     });
   };
 
@@ -69,19 +75,19 @@ function FoodsDetails() {
     );
   };
 
-  // // referencia: https://blog.dadops.co/2021/03/17/copy-and-paste-in-a-react-app/
-  // function copyUrl() {
-  //   const section = document.getElementById('sec-top');
-  //   const inviUrl = document.createElement('input');
-  //   const advise = document.createElement('span');
-  //   advise.innerText = 'Link copiado!';
-  //   inviUrl.value = `localhost:3000${pathname}`;
-  //   document.body.appendChild(inviUrl);
-  //   inviUrl.select();
-  //   document.execCommand('copy');
-  //   document.body.removeChild(inviUrl);
-  //   section.appendChild(advise);
-  // }
+  // referencia: https://blog.dadops.co/2021/03/17/copy-and-paste-in-a-react-app/
+  function copyUrl() {
+    const section = document.getElementById('sec-top');
+    const inviUrl = document.createElement('input');
+    const advise = document.createElement('span');
+    advise.innerText = 'Link copiado!';
+    inviUrl.value = `http://localhost:3000${pathname}`;
+    document.body.appendChild(inviUrl);
+    inviUrl.select();
+    document.execCommand('copy');
+    document.body.removeChild(inviUrl);
+    section.appendChild(advise);
+  }
 
   return (
     <main>
@@ -118,7 +124,7 @@ function FoodsDetails() {
                 <button
                   type="button"
                   data-testid="share-btn"
-                  onClick=""
+                  onClick={ copyUrl }
                 >
                   <img
                     src={ shareIcon }
