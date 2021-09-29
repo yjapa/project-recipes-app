@@ -64,15 +64,15 @@ function FoodsProgress() {
                   <label
                     htmlFor={ i }
                     className="teste"
+                    data-testid={ `${i}ingredient-step` }
                   >
                     <input
                       type="checkbox"
                       id={ i }
                       value={ ingredient }
-                      data-testid="ingredient-step"
                       onChange={ (event) => handleScratchedIngredient(event, i) }
                     />
-                    {`${ingredient}`}
+                    {ingredient}
                   </label>
                 </div>
               ))}

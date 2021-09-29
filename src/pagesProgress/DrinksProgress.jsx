@@ -63,15 +63,14 @@ function DrinksProgress() {
                   <label
                     htmlFor={ indexad }
                     className="teste"
+                    data-testid={ `${indexad}ingredient-step` }
                   >
                     <input
                       type="checkbox"
-                      name="ingredient"
                       id={ indexad }
-                      data-testid="ingredient-step"
                       onChange={ (event) => handleScratchedIngredient(event, indexad) }
                     />
-                    {`${ingredient}`}
+                    {ingredient}
                   </label>
                 </div>
               ))}
