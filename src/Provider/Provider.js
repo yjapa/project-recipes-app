@@ -14,11 +14,15 @@ import {
   categoriesDrinks,
   fetchCategoryMeal,
   fetchCategoryDrink,
+  queryRecipeByID,
+  queryDrinkByID,
 } from '../services';
 
 function Provider({ children }) {
   const [data, setData] = useState([]);
   const [dataDrinks, setDataDrinks] = useState([]);
+  const [mealsDataById, setMealsDataById] = useState([]);
+  const [drinksById, setDrinksById] = useState([]);
   const [loading, setLoading] = useState(false);
 
   const maxNumberIt = 12;
@@ -33,7 +37,20 @@ function Provider({ children }) {
   };
 
   // ========================================================================================================
-  // Função para juntar os Ingredientes com as Medidas
+  // Função para juntar os Ingredientes com as Medidas - referencia grupo 24;
+
+  // const listIngredients = (DataDetails, ingredients) => {
+  //   const number = 20;
+  //   if (DataDetails && DataDetails.length !== 0) {
+  //     for (let i = 1; i <= number; i += 1) {
+  //       if (DataDetails[0][`strIngredient${i}`]) {
+  //         const ing = `${DataDetails[0][`strIngredient${i}`]}`;
+  //         const mes = `${DataDetails[0][`strMeasure${i}`]}`;
+  //         ingredients.push(`${ing} ${(mes === 'null') ? '' : mes}`);
+  //       } else break;
+  //     }
+  //   }
+  // };
 
   const listIngredients = (DataDetails, ingredients) => {
     const number = 20;
@@ -42,8 +59,8 @@ function Provider({ children }) {
         if (DataDetails[0][`strIngredient${i}`]) {
           const ing = `${DataDetails[0][`strIngredient${i}`]}`;
           const mes = `${DataDetails[0][`strMeasure${i}`]}`;
-          ingredients.push(`${ing} ${(mes === 'null') ? '' : mes}`);
-        } else break;
+          ingredients.push(`${ing} ${mes}`);
+        }
       }
     }
   };
@@ -74,12 +91,27 @@ function Provider({ children }) {
     setDataDrinks(dataToOpen);
   };
   // ========================================================================================================
+  // Fetch realizado pelo ID
+
+  const fetchDataByIdMeal = async (mealID) => {
+    const dados = await queryRecipeByID(mealID);
+    setMealsDataById(dados);
+  };
+
+  const fetchDataByIdDrink = async (drinkId) => {
+    const dados = await queryDrinkByID(drinkId);
+    setDrinksById(dados);
+  };
+
+  // ========================================================================================================
 
   const contextValue = {
     ...data,
     dataDrinks,
     setData,
     setDataDrinks,
+    mealsDataById,
+    drinksById,
     loading,
     setLoading,
     fetchDataMeals,
@@ -91,6 +123,7 @@ function Provider({ children }) {
       queryName,
       categoriesMeals,
       fetchDataMealsByCategory,
+      fetchDataByIdMeal,
     },
     drinksApi: {
       queryDefaultDrinks,
@@ -99,6 +132,7 @@ function Provider({ children }) {
       queryNameDrink,
       categoriesDrinks,
       fetchDataDrinksByCategory,
+      fetchDataByIdDrink,
     },
     arrayFiltered,
     listIngredients,

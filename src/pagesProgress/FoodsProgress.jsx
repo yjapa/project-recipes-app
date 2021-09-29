@@ -60,21 +60,20 @@ function FoodsProgress() {
             <section>
               <h3>Ingredients</h3>
               {ingredients.map((ingredient, i) => (
-                <div key={ i }>
-                  <label
-                    htmlFor={ i }
-                    className="teste"
-                  >
-                    <input
-                      type="checkbox"
-                      id={ i }
-                      value={ ingredient }
-                      data-testid="ingredient-step"
-                      onChange={ (event) => handleScratchedIngredient(event, i) }
-                    />
-                    {`${ingredient}`}
-                  </label>
-                </div>
+                <label
+                  htmlFor={ i }
+                  className="teste"
+                  key={ i }
+                  data-testid={ `${i}-ingredient-step` }
+                >
+                  <input
+                    type="checkbox"
+                    id={ i }
+                    value={ ingredient }
+                    onChange={ (event) => handleScratchedIngredient(event, i) }
+                  />
+                  {`${ingredient}`}
+                </label>
               ))}
             </section>
             <section>
