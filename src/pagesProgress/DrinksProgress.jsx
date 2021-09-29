@@ -27,7 +27,7 @@ function DrinksProgress() {
     const checkbox = document.querySelectorAll('input[type=checkbox]')[i];
     const eve = event.target.value;
     const saveDrinksLS = {
-      cocktails: { [drinkId]: [...checkboxSave, eve] },
+      cocktails: { [drinkId]: checkboxSave },
     };
     const removeDrinksLS = {
       cocktails: { [drinkId]: checkboxSave },
@@ -37,7 +37,7 @@ function DrinksProgress() {
         ...checkboxSave,
         eve,
       ]);
-      console.log(checkboxSave);
+      console.log(checkboxSave, '1');
       localStorage.inProgressRecipes = JSON.stringify(saveDrinksLS);
     } else {
       checkboxSave.splice(checkboxSave.indexOf(event.target.value), 1);
@@ -51,6 +51,7 @@ function DrinksProgress() {
   useEffect(() => {
     fetchDataByIdDrink(drinkId);
   }, []);
+
   return (
     <div>
       {drinks && drinks.map((item, index) => {
