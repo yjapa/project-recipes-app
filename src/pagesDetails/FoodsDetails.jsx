@@ -1,44 +1,21 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import { useHistory } from 'react-router';
 import shareIcon from '../images/shareIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
-import { queryRecipeByID } from '../services';
 import MyContext from '../context/myContext';
-<<<<<<< HEAD
-=======
-
-// const listDetails = (DataDetails, ingredients) => {
-//   const number = 20;
-//   if (DataDetails && DataDetails.length !== 0) {
-//     for (let i = 1; i <= number; i += 1) {
-//       if (DataDetails[0][`strIngredient${i}`]) {
-//         const ing = `${DataDetails[0][`strIngredient${i}`]}`;
-//         const mes = `${DataDetails[0][`strMeasure${i}`]}`;
-//         ingredients.push(`${ing} ${(mes === 'null') ? '' : mes}`);
-//       } else break;
-//     }
-//   }
-// };
->>>>>>> bf60cabb89af5efaadcf5c978a046c1187b0af58
 
 function FoodsDetails() {
-  const { listIngredients } = useContext(MyContext);
+  const { listIngredients,
+    recipesApi: { fetchDataByIdMeal }, mealsDataById } = useContext(MyContext);
   const { mealId } = useParams();
   const history = useHistory();
-  const [mealsDataById, setMealsDataById] = useState([]);
   const { meals } = mealsDataById;
-  const { displayIngredientsAndMeasures } = useContext(MyContext);
   const ingredients = [];
   listIngredients(meals, ingredients);
 
-  const fetchDataByID = async () => {
-    const dados = await queryRecipeByID(mealId);
-    setMealsDataById(dados);
-  };
-
   useEffect(() => {
-    fetchDataByID();
+    fetchDataByIdMeal(mealId);
   }, []);
 
   const handleClick = (idMeal) => history.push(`/comidas/${idMeal}/in-progress`);
@@ -50,11 +27,8 @@ function FoodsDetails() {
           strMeal,
           strMealThumb,
           strCategory,
-          // strArea,
           strInstructions,
-          // strTags,
           strYoutube,
-          // strIngredient1,
         } = item;
         return (
           <section key={ index }>
@@ -62,6 +36,7 @@ function FoodsDetails() {
               <img
                 src={ strMealThumb }
                 alt={ strMeal }
+                style={ { width: '200px' } }
                 data-testid="recipe-photo"
               />
               <section>
@@ -111,14 +86,21 @@ function FoodsDetails() {
                     {strInstructions}
                   </p>
                 </div>
-                <video src={ strYoutube }>
-                  <track
-                    default
-                    kind="captions"
-                    src=""
-                  />
-                  Video
-                </video>
+                <iframe
+                  data-testid="video"
+                  width="339px"
+                  height="50%"
+                  src={ strYoutube }
+                  title="YouTube video player"
+                  frameBorder="0"
+                  allow="accelerometer"
+                  autoPlay
+                  clipboard-write
+                  encrypted-media
+                  gyroscope
+                  picture-in-picture
+                  allowFullScreen
+                />
                 <button
                   data-testid="start-recipe-btn"
                   type="button"
