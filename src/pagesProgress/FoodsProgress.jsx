@@ -18,6 +18,7 @@ function FoodsProgress() {
   }, []);
 
   const handleScratchedIngredient = (event, i) => {
+
     const scratched = document.querySelectorAll('.teste')[i];
     if (scratched.classList.contains('risk')) {
       scratched.classList.remove('risk');
