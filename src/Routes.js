@@ -4,7 +4,9 @@ import Login from './pages/Login';
 import Foods from './pages/Foods';
 import Drinks from './pages/Drinks';
 import Perfil from './pages/Perfil';
-import Explore from './pages/Explore';
+import Explore from './PagesExplorer/Explore';
+import ExploreMeals from './PagesExplorer/ExploreMeals';
+import ExploreDrinks from './PagesExplorer/ExploreDrinks';
 import FoodsDetails from './pagesDetails/FoodsDetails';
 import DrinksDetails from './pagesDetails/DrinksDetails';
 import FoodsProgress from './pagesProgress/FoodsProgress';
@@ -13,23 +15,25 @@ import DrinksProgress from './pagesProgress/DrinksProgress';
 function Routes() {
   return (
     <Switch>
-      <Route exact path="/" component={ Login } />
-      <Route exact path="/comidas" component={ Foods } />
-      <Route exact path="/comidas/:mealId" component={ FoodsDetails } />
+      <Route exact path='/' component={Login} />
+      <Route exact path='/comidas' component={Foods} />
+      <Route exact path='/comidas/:mealId' component={FoodsDetails} />
       <Route
         exact
-        path="/comidas/:mealId/in-progress"
-        component={ FoodsProgress }
+        path='/comidas/:mealId/in-progress'
+        component={FoodsProgress}
       />
-      <Route exact path="/bebidas" component={ Drinks } />
-      <Route exact path="/bebidas/:drinkId" component={ DrinksDetails } />
+      <Route exact path='/bebidas' component={Drinks} />
+      <Route exact path='/bebidas/:drinkId' component={DrinksDetails} />
       <Route
         exact
-        path="/bebidas/:drinkId/in-progress"
-        component={ DrinksProgress }
+        path='/bebidas/:drinkId/in-progress'
+        component={DrinksProgress}
       />
-      <Route exact path="/perfil" component={ Perfil } />
-      <Route exact path="/explorar" component={ Explore } />
+      <Route exact path='/perfil' component={Perfil} />
+      <Route exact path='/explorar' component={Explore} />
+      <Route exact path='/explorar/comidas' component={ExploreMeals} />
+      <Route exact path='/explorar/bebidas' component={ExploreDrinks} />
     </Switch>
   );
 }
