@@ -37,7 +37,7 @@ function Provider({ children }) {
   };
 
   // ========================================================================================================
-  // Função para juntar os Ingredientes com as Medidas
+  // Função para juntar os Ingredientes com as Medidas - referencia grupo 24;
 
   const listIngredients = (DataDetails, ingredients) => {
     const number = 20;

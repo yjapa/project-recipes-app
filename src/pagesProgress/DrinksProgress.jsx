@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import MyContext from '../context/myContext';
 import shareIcon from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
+import '../css/pageProgress.css';
 
 function DrinksProgress() {
   const { drinkId } = useParams();
@@ -11,6 +12,15 @@ function DrinksProgress() {
   const { drinks } = drinksById;
   const ingredients = [];
   listIngredients(drinks, ingredients);
+
+  const handleScratchedIngredient = (event, i) => {
+    const scratched = document.querySelectorAll('.teste')[i];
+    if (scratched.classList.contains('risk')) {
+      scratched.classList.remove('risk');
+    } else {
+      scratched.classList.add('risk');
+    }
+  };
 
   useEffect(() => {
     fetchDataByIdDrink(drinkId);
@@ -26,7 +36,12 @@ function DrinksProgress() {
         } = item;
         return (
           <div key={ index }>
-            <img src={ strDrinkThumb } alt={ strDrink } data-testid="recipe-photo" />
+            <img
+              src={ strDrinkThumb }
+              alt={ strDrink }
+              style={ { width: '300px' } }
+              data-testid="recipe-photo"
+            />
             <h2 data-testid="recipe-title">{strDrink}</h2>
             <span data-testid="recipe-category">{strCategory}</span>
             <button
@@ -45,8 +60,17 @@ function DrinksProgress() {
               <h3>Ingredients</h3>
               {ingredients.map((ingredient, indexad) => (
                 <div key={ indexad }>
-                  <label key={ indexad } htmlFor={ indexad }>
-                    <input type="checkbox" name="ingredient" id={ indexad } />
+                  <label
+                    htmlFor={ indexad }
+                    className="teste"
+                  >
+                    <input
+                      type="checkbox"
+                      name="ingredient"
+                      id={ indexad }
+                      data-testid="ingredient-step"
+                      onChange={ (event) => handleScratchedIngredient(event, indexad) }
+                    />
                     {`${ingredient}`}
                   </label>
                 </div>

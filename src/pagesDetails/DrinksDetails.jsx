@@ -35,6 +35,7 @@ function DrinksDetails() {
               <img
                 src={ strDrinkThumb }
                 alt={ strDrink }
+                style={ { width: '200px' } }
                 data-testid="recipe-photo"
               />
               <section>

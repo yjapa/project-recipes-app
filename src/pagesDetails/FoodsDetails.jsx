@@ -36,6 +36,7 @@ function FoodsDetails() {
               <img
                 src={ strMealThumb }
                 alt={ strMeal }
+                style={ { width: '200px' } }
                 data-testid="recipe-photo"
               />
               <section>
@@ -85,14 +86,21 @@ function FoodsDetails() {
                     {strInstructions}
                   </p>
                 </div>
-                <video src={ strYoutube }>
-                  <track
-                    default
-                    kind="captions"
-                    src=""
-                  />
-                  Video
-                </video>
+                <iframe
+                  data-testid="video"
+                  width="339px"
+                  height="50%"
+                  src={ strYoutube }
+                  title="YouTube video player"
+                  frameBorder="0"
+                  allow="accelerometer"
+                  autoPlay
+                  clipboard-write
+                  encrypted-media
+                  gyroscope
+                  picture-in-picture
+                  allowFullScreen
+                />
                 <button
                   data-testid="start-recipe-btn"
                   type="button"

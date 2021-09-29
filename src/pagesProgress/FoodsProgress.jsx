@@ -1,9 +1,9 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import MyContext from '../context/myContext';
 import shareIcon from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
-import '../index.css';
+import '../css/pageProgress.css';
 
 function FoodsProgress() {
   const { mealId } = useParams();
@@ -37,7 +37,12 @@ function FoodsProgress() {
         } = item;
         return (
           <div key={ index }>
-            <img src={ strMealThumb } alt={ strMeal } data-testid="recipe-photo" />
+            <img
+              src={ strMealThumb }
+              alt={ strMeal }
+              data-testid="recipe-photo"
+              style={ { width: '300px' } }
+            />
             <h2 data-testid="recipe-title">{strMeal}</h2>
             <span data-testid="recipe-category">{strCategory}</span>
             <button
@@ -58,13 +63,13 @@ function FoodsProgress() {
                 <div key={ i }>
                   <label
                     htmlFor={ i }
-                    key={ i }
                     className="teste"
                   >
                     <input
                       type="checkbox"
                       id={ i }
                       value={ ingredient }
+                      data-testid="ingredient-step"
                       onChange={ (event) => handleScratchedIngredient(event, i) }
                     />
                     {`${ingredient}`}
