@@ -4,12 +4,12 @@ import shareIcon from '../images/shareIcon.svg';
 
 const CardRecipe = (
   {
+    arrTags,
+    dtRecipeDone,
     indexProps,
     sourceImage,
     strCategory,
     strRecipeName,
-    dtRecipeDone,
-    arrTags,
   },
 ) => (
   <div>
@@ -38,8 +38,8 @@ const CardRecipe = (
 
 CardRecipe.propTypes = {
   arrTags: PropTypes.array,
-  dtRecipeDone: PropTypes.string,
-  index: PropTypes.string,
+  dtRecipeDone: PropTypes.date,
+  index: PropTypes.number,
   sourceImage: PropTypes.string,
   strCategory: PropTypes.string,
   strRecipeName: PropTypes.string,

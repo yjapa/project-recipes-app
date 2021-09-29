@@ -14,7 +14,7 @@ const CardFavorite = (
   <div>
     <div>
       <img
-        alt="share-icon"
+        alt={ sourceImage }
         data-testid={ `${indexProps}-horizontal-image` }
         src={ sourceImage }
       />
