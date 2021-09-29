@@ -8,6 +8,10 @@ import '../css/pageProgress.css';
 function DrinksProgress() {
   const { drinkId } = useParams();
   const [checkboxSave, setCheckboxSave] = useState([]);
+  // const [cloneCheckboxSave, setCloneCheckboxSave] = useState({
+  //   cocktails: {},
+  // });
+
   const { listIngredients,
     drinksApi: { fetchDataByIdDrink }, drinksById } = useContext(MyContext);
   const { drinks } = drinksById;
@@ -23,11 +27,41 @@ function DrinksProgress() {
     }
   };
 
+  // const saveIngredientChecked = (event, i) => {
+  //   const checkbox = document.querySelectorAll('input[type=checkbox]')[i];
+  //   const { cocktails: { drinkId } } = cloneCheckboxSave;
+  //   const eve = event.target.value;
+  //   // const saveDrinksLS = { [drinkId]: eve };
+  //   const removeDrinksLS = {
+  //     cocktails: { [drinkId]: cocktails },
+  //   };
+  //   if (checkbox.checked) {
+  //     setCloneCheckboxSave({
+  //       ...cloneCheckboxSave,
+  //       cocktails: { ...cocktails, [drinkId]: [cocktails, eve], eve },
+  //     });
+  //     localStorage.inProgressRecipes = JSON.stringify(cloneCheckboxSave);
+  //   } else {
+  //     cloneCheckboxSave.splice(cloneCheckboxSave.indexOf(event.target.value), 1);
+  //     setCloneCheckboxSave([
+  //       ...cloneCheckboxSave,
+  //     ]);
+  //     localStorage.inProgressRecipes = JSON.stringify(removeDrinksLS);
+  //   }
+  //   // const saveProgress = JSON.parse(localStorage.getItem('inProgressRecipes'));
+  //   // return saveProgress.cocktails[drinkId];
+  // };
+
   const saveIngredientChecked = (event, i) => {
     const checkbox = document.querySelectorAll('input[type=checkbox]')[i];
     const eve = event.target.value;
+    const saveProgress = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    if (saveProgress === null) {
+      return saveProgress.cocktails;
+    }
+    console.log(saveProgress);
     const saveDrinksLS = {
-      cocktails: { [drinkId]: [...checkboxSave, eve] },
+      cocktails: { ...saveProgress.cocktails, [drinkId]: [...checkboxSave, eve] },
     };
     const removeDrinksLS = {
       cocktails: { [drinkId]: checkboxSave },
@@ -37,7 +71,6 @@ function DrinksProgress() {
         ...checkboxSave,
         eve,
       ]);
-      console.log(checkboxSave, '1');
       localStorage.inProgressRecipes = JSON.stringify(saveDrinksLS);
     } else {
       checkboxSave.splice(checkboxSave.indexOf(event.target.value), 1);
@@ -46,6 +79,8 @@ function DrinksProgress() {
       ]);
       localStorage.inProgressRecipes = JSON.stringify(removeDrinksLS);
     }
+    // const saveProgress = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    // return saveProgress.cocktails[drinkId];
   };
 
   useEffect(() => {
