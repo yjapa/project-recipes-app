@@ -16,35 +16,44 @@ function FoodsDetails() {
   const ingredients = [];
   listIngredients(meals, ingredients);
 
-  const setStorage = () => {
-    localStorage.setItem('startButton', true);
-    // localStorage.setItem('inProgressRecipes',
-    //   JSON.stringify({ meals: { [mealId]: [] } }));
-  };
+  const setStorage = () => localStorage.setItem('startButton', true);
 
   const handleClick = (idMeal) => {
-    // const recipeArr = JSON.parse(localStorage.getItem('startedRecipes'));
-    // recipeArr.push(mealId);
-    // localStorage.setItem('startedRecipes', JSON.stringify(recipeArr));
-    // localStorage.setItem('startButton', false);
+    const saveProgress = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    localStorage.setItem('startButton', false);
 
-    localStorage.setItem('inProgressRecipes',
-      JSON.stringify({ meals: { [mealId]: [] } }));
-
+    if (saveProgress === null) {
+      localStorage.inProgressRecipes = JSON.stringify({ meals: {
+        [mealId]: [],
+      } });
+    } else {
+      localStorage.inProgressRecipes = JSON.stringify({
+        ...saveProgress,
+        meals: {
+          ...saveProgress.meals,
+          [mealId]: [],
+        },
+      });
+    }
     (history.push(`/comidas/${idMeal}/in-progress`));
   };
 
   const checkRecipe = () => {
-    const recipeArr = JSON.parse(localStorage.getItem('inProgressRecipes'));
-    const mealKey = recipeArr.meals[mealId];
-    mealKey.filter((item) => {
-      if (item === mealId) {
+    const saveProgress = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    if (saveProgress !== null && saveProgress.meals !== null) {
+      const mealStorage = JSON.parse(localStorage.getItem('inProgressRecipes'));
+      const storageMealIds = Object.keys(mealStorage.meals);
+      if (storageMealIds.includes(mealId)) {
         localStorage.setItem('startButton', false);
+        console.log(saveProgress);
       } else {
         localStorage.setItem('startButton', true);
+        console.log(saveProgress);
+
+        // console.log(storageMealIds);
+        // console.log(mealId);
       }
-    });
-    console.log(mealKey);
+    }
   };
 
   const continueClick = (idMeal) => {

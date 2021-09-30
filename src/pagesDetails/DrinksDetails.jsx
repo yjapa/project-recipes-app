@@ -16,22 +16,21 @@ function DrinksDetails() {
   const ingredients = [];
   listIngredients(drinks, ingredients);
 
-  const setStorage = () => {
-    const recipeArr = JSON.parse(localStorage.getItem('startedRecipes'));
-    if (!recipeArr) {
-      localStorage.setItem('startButton', true);
-      localStorage.setItem('startedRecipes', JSON.stringify([]));
-    }
-  };
+  const setStorage = () => localStorage.setItem('startButton', true);
 
   const checkRecipe = () => {
-    const recipeArr = JSON.parse(localStorage.getItem('startedRecipes'));
-    if (recipeArr.includes(drinkId)) {
-      localStorage.setItem('startButton', false);
-    } else {
-      localStorage.setItem('startButton', true);
+    const saveProgress = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    if (saveProgress !== null && saveProgress.cocktails !== null) {
+      const drinkStorage = JSON.parse(localStorage.getItem('inProgressRecipes'));
+      const storageDrinkIds = Object.keys(drinkStorage.cocktails);
+      if (storageDrinkIds.includes(drinkId)) {
+        localStorage.setItem('startButton', false);
+        console.log(saveProgress.cocktails);
+      } else {
+        localStorage.setItem('startButton', true);
+        console.log(saveProgress.cocktails);
+      }
     }
-    console.log(recipeArr);
   };
 
   useEffect(() => {
@@ -41,11 +40,22 @@ function DrinksDetails() {
   }, []);
 
   const handleClick = (idDrink) => {
-    const recipeArr = JSON.parse(localStorage.getItem('startedRecipes'));
-    recipeArr.push(drinkId);
-    localStorage.setItem('startedRecipes', JSON.stringify(recipeArr));
+    const saveProgress = JSON.parse(localStorage.getItem('inProgressRecipes'));
     localStorage.setItem('startButton', false);
-    (history.push(`/bebidas/${idDrink}/in-progress`));
+    if (saveProgress === null) {
+      localStorage.inProgressRecipes = JSON.stringify({ cocktails: {
+        [drinkId]: [],
+      } });
+    } else {
+      localStorage.inProgressRecipes = JSON.stringify({
+        ...saveProgress,
+        cocktails: {
+          ...saveProgress.cocktails,
+          [drinkId]: [],
+        },
+      });
+    }
+    history.push(`/bebidas/${idDrink}/in-progress`);
   };
 
   const continueClick = (idMeal) => {
