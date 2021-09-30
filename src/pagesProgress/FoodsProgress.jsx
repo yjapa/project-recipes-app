@@ -18,7 +18,6 @@ function FoodsProgress() {
   }, []);
 
   const handleScratchedIngredient = (event, i) => {
-
     const scratched = document.querySelectorAll('.teste')[i];
     if (scratched.classList.contains('risk')) {
       scratched.classList.remove('risk');
@@ -61,20 +60,21 @@ function FoodsProgress() {
             <section>
               <h3>Ingredients</h3>
               {ingredients.map((ingredient, i) => (
-                <label
-                  htmlFor={ i }
-                  className="teste"
-                  key={ i }
-                  data-testid={ `${i}-ingredient-step` }
-                >
-                  <input
-                    type="checkbox"
-                    id={ i }
-                    value={ ingredient }
-                    onChange={ (event) => handleScratchedIngredient(event, i) }
-                  />
-                  {`${ingredient}`}
-                </label>
+                <div key={ i }>
+                  <label
+                    htmlFor={ i }
+                    className="teste"
+                    data-testid={ `${i}-ingredient-step` }
+                  >
+                    <input
+                      type="checkbox"
+                      id={ i }
+                      value={ ingredient }
+                      onClick={ (event) => handleScratchedIngredient(event, i) }
+                    />
+                    {ingredient}
+                  </label>
+                </div>
               ))}
             </section>
             <section>

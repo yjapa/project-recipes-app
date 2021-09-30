@@ -28,7 +28,7 @@ function FoodsDetails() {
           strMealThumb,
           strCategory,
           strInstructions,
-          strYoutube,
+          // strYoutube,
         } = item;
         return (
           <section key={ index }>
@@ -86,7 +86,7 @@ function FoodsDetails() {
                     {strInstructions}
                   </p>
                 </div>
-                <iframe
+                {/* <iframe
                   data-testid="video"
                   width="339px"
                   height="50%"
@@ -100,7 +100,7 @@ function FoodsDetails() {
                   gyroscope
                   picture-in-picture
                   allowFullScreen
-                />
+                /> */}
                 <button
                   data-testid="start-recipe-btn"
                   type="button"

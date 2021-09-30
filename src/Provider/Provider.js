@@ -59,7 +59,7 @@ function Provider({ children }) {
         if (DataDetails[0][`strIngredient${i}`]) {
           const ing = `${DataDetails[0][`strIngredient${i}`]}`;
           const mes = `${DataDetails[0][`strMeasure${i}`]}`;
-          ingredients.push(`${ing} ${mes}`);
+          ingredients.push(`${ing} ${(mes === 'null') ? '' : mes}`);
         }
       }
     }

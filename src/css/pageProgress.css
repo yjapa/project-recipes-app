@@ -5,14 +5,19 @@
 @media screen and ( min-width : 360px ) and ( min-height : 640px ) {
 }
 
-  body {
-    background-color: lightgreen;
-    position: relative;
-    left: 20px;
-    width: 360px;
-    height: 1034px;
-  }
+body {
+  background-color: lightgreen;
+  position: relative;
+  left: 20px;
+  width: 360px;
+  height: 1034px;
+}
 
-  #recipe-photo {
-    width: 201px;
-  }
+#recipe-photo {
+  width: 201px;
+}
+
+input[type=checkbox] {
+  width: 50px;
+  height: 30px
+}

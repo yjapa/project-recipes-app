@@ -7,6 +7,7 @@ import '../css/pageProgress.css';
 
 function DrinksProgress() {
   const { drinkId } = useParams();
+
   const { listIngredients,
     drinksApi: { fetchDataByIdDrink }, drinksById } = useContext(MyContext);
   const { drinks } = drinksById;
@@ -14,17 +15,38 @@ function DrinksProgress() {
   listIngredients(drinks, ingredients);
 
   const handleScratchedIngredient = (event, i) => {
+    const eve = event.target.value;
     const scratched = document.querySelectorAll('.teste')[i];
-    if (scratched.classList.contains('risk')) {
-      scratched.classList.remove('risk');
-    } else {
+    const checkbox = document.querySelectorAll('input[type=checkbox]')[i];
+    if (checkbox.checked) {
+      const saveProgress = JSON.parse(localStorage.getItem('inProgressRecipes'));
+      localStorage.inProgressRecipes = JSON.stringify({
+        ...saveProgress,
+        cocktails: {
+          ...saveProgress.cocktails,
+          [drinkId]: [...saveProgress.cocktails[drinkId], eve],
+        },
+      });
       scratched.classList.add('risk');
+    } else {
+      const saveProgress = JSON.parse(localStorage.getItem('inProgressRecipes'));
+      scratched.classList.remove('risk');
+      const removeIngredient = saveProgress.cocktails[drinkId];
+      removeIngredient.splice(removeIngredient.indexOf(event.target.value), 1);
+      localStorage.inProgressRecipes = JSON.stringify({
+        ...saveProgress,
+        cocktails: {
+          ...saveProgress.cocktails,
+          [drinkId]: removeIngredient,
+        },
+      });
     }
   };
 
   useEffect(() => {
     fetchDataByIdDrink(drinkId);
   }, []);
+
   return (
     <div>
       {drinks && drinks.map((item, index) => {
@@ -67,11 +89,12 @@ function DrinksProgress() {
                   >
                     <input
                       type="checkbox"
-                      name="ingredient"
                       id={ indexad }
-                      onChange={ (event) => handleScratchedIngredient(event, indexad) }
+                      value={ ingredient }
+                      // onChange={ (event) => saveIngredientChecked(event, indexad) }
+                      onClick={ (event) => handleScratchedIngredient(event, indexad) }
                     />
-                    {`${ingredient}`}
+                    {ingredient}
                   </label>
                 </div>
               ))}

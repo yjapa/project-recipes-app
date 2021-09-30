@@ -18,7 +18,23 @@ function DrinksDetails() {
     fetchDataByIdDrink(drinkId);
   }, []);
 
-  const handleClick = (idDrink) => history.push(`/bebidas/${idDrink}/in-progress`);
+  const handleClick = (idDrink) => {
+    history.push(`/bebidas/${idDrink}/in-progress`);
+    const saveProgress = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    if (saveProgress === null) {
+      localStorage.inProgressRecipes = JSON.stringify({ cocktails: {
+        [drinkId]: [],
+      } });
+    } else {
+      localStorage.inProgressRecipes = JSON.stringify({
+        ...saveProgress,
+        cocktails: {
+          ...saveProgress.cocktails,
+          [drinkId]: [],
+        },
+      });
+    }
+  };
 
   return (
     <main>
