@@ -10,34 +10,25 @@ function FoodsDetails() {
   const { listIngredients,
     recipesApi: { fetchDataByIdMeal },
     mealsDataById, startButton,
-    setStartButton } = useContext(MyContext);
+    setStartButton, startedRecipes } = useContext(MyContext);
   const { mealId } = useParams();
   const history = useHistory();
   const { meals } = mealsDataById;
   const ingredients = [];
   listIngredients(meals, ingredients);
 
-  const startedRecipes = [];
-
   const handleClick = (idMeal) => {
-    console.log(startedRecipes);
-    startedRecipes.push([Number(mealId)]);
+    startedRecipes.push(mealId);
     setStartButton(false);
     (history.push(`/comidas/${idMeal}/in-progress`));
   };
 
   const checkRecipe = () => {
-    console.log(startedRecipes[0]);
-    console.log(mealId);
-    startedRecipes.map((item) => {
-      if (item === mealId) {
-        setStartButton(false);
-      } else {
-        console.log(mealId);
-        console.log(item);
-        setStartButton(true);
-      }
-    });
+    if (startedRecipes.includes(mealId)) {
+      setStartButton(false);
+    } else {
+      setStartButton(true);
+    }
   };
 
   const continueClick = (idMeal) => {
