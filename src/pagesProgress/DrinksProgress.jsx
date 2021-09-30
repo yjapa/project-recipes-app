@@ -8,9 +8,6 @@ import '../css/pageProgress.css';
 function DrinksProgress() {
   const { drinkId } = useParams();
   const [checkboxSave, setCheckboxSave] = useState([]);
-  // const [cloneCheckboxSave, setCloneCheckboxSave] = useState({
-  //   cocktails: {},
-  // });
 
   const { listIngredients,
     drinksApi: { fetchDataByIdDrink }, drinksById } = useContext(MyContext);
@@ -27,42 +24,22 @@ function DrinksProgress() {
     }
   };
 
-  // const saveIngredientChecked = (event, i) => {
-  //   const checkbox = document.querySelectorAll('input[type=checkbox]')[i];
-  //   const { cocktails: { drinkId } } = cloneCheckboxSave;
-  //   const eve = event.target.value;
-  //   // const saveDrinksLS = { [drinkId]: eve };
-  //   const removeDrinksLS = {
-  //     cocktails: { [drinkId]: cocktails },
-  //   };
-  //   if (checkbox.checked) {
-  //     setCloneCheckboxSave({
-  //       ...cloneCheckboxSave,
-  //       cocktails: { ...cocktails, [drinkId]: [cocktails, eve], eve },
-  //     });
-  //     localStorage.inProgressRecipes = JSON.stringify(cloneCheckboxSave);
-  //   } else {
-  //     cloneCheckboxSave.splice(cloneCheckboxSave.indexOf(event.target.value), 1);
-  //     setCloneCheckboxSave([
-  //       ...cloneCheckboxSave,
-  //     ]);
-  //     localStorage.inProgressRecipes = JSON.stringify(removeDrinksLS);
-  //   }
-  //   // const saveProgress = JSON.parse(localStorage.getItem('inProgressRecipes'));
-  //   // return saveProgress.cocktails[drinkId];
-  // };
-
   const saveIngredientChecked = (event, i) => {
     const checkbox = document.querySelectorAll('input[type=checkbox]')[i];
     const eve = event.target.value;
-    const saveProgress = JSON.parse(localStorage.getItem('inProgressRecipes'));
-    if (saveProgress === null) {
-      return saveProgress.cocktails;
+    const test = { cocktails: {
+      [drinkId]: [...checkboxSave, eve],
+    } };
+    const saveProgress = localStorage.getItem('inProgressRecipes');
+    const saveProgressParse = JSON.parse(saveProgress);
+    if (saveProgressParse === null) {
+      localStorage.inProgressRecipes = JSON.stringify(test);
     }
-    console.log(saveProgress);
+    const { cocktails } = saveProgressParse;
     const saveDrinksLS = {
-      cocktails: { ...saveProgress.cocktails, [drinkId]: [...checkboxSave, eve] },
+      cocktails: { ...cocktails, [drinkId]: [...checkboxSave, eve] },
     };
+
     const removeDrinksLS = {
       cocktails: { [drinkId]: checkboxSave },
     };
