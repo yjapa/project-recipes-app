@@ -5,12 +5,19 @@ import shareIcon from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import MyContext from '../context/myContext';
 
+const setStorage = () => {
+  const recipeArr = JSON.parse(localStorage.getItem('startedRecipes'));
+  if (!recipeArr) {
+    localStorage.setItem('startButton', true);
+    localStorage.setItem('startedRecipes', JSON.stringify([]));
+  }
+};
+
 function FoodsDetails() {
   const { pathname } = useLocation();
   const { listIngredients,
     recipesApi: { fetchDataByIdMeal },
-    mealsDataById, startButton,
-    setStartButton, startedRecipes } = useContext(MyContext);
+    mealsDataById } = useContext(MyContext);
   const { mealId } = useParams();
   const history = useHistory();
   const { meals } = mealsDataById;
@@ -18,17 +25,21 @@ function FoodsDetails() {
   listIngredients(meals, ingredients);
 
   const handleClick = (idMeal) => {
-    startedRecipes.push(mealId);
-    setStartButton(false);
+    const recipeArr = JSON.parse(localStorage.getItem('startedRecipes'));
+    recipeArr.push(mealId);
+    localStorage.setItem('startedRecipes', JSON.stringify(recipeArr));
+    localStorage.setItem('startButton', false);
     (history.push(`/comidas/${idMeal}/in-progress`));
   };
 
   const checkRecipe = () => {
-    if (startedRecipes.includes(mealId)) {
-      setStartButton(false);
+    const recipeArr = JSON.parse(localStorage.getItem('startedRecipes'));
+    if (recipeArr.includes(mealId)) {
+      localStorage.setItem('startButton', false);
     } else {
-      setStartButton(true);
+      localStorage.setItem('startButton', true);
     }
+    console.log(recipeArr);
   };
 
   const continueClick = (idMeal) => {
@@ -37,11 +48,14 @@ function FoodsDetails() {
 
   useEffect(() => {
     fetchDataByIdMeal(mealId);
+    setStorage();
     checkRecipe();
   }, []);
 
   const renderButton = () => {
-    if (startButton) {
+    const startBtnStorage = JSON.parse(localStorage.getItem('startButton'));
+
+    if (startBtnStorage) {
       return (
         <button
           id="btn-start"

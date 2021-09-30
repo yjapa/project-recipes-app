@@ -10,23 +10,52 @@ function DrinksDetails() {
   const { drinkId } = useParams();
   const { listIngredients, drinksById,
     drinksApi: { fetchDataByIdDrink },
-    startButton, setStartButton } = useContext(MyContext);
+  } = useContext(MyContext);
   const { drinks } = drinksById;
   const history = useHistory();
   const ingredients = [];
   listIngredients(drinks, ingredients);
 
+  const setStorage = () => {
+    const recipeArr = JSON.parse(localStorage.getItem('startedRecipes'));
+    if (!recipeArr) {
+      localStorage.setItem('startButton', true);
+      localStorage.setItem('startedRecipes', JSON.stringify([]));
+    }
+  };
+
+  const checkRecipe = () => {
+    const recipeArr = JSON.parse(localStorage.getItem('startedRecipes'));
+    if (recipeArr.includes(drinkId)) {
+      localStorage.setItem('startButton', false);
+    } else {
+      localStorage.setItem('startButton', true);
+    }
+    console.log(recipeArr);
+  };
+
   useEffect(() => {
     fetchDataByIdDrink(drinkId);
+    setStorage();
+    checkRecipe();
   }, []);
 
   const handleClick = (idDrink) => {
-    setStartButton(false);
+    const recipeArr = JSON.parse(localStorage.getItem('startedRecipes'));
+    recipeArr.push(drinkId);
+    localStorage.setItem('startedRecipes', JSON.stringify(recipeArr));
+    localStorage.setItem('startButton', false);
     (history.push(`/bebidas/${idDrink}/in-progress`));
   };
 
+  const continueClick = (idMeal) => {
+    (history.push(`/comidas/${idMeal}/in-progress`));
+  };
+
   const renderButton = () => {
-    if (startButton) {
+    const startBtnStorage = JSON.parse(localStorage.getItem('startButton'));
+
+    if (startBtnStorage) {
       return (
         <button
           id="btn-start"
@@ -44,7 +73,7 @@ function DrinksDetails() {
         className="btn-style"
         data-testid="start-recipe-btn"
         type="button"
-        onClick={ () => handleClick(drinkId) }
+        onClick={ () => continueClick(drinkId) }
       >
         Continuar Receita
       </button>
