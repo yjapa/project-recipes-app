@@ -5,14 +5,6 @@ import shareIcon from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import MyContext from '../context/myContext';
 
-const setStorage = () => {
-  const recipeArr = JSON.parse(localStorage.getItem('startedRecipes'));
-  if (!recipeArr) {
-    localStorage.setItem('startButton', true);
-    localStorage.setItem('startedRecipes', JSON.stringify([]));
-  }
-};
-
 function FoodsDetails() {
   const { pathname } = useLocation();
   const { listIngredients,
@@ -24,22 +16,35 @@ function FoodsDetails() {
   const ingredients = [];
   listIngredients(meals, ingredients);
 
+  const setStorage = () => {
+    localStorage.setItem('startButton', true);
+    // localStorage.setItem('inProgressRecipes',
+    //   JSON.stringify({ meals: { [mealId]: [] } }));
+  };
+
   const handleClick = (idMeal) => {
-    const recipeArr = JSON.parse(localStorage.getItem('startedRecipes'));
-    recipeArr.push(mealId);
-    localStorage.setItem('startedRecipes', JSON.stringify(recipeArr));
-    localStorage.setItem('startButton', false);
+    // const recipeArr = JSON.parse(localStorage.getItem('startedRecipes'));
+    // recipeArr.push(mealId);
+    // localStorage.setItem('startedRecipes', JSON.stringify(recipeArr));
+    // localStorage.setItem('startButton', false);
+
+    localStorage.setItem('inProgressRecipes',
+      JSON.stringify({ meals: { [mealId]: [] } }));
+
     (history.push(`/comidas/${idMeal}/in-progress`));
   };
 
   const checkRecipe = () => {
-    const recipeArr = JSON.parse(localStorage.getItem('startedRecipes'));
-    if (recipeArr.includes(mealId)) {
-      localStorage.setItem('startButton', false);
-    } else {
-      localStorage.setItem('startButton', true);
-    }
-    console.log(recipeArr);
+    const recipeArr = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    const mealKey = recipeArr.meals[mealId];
+    mealKey.filter((item) => {
+      if (item === mealId) {
+        localStorage.setItem('startButton', false);
+      } else {
+        localStorage.setItem('startButton', true);
+      }
+    });
+    console.log(mealKey);
   };
 
   const continueClick = (idMeal) => {
