@@ -43,8 +43,38 @@ function DrinksProgress() {
     }
   };
 
+  const ingredientsInProgress = () => {
+    const saveProgress = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    const getCocktails = saveProgress.cocktails;
+    const arrayIngredients = getCocktails[drinkId];
+    if (arrayIngredients) {
+      arrayIngredients.map((idIngredient) => {
+        const checkboxChecked = document.getElementById(idIngredient);
+        if (checkboxChecked) {
+          console.log(checkboxChecked);
+          checkboxChecked.parentElement.classList.add('risk');
+          checkboxChecked.checked = true;
+          checkboxChecked.setAttribute('checked', 'true');
+        } return null;
+      });
+    }
+  };
+
+  const setLocalStorage = () => {
+    const LS = {
+      cocktails: {
+        [drinkId]: [],
+      },
+    };
+    const saveProgress = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    if (saveProgress === null) {
+      localStorage.setItem('inProgressRecipes', JSON.stringify(LS));
+    }
+  };
+
   useEffect(() => {
     fetchDataByIdDrink(drinkId);
+    setLocalStorage();
   }, []);
 
   return (
@@ -83,15 +113,14 @@ function DrinksProgress() {
               {ingredients.map((ingredient, indexad) => (
                 <div key={ indexad }>
                   <label
-                    htmlFor={ indexad }
+                    htmlFor={ ingredient }
                     className="teste"
                     data-testid={ `${indexad}-ingredient-step` }
                   >
                     <input
                       type="checkbox"
-                      id={ indexad }
+                      id={ ingredient }
                       value={ ingredient }
-                      // onChange={ (event) => saveIngredientChecked(event, indexad) }
                       onClick={ (event) => handleScratchedIngredient(event, indexad) }
                     />
                     {ingredient}

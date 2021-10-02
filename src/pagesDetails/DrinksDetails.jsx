@@ -14,17 +14,15 @@ function DrinksDetails() {
   const ingredients = [];
   listIngredients(drinks, ingredients);
 
-  useEffect(() => {
-    fetchDataByIdDrink(drinkId);
-  }, []);
-
   const handleClick = (idDrink) => {
     history.push(`/bebidas/${idDrink}/in-progress`);
     const saveProgress = JSON.parse(localStorage.getItem('inProgressRecipes'));
     if (saveProgress === null) {
-      localStorage.inProgressRecipes = JSON.stringify({ cocktails: {
-        [drinkId]: [],
-      } });
+      localStorage.inProgressRecipes = JSON.stringify({
+        cocktails: {
+          [drinkId]: [],
+        },
+      });
     } else {
       localStorage.inProgressRecipes = JSON.stringify({
         ...saveProgress,
@@ -35,6 +33,23 @@ function DrinksDetails() {
       });
     }
   };
+
+  const setLocalStorage = () => {
+    const LS = {
+      cocktails: {
+        [drinkId]: [],
+      },
+    };
+    const saveProgress = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    if (saveProgress === null) {
+      localStorage.setItem('inProgressRecipes', JSON.stringify(LS));
+    }
+  };
+
+  useEffect(() => {
+    fetchDataByIdDrink(drinkId);
+    setLocalStorage();
+  }, []);
 
   return (
     <main>

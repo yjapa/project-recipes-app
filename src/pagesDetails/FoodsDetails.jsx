@@ -14,11 +14,34 @@ function FoodsDetails() {
   const ingredients = [];
   listIngredients(meals, ingredients);
 
+  const handleClick = (idMeal) => {
+    const saveProgress = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    localStorage.inProgressRecipes = JSON.stringify({
+      ...saveProgress,
+      meals: {
+        ...saveProgress.meals,
+        [mealId]: [],
+      },
+    });
+    history.push(`/comidas/${idMeal}/in-progress`);
+  };
+
+  const setLocalStorage = () => {
+    const LS = {
+      meals: {
+        [mealId]: [],
+      },
+    };
+    const saveProgress = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    if (saveProgress === null) {
+      localStorage.inProgressRecipes = JSON.stringify(LS);
+    }
+  };
+
   useEffect(() => {
     fetchDataByIdMeal(mealId);
+    setLocalStorage();
   }, []);
-
-  const handleClick = (idMeal) => history.push(`/comidas/${idMeal}/in-progress`);
 
   return (
     <main>

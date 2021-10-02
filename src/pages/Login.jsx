@@ -28,8 +28,12 @@ const Login = () => {
     const userEmail = {
       email: loginState.email,
     };
+    const inProgressRecipes = {
+      cocktails: {},
+      meals: {},
+    };
     localStorage.user = JSON.stringify(userEmail);
-
+    localStorage.inProgressRecipes = JSON.stringify(inProgressRecipes);
     history.push('/comidas');
   };
 
