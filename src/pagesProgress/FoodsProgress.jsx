@@ -1,5 +1,5 @@
-import React, { useContext, useEffect } from 'react';
-import { useParams, useLocation } from 'react-router-dom';
+import React, { useContext, useEffect, useState } from 'react';
+import { useParams, useLocation, useHistory } from 'react-router-dom';
 import MyContext from '../context/myContext';
 import shareIcon from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
@@ -9,9 +9,13 @@ function FoodsProgress() {
   const { pathname } = useLocation();
   const { mealId } = useParams();
   const { listIngredients,
-    recipesApi: { fetchDataByIdMeal }, mealsDataById } = useContext(MyContext);
+    recipesApi: { fetchDataByIdMeal },
+    mealsDataById } = useContext(MyContext);
   const { meals } = mealsDataById;
   const ingredients = [];
+  const history = useHistory();
+  const [listIngredientFoods, setListIngredientFoods] = useState([]);
+  const [finishRecipeFoods, setFinishRecipeFoods] = useState(true);
   listIngredients(meals, ingredients);
 
   const handleScratchedIngredient = ({ target }, i) => {
@@ -27,6 +31,7 @@ function FoodsProgress() {
           [mealId]: [...saveProgress.meals[mealId], target.value],
         },
       });
+      setListIngredientFoods([...listIngredientFoods, target.value]);
     } else {
       scratched.classList.remove('risk');
       const saveProgress = JSON.parse(localStorage.getItem('inProgressRecipes'));
@@ -39,6 +44,7 @@ function FoodsProgress() {
           [mealId]: removeIngredient,
         },
       });
+      setListIngredientFoods([...removeIngredient]);
     }
   };
 
@@ -94,8 +100,25 @@ function FoodsProgress() {
   useEffect(() => {
     fetchDataByIdMeal(mealId);
     setLocalStorage();
-    ingredientsInProgress();
   }, []);
+
+  const switchFinishBtnFoods = () => {
+    const saveProgress = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    const checkboxLength = document.querySelectorAll('input[type=checkbox]').length;
+    if (saveProgress.meals[mealId].length === checkboxLength) {
+      setFinishRecipeFoods(false);
+    } else {
+      setFinishRecipeFoods(true);
+    }
+  };
+
+  useEffect(() => {
+    switchFinishBtnFoods();
+  }, [listIngredientFoods]);
+
+  const handleClick = () => {
+    history.push('/receitas-feitas');
+  };
 
   return (
     <div>
@@ -161,6 +184,8 @@ function FoodsProgress() {
             <button
               type="button"
               data-testid="finish-recipe-btn"
+              disabled={ finishRecipeFoods }
+              onClick={ handleClick }
             >
               Finalizar Receita
             </button>
