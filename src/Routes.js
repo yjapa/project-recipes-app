@@ -11,6 +11,13 @@ import FoodsDetails from './pagesDetails/FoodsDetails';
 import DrinksDetails from './pagesDetails/DrinksDetails';
 import FoodsProgress from './pagesProgress/FoodsProgress';
 import DrinksProgress from './pagesProgress/DrinksProgress';
+import IngredDrinks from './PagesExplorer/IngredDrinks';
+import IngredMeals from './PagesExplorer/IngredMeals';
+import MealsArea from './PagesExplorer/MealsArea';
+import SurpriseDrink from './PagesExplorer/SurpriseDrink';
+import SurpriseMeal from './PagesExplorer/SurpriseMeal';
+import DrinksArea from './PagesExplorer/DrinksArea';
+
 
 function Routes() {
   return (
@@ -34,6 +41,28 @@ function Routes() {
       <Route exact path='/explorar' component={Explore} />
       <Route exact path='/explorar/comidas' component={ExploreMeals} />
       <Route exact path='/explorar/bebidas' component={ExploreDrinks} />
+      <Route
+        exact
+        path='/explorar/comidas/ingredientes'
+        component={IngredMeals}
+      />
+      <Route
+        exact
+        path='/explorar/bebidas/ingredientes'
+        component={IngredDrinks}
+      />
+      <Route exact path='/explorar/comidas/area' component={MealsArea} />
+      <Route exact path='/explorar/bebidas/area' component={DrinksArea} />
+      <Route
+        exact
+        path='/explorar/bebidas/receitaBebidaSurpresa'
+        component={SurpriseDrink}
+      />
+      <Route
+        exact
+        path='/explorar/comidas/receitaComidaSurpresa'
+        component={SurpriseMeal}
+      />
     </Switch>
   );
 }

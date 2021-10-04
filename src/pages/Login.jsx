@@ -1,9 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import '../App.css';
 
 const Login = () => {
   const history = useHistory();
+
+  // const recipeStorage = () => {
+  //   localStorage.setItem('startButton', true);
+  //   localStorage.setItem('startedRecipes', JSON.stringify([]));
+  //   // localStorage.setItem('favorites', JSON.stringify([]));
+  // };
+
+  // useEffect(() => {
+  //   recipeStorage();
+  // }, []);
 
   const [loginState, setLoginState] = useState({
     email: '',

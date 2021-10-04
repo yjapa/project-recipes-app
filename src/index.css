@@ -12,6 +12,36 @@ code {
     monospace;
 }
 
+header {
+  background-color: rgb(146, 146, 146);
+}
+
+.top-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.category-buttons {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: flex-end;
+}
+
+button:hover {
+  background-color: aliceblue;
+}
+
+.btn-style {
+  background-color: rgb(159, 182, 182);
+  bottom: 0;
+  padding: 20px;
+  position: fixed;
+  width: 150px;
+  left: 0%;
+}
 .risk {
   text-decoration: line-through;
 }

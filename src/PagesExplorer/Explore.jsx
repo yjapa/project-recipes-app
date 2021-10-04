@@ -1,18 +1,19 @@
 import React from 'react';
+import { useHistory } from 'react-router';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import { useHistory } from 'react-router';
 
 function Explore() {
   const history = useHistory();
 
   function handleClick() {
-    history.push(`/explorar/comidas`);
+    history.push('/explorar/comidas');
   }
 
-   function handleClick2() {
-    history.push(`/explorar/comidas`);
+  function handleClick2() {
+    history.push('/explorar/bebidas');
   }
+  
   return (
     <section>
       <div>
@@ -24,7 +25,7 @@ function Explore() {
         type="button"
         onClick={ handleClick }
       >
-       Explorar comidas 
+        Explorar comidas
       </button>
       <button
         data-testid="explore-drinks"

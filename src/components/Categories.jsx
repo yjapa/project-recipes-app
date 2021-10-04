@@ -67,8 +67,12 @@ function Categories() {
     defaultRecipes(strCategory);
   };
 
+  // if(location.pathname !== '/explore') {
+  //   return <Categories />
+  // }
+
   return (
-    <div>
+    <div className="category-buttons">
       <button
         type="button"
         data-testid="All-category-filter"
