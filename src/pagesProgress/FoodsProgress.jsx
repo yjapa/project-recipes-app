@@ -13,18 +13,50 @@ function FoodsProgress() {
   const ingredients = [];
   listIngredients(meals, ingredients);
 
-  useEffect(() => {
-    fetchDataByIdMeal(mealId);
-  }, []);
-
-  const handleScratchedIngredient = (event, i) => {
+  const handleScratchedIngredient = ({ target }, i) => {
     const scratched = document.querySelectorAll('.teste')[i];
-    if (scratched.classList.contains('risk')) {
-      scratched.classList.remove('risk');
-    } else {
+    const checkbox = document.querySelectorAll('input[type=checkbox]')[i];
+    if (checkbox.checked) {
       scratched.classList.add('risk');
+      const saveProgress = JSON.parse(localStorage.getItem('inProgressRecipes'));
+      localStorage.inProgressRecipes = JSON.stringify({
+        ...saveProgress,
+        meals: {
+          ...saveProgress.meals,
+          [mealId]: [...saveProgress.meals[mealId], target.value],
+        },
+      });
+    } else {
+      scratched.classList.remove('risk');
+      const saveProgress = JSON.parse(localStorage.getItem('inProgressRecipes'));
+      const removeIngredient = saveProgress.meals[mealId];
+      removeIngredient.splice(removeIngredient.indexOf(target.value), 1);
+      localStorage.inProgressRecipes = JSON.stringify({
+        ...saveProgress,
+        meals: {
+          ...saveProgress.meals,
+          [mealId]: removeIngredient,
+        },
+      });
     }
   };
+
+  const setLocalStorage = () => {
+    const LS = {
+      meals: {
+        [mealId]: [],
+      },
+    };
+    const saveProgress = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    if (saveProgress === null) {
+      localStorage.inProgressRecipes = JSON.stringify(LS);
+    }
+  };
+
+  useEffect(() => {
+    fetchDataByIdMeal(mealId);
+    setLocalStorage();
+  }, []);
 
   return (
     <div>
@@ -64,13 +96,13 @@ function FoodsProgress() {
                   <label
                     htmlFor={ i }
                     className="teste"
-                    data-testid={ `${i}ingredient-step` }
+                    data-testid={ `${i}-ingredient-step` }
                   >
                     <input
                       type="checkbox"
                       id={ i }
                       value={ ingredient }
-                      onChange={ (event) => handleScratchedIngredient(event, i) }
+                      onClick={ (event) => handleScratchedIngredient(event, i) }
                     />
                     {ingredient}
                   </label>

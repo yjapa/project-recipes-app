@@ -2,15 +2,32 @@
   text-decoration: line-through;
 }
 
-@media screen and ( min-width : 360px ) and ( min-height : 640px ) {
+/* @media screen and ( min-width : 360px ) and ( min-height : 640px ) {
+} */
+
+<<<<<<< HEAD
+=======
+body {
+  background-color: lightgreen;
+  height: 1034px;
+  left: 20px;
+  position: relative;
+  width: 360px;
 }
+>>>>>>> fa27fa89f552649e8228df62473767bf16e2f8ff
 
-
-#recipe-photo {
+/* #recipe-photo {
   width: 201px;
-}
+} */
 
+<<<<<<< HEAD
 input [ type = "checkbox" ] {
   height: 30px;
   width: 50px;
 }
+=======
+/* input[type=checkbox] {
+  width: 50px;
+  height: 30px;
+} */
+>>>>>>> fa27fa89f552649e8228df62473767bf16e2f8ff
