@@ -45,12 +45,10 @@ function FoodsProgress() {
     const saveProgress = JSON.parse(localStorage.getItem('inProgressRecipes'));
     const getCocktails = saveProgress.meals;
     const arrayIngredients = getCocktails[mealId];
-    console.log(arrayIngredients);
     if (arrayIngredients) {
       arrayIngredients.map((idIngredient) => {
         const checkboxChecked = document.getElementById(idIngredient);
         if (checkboxChecked) {
-          console.log(checkboxChecked);
           checkboxChecked.parentElement.classList.add('risk');
           checkboxChecked.checked = true;
           checkboxChecked.setAttribute('checked', 'true');
@@ -117,13 +115,13 @@ function FoodsProgress() {
               {ingredients.map((ingredient, i) => (
                 <div key={ i }>
                   <label
-                    htmlFor={ i }
+                    htmlFor={ ingredient }
                     className="teste"
                     data-testid={ `${i}-ingredient-step` }
                   >
                     <input
                       type="checkbox"
-                      id={ i }
+                      id={ ingredient }
                       value={ ingredient }
                       onClick={ (event) => handleScratchedIngredient(event, i) }
                     />
