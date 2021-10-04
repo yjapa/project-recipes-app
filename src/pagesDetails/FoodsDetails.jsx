@@ -16,7 +16,7 @@ function FoodsDetails() {
   const ingredients = [];
   listIngredients(meals, ingredients);
 
-  const setStorage = () => localStorage.setItem('startButton', true);
+  // const setStorage = () => localStorage.setItem('startButton', true);
 
   const handleClick = (idMeal) => {
     const saveProgress = JSON.parse(localStorage.getItem('inProgressRecipes'));
@@ -40,8 +40,8 @@ function FoodsDetails() {
 
   const checkRecipe = () => {
     const saveProgress = JSON.parse(localStorage.getItem('inProgressRecipes'));
-    if (saveProgress !== null && saveProgress.meals !== null) {
-      const mealStorage = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    const mealStorage = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    if (mealStorage !== null && mealStorage.meals !== undefined) {
       const storageMealIds = Object.keys(mealStorage.meals);
       if (storageMealIds.includes(mealId)) {
         localStorage.setItem('startButton', false);
@@ -53,6 +53,9 @@ function FoodsDetails() {
         // console.log(storageMealIds);
         // console.log(mealId);
       }
+    } else {
+      localStorage.setItem('startButton', true);
+      console.log('asasa');
     }
   };
 
@@ -62,7 +65,7 @@ function FoodsDetails() {
 
   useEffect(() => {
     fetchDataByIdMeal(mealId);
-    setStorage();
+    // setStorage();
     checkRecipe();
   }, []);
 
