@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import MyContext from '../context/myContext';
 import shareIcon from '../images/shareIcon.svg';
@@ -7,7 +7,10 @@ import '../css/pageProgress.css';
 
 function DrinksProgress() {
   const { drinkId } = useParams();
+<<<<<<< HEAD
   const [checkboxSave, setCheckboxSave] = useState([]);
+=======
+>>>>>>> fa27fa89f552649e8228df62473767bf16e2f8ff
 
   const { listIngredients,
     drinksApi: { fetchDataByIdDrink }, drinksById } = useContext(MyContext);
@@ -16,14 +19,35 @@ function DrinksProgress() {
   listIngredients(drinks, ingredients);
 
   const handleScratchedIngredient = (event, i) => {
+    const eve = event.target.value;
     const scratched = document.querySelectorAll('.teste')[i];
-    if (scratched.classList.contains('risk')) {
-      scratched.classList.remove('risk');
-    } else {
+    const checkbox = document.querySelectorAll('input[type=checkbox]')[i];
+    if (checkbox.checked) {
+      const saveProgress = JSON.parse(localStorage.getItem('inProgressRecipes'));
+      localStorage.inProgressRecipes = JSON.stringify({
+        ...saveProgress,
+        cocktails: {
+          ...saveProgress.cocktails,
+          [drinkId]: [...saveProgress.cocktails[drinkId], eve],
+        },
+      });
       scratched.classList.add('risk');
+    } else {
+      const saveProgress = JSON.parse(localStorage.getItem('inProgressRecipes'));
+      scratched.classList.remove('risk');
+      const removeIngredient = saveProgress.cocktails[drinkId];
+      removeIngredient.splice(removeIngredient.indexOf(event.target.value), 1);
+      localStorage.inProgressRecipes = JSON.stringify({
+        ...saveProgress,
+        cocktails: {
+          ...saveProgress.cocktails,
+          [drinkId]: removeIngredient,
+        },
+      });
     }
   };
 
+<<<<<<< HEAD
   const saveIngredientChecked = (event, i) => {
     const checkbox = document.querySelectorAll('input[type=checkbox]')[i];
     const eve = event.target.value;
@@ -42,26 +66,40 @@ function DrinksProgress() {
 
     const removeDrinksLS = {
       cocktails: { [drinkId]: checkboxSave },
-    };
-    if (checkbox.checked) {
-      setCheckboxSave([
-        ...checkboxSave,
-        eve,
-      ]);
-      localStorage.inProgressRecipes = JSON.stringify(saveDrinksLS);
-    } else {
-      checkboxSave.splice(checkboxSave.indexOf(event.target.value), 1);
-      setCheckboxSave([
-        ...checkboxSave,
-      ]);
-      localStorage.inProgressRecipes = JSON.stringify(removeDrinksLS);
+=======
+  const ingredientsInProgress = () => {
+    const saveProgress = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    const getCocktails = saveProgress.cocktails;
+    const arrayIngredients = getCocktails[drinkId];
+    if (arrayIngredients) {
+      arrayIngredients.map((idIngredient) => {
+        const checkboxChecked = document.getElementById(idIngredient);
+        if (checkboxChecked) {
+          console.log(checkboxChecked);
+          checkboxChecked.parentElement.classList.add('risk');
+          checkboxChecked.checked = true;
+          checkboxChecked.setAttribute('checked', 'true');
+        } return null;
+      });
     }
-    // const saveProgress = JSON.parse(localStorage.getItem('inProgressRecipes'));
-    // return saveProgress.cocktails[drinkId];
+  };
+
+  const setLocalStorage = () => {
+    const LS = {
+      cocktails: {
+        [drinkId]: [],
+      },
+>>>>>>> fa27fa89f552649e8228df62473767bf16e2f8ff
+    };
+    const saveProgress = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    if (saveProgress === null) {
+      localStorage.setItem('inProgressRecipes', JSON.stringify(LS));
+    }
   };
 
   useEffect(() => {
     fetchDataByIdDrink(drinkId);
+    setLocalStorage();
   }, []);
 
   return (
@@ -100,15 +138,14 @@ function DrinksProgress() {
               {ingredients.map((ingredient, indexad) => (
                 <div key={ indexad }>
                   <label
-                    htmlFor={ indexad }
+                    htmlFor={ ingredient }
                     className="teste"
-                    data-testid={ `${indexad}ingredient-step` }
+                    data-testid={ `${indexad}-ingredient-step` }
                   >
                     <input
                       type="checkbox"
-                      id={ indexad }
+                      id={ ingredient }
                       value={ ingredient }
-                      onChange={ (event) => saveIngredientChecked(event, indexad) }
                       onClick={ (event) => handleScratchedIngredient(event, indexad) }
                     />
                     {ingredient}

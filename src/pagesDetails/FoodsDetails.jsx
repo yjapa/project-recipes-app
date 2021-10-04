@@ -16,6 +16,7 @@ function FoodsDetails() {
   const ingredients = [];
   listIngredients(meals, ingredients);
 
+<<<<<<< HEAD
   const setStorage = () => {
     localStorage.setItem('startButton', true);
     localStorage.setItem('inProgressRecipes',
@@ -51,10 +52,35 @@ function FoodsDetails() {
 
   const continueClick = (idMeal) => {
     (history.push(`/comidas/${idMeal}/in-progress`));
+=======
+  const handleClick = (idMeal) => {
+    const saveProgress = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    localStorage.inProgressRecipes = JSON.stringify({
+      ...saveProgress,
+      meals: {
+        ...saveProgress.meals,
+        [mealId]: [],
+      },
+    });
+    history.push(`/comidas/${idMeal}/in-progress`);
+  };
+
+  const setLocalStorage = () => {
+    const LS = {
+      meals: {
+        [mealId]: [],
+      },
+    };
+    const saveProgress = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    if (saveProgress === null) {
+      localStorage.inProgressRecipes = JSON.stringify(LS);
+    }
+>>>>>>> fa27fa89f552649e8228df62473767bf16e2f8ff
   };
 
   useEffect(() => {
     fetchDataByIdMeal(mealId);
+<<<<<<< HEAD
     setStorage();
     checkRecipe();
   }, []);
@@ -101,6 +127,11 @@ function FoodsDetails() {
     section.appendChild(advise);
   }
 
+=======
+    setLocalStorage();
+  }, []);
+
+>>>>>>> fa27fa89f552649e8228df62473767bf16e2f8ff
   return (
     <main>
       {meals && meals.map((item, index) => {
@@ -109,7 +140,7 @@ function FoodsDetails() {
           strMealThumb,
           strCategory,
           strInstructions,
-          strYoutube,
+          // strYoutube,
         } = item;
         return (
           <section key={ index }>
@@ -175,7 +206,7 @@ function FoodsDetails() {
                     {strInstructions}
                   </p>
                 </div>
-                <iframe
+                {/* <iframe
                   data-testid="video"
                   width="339px"
                   height="50%"
@@ -189,7 +220,7 @@ function FoodsDetails() {
                   gyroscope
                   picture-in-picture
                   allowFullScreen
-                />
+                /> */}
                 <button
                   data-testid="start-recipe-btn"
                   type="button"
