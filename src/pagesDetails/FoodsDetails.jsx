@@ -99,6 +99,7 @@ function FoodsDetails() {
 
   // referencia: https://blog.dadops.co/2021/03/17/copy-and-paste-in-a-react-app/
   function copyUrl() {
+    const THREESEC = 3000;
     const section = document.getElementById('sec-top');
     const inviUrl = document.createElement('input');
     const advise = document.createElement('span');
@@ -109,6 +110,9 @@ function FoodsDetails() {
     document.execCommand('copy');
     document.body.removeChild(inviUrl);
     section.appendChild(advise);
+    setTimeout(() => {
+      section.removeChild(advise);
+    }, THREESEC);
   }
 
   return (
