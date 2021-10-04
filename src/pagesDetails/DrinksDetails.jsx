@@ -16,6 +16,7 @@ function DrinksDetails() {
   const ingredients = [];
   listIngredients(drinks, ingredients);
 
+  // padwan
   // const setStorage = () => localStorage.setItem('startButton', true);
 
   const checkRecipe = () => {
