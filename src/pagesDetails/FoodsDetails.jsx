@@ -1,47 +1,119 @@
 import React, { useEffect, useContext } from 'react';
-import { useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import { useHistory } from 'react-router';
 import shareIcon from '../images/shareIcon.svg';
-import blackHeartIcon from '../images/blackHeartIcon.svg';
+import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import MyContext from '../context/myContext';
 
 function FoodsDetails() {
+  const { pathname } = useLocation();
   const { listIngredients,
-    recipesApi: { fetchDataByIdMeal }, mealsDataById } = useContext(MyContext);
+    recipesApi: { fetchDataByIdMeal },
+    mealsDataById } = useContext(MyContext);
   const { mealId } = useParams();
   const history = useHistory();
   const { meals } = mealsDataById;
   const ingredients = [];
   listIngredients(meals, ingredients);
 
+  // const setStorage = () => localStorage.setItem('startButton', true);
+
   const handleClick = (idMeal) => {
     const saveProgress = JSON.parse(localStorage.getItem('inProgressRecipes'));
-    localStorage.inProgressRecipes = JSON.stringify({
-      ...saveProgress,
-      meals: {
-        ...saveProgress.meals,
+    localStorage.setItem('startButton', false);
+
+    if (saveProgress === null) {
+      localStorage.inProgressRecipes = JSON.stringify({ meals: {
         [mealId]: [],
-      },
-    });
-    history.push(`/comidas/${idMeal}/in-progress`);
+      } });
+    } else {
+      localStorage.inProgressRecipes = JSON.stringify({
+        ...saveProgress,
+        meals: {
+          ...saveProgress.meals,
+          [mealId]: [],
+        },
+      });
+    }
+    (history.push(`/comidas/${idMeal}/in-progress`));
   };
 
-  const setLocalStorage = () => {
-    const LS = {
-      meals: {
-        [mealId]: [],
-      },
-    };
+  const checkRecipe = () => {
     const saveProgress = JSON.parse(localStorage.getItem('inProgressRecipes'));
-    if (saveProgress === null) {
-      localStorage.inProgressRecipes = JSON.stringify(LS);
+    const mealStorage = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    if (mealStorage !== null && mealStorage.meals !== undefined) {
+      const storageMealIds = Object.keys(mealStorage.meals);
+      if (storageMealIds.includes(mealId)) {
+        localStorage.setItem('startButton', false);
+        console.log(saveProgress);
+      } else {
+        localStorage.setItem('startButton', true);
+        console.log(saveProgress);
+
+        // console.log(storageMealIds);
+        // console.log(mealId);
+      }
+    } else {
+      localStorage.setItem('startButton', true);
+      console.log('asasa');
     }
+  };
+
+  const continueClick = (idMeal) => {
+    (history.push(`/comidas/${idMeal}/in-progress`));
   };
 
   useEffect(() => {
     fetchDataByIdMeal(mealId);
-    setLocalStorage();
+    // setStorage();
+    checkRecipe();
   }, []);
+
+  const renderButton = () => {
+    const startBtnStorage = JSON.parse(localStorage.getItem('startButton'));
+
+    if (startBtnStorage) {
+      return (
+        <button
+          id="btn-start"
+          className="btn-style"
+          data-testid="start-recipe-btn"
+          type="button"
+          onClick={ () => handleClick(mealId) }
+        >
+          Iniciar Receita
+        </button>);
+    }
+    return (
+      <button
+        id="btn-continue"
+        className="btn-style"
+        data-testid="start-recipe-btn"
+        type="button"
+        onClick={ () => continueClick(mealId) }
+      >
+        Continuar Receita
+      </button>
+    );
+  };
+
+  // referencia: https://blog.dadops.co/2021/03/17/copy-and-paste-in-a-react-app/
+  function copyUrl() {
+    const THREESEC = 3000;
+    const section = document.getElementById('sec-top');
+    const inviUrl = document.createElement('input');
+    const advise = document.createElement('span');
+    advise.innerText = 'Link copiado!';
+    inviUrl.value = `http://localhost:3000${pathname}`;
+    document.body.appendChild(inviUrl);
+    inviUrl.select();
+    document.execCommand('copy');
+    document.body.removeChild(inviUrl);
+    section.appendChild(advise);
+    setTimeout(() => {
+      section.removeChild(advise);
+    }, THREESEC);
+  }
 
   return (
     <main>
@@ -51,7 +123,7 @@ function FoodsDetails() {
           strMealThumb,
           strCategory,
           strInstructions,
-          // strYoutube,
+          strYoutube,
         } = item;
         return (
           <section key={ index }>
@@ -62,7 +134,9 @@ function FoodsDetails() {
                 style={ { width: '200px' } }
                 data-testid="recipe-photo"
               />
-              <section>
+              <section
+                id="sec-top"
+              >
                 <h1
                   data-testid="recipe-title"
                 >
@@ -76,6 +150,7 @@ function FoodsDetails() {
                 <button
                   type="button"
                   data-testid="share-btn"
+                  onClick={ copyUrl }
                 >
                   <img
                     src={ shareIcon }
@@ -87,7 +162,7 @@ function FoodsDetails() {
                   type="button"
                 >
                   <img
-                    src={ blackHeartIcon }
+                    src={ whiteHeartIcon }
                     alt="Favoritar"
                   />
                 </button>
@@ -97,7 +172,12 @@ function FoodsDetails() {
                   <h2>Ingredients</h2>
                   {ingredients.map((ingredient, indexIng) => (
                     <ul key={ indexIng }>
-                      <li>{ingredient}</li>
+                      <li
+                        data-testid={ `${indexIng}-ingredient-name-and-measure` }
+                      >
+                        {ingredient}
+
+                      </li>
                     </ul>
                   ))}
                 </div>
@@ -109,29 +189,24 @@ function FoodsDetails() {
                     {strInstructions}
                   </p>
                 </div>
-                {/* <iframe
-                  data-testid="video"
-                  width="339px"
-                  height="50%"
+                <video
                   src={ strYoutube }
-                  title="YouTube video player"
-                  frameBorder="0"
-                  allow="accelerometer"
-                  autoPlay
-                  clipboard-write
-                  encrypted-media
-                  gyroscope
-                  picture-in-picture
-                  allowFullScreen
-                /> */}
-                <button
-                  data-testid="start-recipe-btn"
-                  type="button"
-                  onClick={ () => handleClick(mealId) }
+                  data-testid="video"
                 >
-                  Iniciar Receita
-                </button>
+                  <track
+                    default
+                    kind="captions"
+                    src=""
+                  />
+                  Video
+                </video>
+                { renderButton() }
               </section>
+              <span
+                data-testid="0-recomendation-card"
+              >
+                Aqui vem o Carrossel
+              </span>
             </div>
           </section>
         );

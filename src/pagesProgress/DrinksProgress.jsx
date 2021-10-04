@@ -1,19 +1,18 @@
 import React, { useContext, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useLocation } from 'react-router-dom';
 import MyContext from '../context/myContext';
 import shareIcon from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import '../css/pageProgress.css';
 
 function DrinksProgress() {
+  const { pathname } = useLocation();
   const { drinkId } = useParams();
-
   const { listIngredients,
     drinksApi: { fetchDataByIdDrink }, drinksById } = useContext(MyContext);
   const { drinks } = drinksById;
   const ingredients = [];
   listIngredients(drinks, ingredients);
-
   const handleScratchedIngredient = (event, i) => {
     const eve = event.target.value;
     const scratched = document.querySelectorAll('.teste')[i];
@@ -43,6 +42,22 @@ function DrinksProgress() {
     }
   };
 
+  function copyUrl() {
+    const THREESEC = 3000;
+    const section = document.getElementById('sec-top');
+    const inviUrl = document.createElement('input');
+    const advise = document.createElement('span');
+    advise.innerText = 'Link copiado!';
+    inviUrl.value = `http://localhost:3000${pathname}`;
+    document.body.appendChild(inviUrl);
+    inviUrl.select();
+    document.execCommand('copy');
+    document.body.removeChild(inviUrl);
+    section.appendChild(advise);
+    setTimeout(() => {
+      section.removeChild(advise);
+    }, THREESEC);
+  }
   const ingredientsInProgress = () => {
     const saveProgress = JSON.parse(localStorage.getItem('inProgressRecipes'));
     const getCocktails = saveProgress.cocktails;
@@ -59,11 +74,9 @@ function DrinksProgress() {
       });
     }
   };
-
   setTimeout(() => {
     ingredientsInProgress();
   });
-
   const setLocalStorage = () => {
     const LS = {
       cocktails: {
@@ -75,12 +88,10 @@ function DrinksProgress() {
       localStorage.setItem('inProgressRecipes', JSON.stringify(LS));
     }
   };
-
   useEffect(() => {
     fetchDataByIdDrink(drinkId);
     setLocalStorage();
   }, []);
-
   return (
     <div>
       {drinks && drinks.map((item, index) => {
@@ -92,26 +103,31 @@ function DrinksProgress() {
         } = item;
         return (
           <div key={ index }>
-            <img
-              src={ strDrinkThumb }
-              alt={ strDrink }
-              style={ { width: '300px' } }
-              data-testid="recipe-photo"
-            />
-            <h2 data-testid="recipe-title">{strDrink}</h2>
-            <span data-testid="recipe-category">{strCategory}</span>
-            <button
-              type="button"
-              data-testid="share-btn"
+            <section
+              id="sec-top"
             >
-              <img src={ shareIcon } alt={ shareIcon } />
-            </button>
-            <button
-              type="button"
-              data-testid="favorite-btn"
-            >
-              <img src={ whiteHeartIcon } alt={ whiteHeartIcon } />
-            </button>
+              <img
+                src={ strDrinkThumb }
+                alt={ strDrink }
+                style={ { width: '300px' } }
+                data-testid="recipe-photo"
+              />
+              <h2 data-testid="recipe-title">{strDrink}</h2>
+              <span data-testid="recipe-category">{strCategory}</span>
+              <button
+                type="button"
+                data-testid="share-btn"
+                onClick={ copyUrl }
+              >
+                <img src={ shareIcon } alt={ shareIcon } />
+              </button>
+              <button
+                type="button"
+                data-testid="favorite-btn"
+              >
+                <img src={ whiteHeartIcon } alt={ whiteHeartIcon } />
+              </button>
+            </section>
             <section>
               <h3>Ingredients</h3>
               {ingredients.map((ingredient, indexad) => (
@@ -136,7 +152,6 @@ function DrinksProgress() {
               <h3 data-testid="instructions">Instructions</h3>
               <p data-testid="instructions">{strInstructions}</p>
             </section>
-
             <button
               type="button"
               data-testid="finish-recipe-btn"
@@ -149,5 +164,4 @@ function DrinksProgress() {
     </div>
   );
 }
-
 export default DrinksProgress;

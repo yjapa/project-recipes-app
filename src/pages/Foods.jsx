@@ -49,7 +49,7 @@ function Foods() {
                 <img
                   src={ strMealThumb }
                   alt={ strMeal }
-                  style={ { width: '300px' } }
+                  style={ { width: '250px' } }
                   data-testid={ `${index}-card-img` }
                 />
               </div>

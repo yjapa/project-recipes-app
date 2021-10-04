@@ -1,11 +1,12 @@
 import React, { useContext, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useLocation } from 'react-router-dom';
 import MyContext from '../context/myContext';
 import shareIcon from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import '../css/pageProgress.css';
 
 function FoodsProgress() {
+  const { pathname } = useLocation();
   const { mealId } = useParams();
   const { listIngredients,
     recipesApi: { fetchDataByIdMeal }, mealsDataById } = useContext(MyContext);
@@ -73,6 +74,23 @@ function FoodsProgress() {
     }
   };
 
+  function copyUrl() {
+    const THREESEC = 3000;
+    const section = document.getElementById('sec-top');
+    const inviUrl = document.createElement('input');
+    const advise = document.createElement('span');
+    advise.innerText = 'Link copiado!';
+    inviUrl.value = `http://localhost:3000${pathname}`;
+    document.body.appendChild(inviUrl);
+    inviUrl.select();
+    document.execCommand('copy');
+    document.body.removeChild(inviUrl);
+    section.appendChild(advise);
+    setTimeout(() => {
+      section.removeChild(advise);
+    }, THREESEC);
+  }
+
   useEffect(() => {
     fetchDataByIdMeal(mealId);
     setLocalStorage();
@@ -90,26 +108,31 @@ function FoodsProgress() {
         } = item;
         return (
           <div key={ index }>
-            <img
-              src={ strMealThumb }
-              alt={ strMeal }
-              data-testid="recipe-photo"
-              style={ { width: '300px' } }
-            />
-            <h2 data-testid="recipe-title">{strMeal}</h2>
-            <span data-testid="recipe-category">{strCategory}</span>
-            <button
-              type="button"
-              data-testid="share-btn"
+            <section
+              id="sec-top"
             >
-              <img src={ shareIcon } alt={ shareIcon } />
-            </button>
-            <button
-              type="button"
-              data-testid="favorite-btn"
-            >
-              <img src={ whiteHeartIcon } alt={ whiteHeartIcon } />
-            </button>
+              <img
+                src={ strMealThumb }
+                alt={ strMeal }
+                data-testid="recipe-photo"
+                style={ { width: '300px' } }
+              />
+              <h2 data-testid="recipe-title">{strMeal}</h2>
+              <span data-testid="recipe-category">{strCategory}</span>
+              <button
+                type="button"
+                data-testid="share-btn"
+              >
+                <img src={ shareIcon } alt={ shareIcon } />
+              </button>
+              <button
+                type="button"
+                data-testid="favorite-btn"
+                onClick={ copyUrl }
+              >
+                <img src={ whiteHeartIcon } alt={ whiteHeartIcon } />
+              </button>
+            </section>
             <section>
               <h3>Ingredients</h3>
               {ingredients.map((ingredient, i) => (

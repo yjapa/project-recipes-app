@@ -4,11 +4,21 @@ import Login from './pages/Login';
 import Foods from './pages/Foods';
 import Drinks from './pages/Drinks';
 import Perfil from './pages/Perfil';
-import Explore from './pages/Explore';
+import Explore from './PagesExplorer/Explore';
+import ExploreMeals from './PagesExplorer/ExploreMeals';
+import ExploreDrinks from './PagesExplorer/ExploreDrinks';
 import FoodsDetails from './pagesDetails/FoodsDetails';
 import DrinksDetails from './pagesDetails/DrinksDetails';
 import FoodsProgress from './pagesProgress/FoodsProgress';
 import DrinksProgress from './pagesProgress/DrinksProgress';
+import RecipesDone from './pages/RecipesDone';
+import FavoriteRecipes from './pages/FavoritesRecipes';
+import IngredDrinks from './PagesExplorer/IngredDrinks';
+import IngredMeals from './PagesExplorer/IngredMeals';
+import MealsArea from './PagesExplorer/MealsArea';
+import SurpriseDrink from './PagesExplorer/SurpriseDrink';
+import SurpriseMeal from './PagesExplorer/SurpriseMeal';
+import DrinksArea from './PagesExplorer/DrinksArea';
 
 function Routes() {
   return (
@@ -30,6 +40,34 @@ function Routes() {
       />
       <Route exact path="/perfil" component={ Perfil } />
       <Route exact path="/explorar" component={ Explore } />
+      <Route exact path="/explorar/comidas" component={ ExploreMeals } />
+      <Route exact path="/explorar/bebidas" component={ ExploreDrinks } />
+      <Route
+        exact
+        path="/explorar/comidas/ingredientes"
+        component={ IngredMeals }
+      />
+      <Route
+        exact
+        path="/explorar/bebidas/ingredientes"
+        component={ IngredDrinks }
+      />
+      <Route exact path="/explorar/comidas/area" component={ MealsArea } />
+      <Route exact path="/explorar/bebidas/area" component={ DrinksArea } />
+      <Route
+        exact
+        path="/explorar/bebidas/receitaBebidaSurpresa"
+        component={ SurpriseDrink }
+      />
+      <Route
+        exact
+        path="/explorar/comidas/receitaComidaSurpresa"
+        component={ SurpriseMeal }
+      />
+      <Route exact path="/perfil" component={ Perfil } />
+      <Route exact path="/explorar" component={ Explore } />
+      <Route exact path="/receitas-feitas" component={ RecipesDone } />
+      <Route exact path="/receitas-favoritas" component={ FavoriteRecipes } />
     </Switch>
   );
 }
