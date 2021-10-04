@@ -24,15 +24,17 @@ function Header({ title, searchIcone }) {
 
   return (
     <header>
-      <Link to="/perfil">
-        <img
-          alt="profile-icon"
-          data-testid="profile-top-btn"
-          src={ profileIcon }
-        />
-      </Link>
-      <h1 data-testid="page-title">{title}</h1>
-      { searchIcone && renderSearchBar() }
+      <div className="top-header">
+        <Link to="/perfil">
+          <img
+            alt="profile-icon"
+            data-testid="profile-top-btn"
+            src={ profileIcon }
+          />
+        </Link>
+        <h1 data-testid="page-title">{title}</h1>
+        { searchIcone && renderSearchBar() }
+      </div>
       { showFilter && <HeaderInput />}
       <Categories />
     </header>
