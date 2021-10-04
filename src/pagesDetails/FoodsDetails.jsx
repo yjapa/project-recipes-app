@@ -16,6 +16,7 @@ function FoodsDetails() {
   const ingredients = [];
   listIngredients(meals, ingredients);
 
+<<<<<<< HEAD
   const setStorage = () => {
     localStorage.setItem('startButton', true);
     localStorage.setItem('inProgressRecipes',
@@ -31,22 +32,57 @@ function FoodsDetails() {
     localStorage.setItem('inProgressRecipes',
       JSON.stringify({ meals: { [mealId]: [] } }));
       // console.log(meals)
+=======
+  // const setStorage = () => localStorage.setItem('startButton', true);
 
+  const handleClick = (idMeal) => {
+    const saveProgress = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    localStorage.setItem('startButton', false);
+>>>>>>> 971648e3df059f224552383c0318f77c12880b61
+
+    if (saveProgress === null) {
+      localStorage.inProgressRecipes = JSON.stringify({ meals: {
+        [mealId]: [],
+      } });
+    } else {
+      localStorage.inProgressRecipes = JSON.stringify({
+        ...saveProgress,
+        meals: {
+          ...saveProgress.meals,
+          [mealId]: [],
+        },
+      });
+    }
     (history.push(`/comidas/${idMeal}/in-progress`));
   };
 
   const checkRecipe = () => {
+<<<<<<< HEAD
     const recipeArr = JSON.parse(localStorage.getItem('inProgressRecipes'));
     const mealKey = recipeArr.meals[mealId];
     // console.log(meals)
     mealKey.filter((item) => {
       if (item === mealId) {
+=======
+    const saveProgress = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    const mealStorage = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    if (mealStorage !== null && mealStorage.meals !== undefined) {
+      const storageMealIds = Object.keys(mealStorage.meals);
+      if (storageMealIds.includes(mealId)) {
+>>>>>>> 971648e3df059f224552383c0318f77c12880b61
         localStorage.setItem('startButton', false);
+        console.log(saveProgress);
       } else {
         localStorage.setItem('startButton', true);
+        console.log(saveProgress);
+
+        // console.log(storageMealIds);
+        // console.log(mealId);
       }
-    });
-    console.log(mealKey);
+    } else {
+      localStorage.setItem('startButton', true);
+      console.log('asasa');
+    }
   };
 
   const continueClick = (idMeal) => {
@@ -55,7 +91,7 @@ function FoodsDetails() {
 
   useEffect(() => {
     fetchDataByIdMeal(mealId);
-    setStorage();
+    // setStorage();
     checkRecipe();
   }, []);
 
@@ -89,6 +125,7 @@ function FoodsDetails() {
 
   // referencia: https://blog.dadops.co/2021/03/17/copy-and-paste-in-a-react-app/
   function copyUrl() {
+    const THREESEC = 3000;
     const section = document.getElementById('sec-top');
     const inviUrl = document.createElement('input');
     const advise = document.createElement('span');
@@ -99,6 +136,9 @@ function FoodsDetails() {
     document.execCommand('copy');
     document.body.removeChild(inviUrl);
     section.appendChild(advise);
+    setTimeout(() => {
+      section.removeChild(advise);
+    }, THREESEC);
   }
 
   return (
@@ -109,7 +149,7 @@ function FoodsDetails() {
           strMealThumb,
           strCategory,
           strInstructions,
-          strYoutube,
+          // strYoutube,
         } = item;
         return (
           <section key={ index }>

@@ -43,6 +43,19 @@ function Provider({ children }) {
   // ========================================================================================================
   // Função para juntar os Ingredientes com as Medidas - referencia grupo 24;
 
+  // const listIngredients = (DataDetails, ingredients) => {
+  //   const number = 20;
+  //   if (DataDetails && DataDetails.length !== 0) {
+  //     for (let i = 1; i <= number; i += 1) {
+  //       if (DataDetails[0][`strIngredient${i}`]) {
+  //         const ing = `${DataDetails[0][`strIngredient${i}`]}`;
+  //         const mes = `${DataDetails[0][`strMeasure${i}`]}`;
+  //         ingredients.push(`${ing} ${(mes === 'null') ? '' : mes}`);
+  //       } else break;
+  //     }
+  //   }
+  // };
+
   const listIngredients = (DataDetails, ingredients) => {
     const number = 20;
     if (DataDetails && DataDetails.length !== 0) {
@@ -51,7 +64,7 @@ function Provider({ children }) {
           const ing = `${DataDetails[0][`strIngredient${i}`]}`;
           const mes = `${DataDetails[0][`strMeasure${i}`]}`;
           ingredients.push(`${ing} ${(mes === 'null') ? '' : mes}`);
-        } else break;
+        }
       }
     }
   };

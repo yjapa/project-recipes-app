@@ -16,36 +16,49 @@ function DrinksDetails() {
   const ingredients = [];
   listIngredients(drinks, ingredients);
 
-  const setStorage = () => {
-    const recipeArr = JSON.parse(localStorage.getItem('startedRecipes'));
-    if (!recipeArr) {
-      localStorage.setItem('startButton', true);
-      localStorage.setItem('startedRecipes', JSON.stringify([]));
-    }
-  };
+  // padwan
+  // const setStorage = () => localStorage.setItem('startButton', true);
 
   const checkRecipe = () => {
-    const recipeArr = JSON.parse(localStorage.getItem('startedRecipes'));
-    if (recipeArr.includes(drinkId)) {
-      localStorage.setItem('startButton', false);
+    const saveProgress = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    const drinkStorage = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    if (drinkStorage !== null && drinkStorage.cocktails !== undefined) {
+      const storageDrinkIds = Object.keys(drinkStorage.cocktails);
+      if (storageDrinkIds.includes(drinkId)) {
+        localStorage.setItem('startButton', false);
+        console.log(saveProgress.cocktails);
+      } else {
+        localStorage.setItem('startButton', true);
+        console.log(saveProgress.cocktails);
+      }
     } else {
       localStorage.setItem('startButton', true);
     }
-    console.log(recipeArr);
   };
 
   useEffect(() => {
     fetchDataByIdDrink(drinkId);
-    setStorage();
+    // setStorage();
     checkRecipe();
   }, []);
 
   const handleClick = (idDrink) => {
-    const recipeArr = JSON.parse(localStorage.getItem('startedRecipes'));
-    recipeArr.push(drinkId);
-    localStorage.setItem('startedRecipes', JSON.stringify(recipeArr));
+    const saveProgress = JSON.parse(localStorage.getItem('inProgressRecipes'));
     localStorage.setItem('startButton', false);
-    (history.push(`/bebidas/${idDrink}/in-progress`));
+    if (saveProgress === null) {
+      localStorage.inProgressRecipes = JSON.stringify({ cocktails: {
+        [drinkId]: [],
+      } });
+    } else {
+      localStorage.inProgressRecipes = JSON.stringify({
+        ...saveProgress,
+        cocktails: {
+          ...saveProgress.cocktails,
+          [drinkId]: [],
+        },
+      });
+    }
+    history.push(`/bebidas/${idDrink}/in-progress`);
   };
 
   const continueClick = (idMeal) => {
@@ -82,6 +95,7 @@ function DrinksDetails() {
 
   // referencia: https://blog.dadops.co/2021/03/17/copy-and-paste-in-a-react-app/
   function copyUrl() {
+    const THREESEC = 3000;
     const section = document.getElementById('sec-top');
     const inviUrl = document.createElement('input');
     const advise = document.createElement('span');
@@ -92,6 +106,9 @@ function DrinksDetails() {
     document.execCommand('copy');
     document.body.removeChild(inviUrl);
     section.appendChild(advise);
+    setTimeout(() => {
+      section.removeChild(advise);
+    }, THREESEC);
   }
 
   return (

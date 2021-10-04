@@ -13,18 +13,73 @@ function FoodsProgress() {
   const ingredients = [];
   listIngredients(meals, ingredients);
 
-  useEffect(() => {
-    fetchDataByIdMeal(mealId);
-  }, []);
-
-  const handleScratchedIngredient = (event, i) => {
+  const handleScratchedIngredient = ({ target }, i) => {
     const scratched = document.querySelectorAll('.teste')[i];
-    if (scratched.classList.contains('risk')) {
-      scratched.classList.remove('risk');
-    } else {
+    const checkbox = document.querySelectorAll('input[type=checkbox]')[i];
+    if (checkbox.checked) {
       scratched.classList.add('risk');
+      const saveProgress = JSON.parse(localStorage.getItem('inProgressRecipes'));
+      localStorage.inProgressRecipes = JSON.stringify({
+        ...saveProgress,
+        meals: {
+          ...saveProgress.meals,
+          [mealId]: [...saveProgress.meals[mealId], target.value],
+        },
+      });
+    } else {
+      scratched.classList.remove('risk');
+      const saveProgress = JSON.parse(localStorage.getItem('inProgressRecipes'));
+      const removeIngredient = saveProgress.meals[mealId];
+      removeIngredient.splice(removeIngredient.indexOf(target.value), 1);
+      localStorage.inProgressRecipes = JSON.stringify({
+        ...saveProgress,
+        meals: {
+          ...saveProgress.meals,
+          [mealId]: removeIngredient,
+        },
+      });
     }
   };
+
+  const ingredientsInProgress = () => {
+    const saveProgress = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    const getCocktails = saveProgress.meals;
+    const arrayIngredients = getCocktails[mealId];
+    console.log(arrayIngredients);
+    if (arrayIngredients) {
+      arrayIngredients.map((idIngredient) => {
+        const checkboxChecked = document.getElementById(idIngredient);
+        if (checkboxChecked) {
+          console.log(checkboxChecked);
+          checkboxChecked.parentElement.classList.add('risk');
+          checkboxChecked.checked = true;
+          checkboxChecked.setAttribute('checked', 'true');
+        } return null;
+      });
+    }
+  };
+
+  setTimeout(() => {
+    ingredientsInProgress();
+  });
+
+  const setLocalStorage = () => {
+    const LS = {
+      meals: {
+        [mealId]: [],
+      },
+    };
+    const saveProgress = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    if (saveProgress === null) {
+      localStorage.inProgressRecipes = JSON.stringify(LS);
+    }
+  };
+
+  useEffect(() => {
+    fetchDataByIdMeal(mealId);
+    setLocalStorage();
+    ingredientsInProgress();
+  }, []);
 
   return (
     <div>
@@ -64,7 +119,7 @@ function FoodsProgress() {
                   <label
                     htmlFor={ i }
                     className="teste"
-                    data-testid={ `${i}ingredient-step` }
+                    data-testid={ `${i}-ingredient-step` }
                   >
                     <input
                       type="checkbox"
