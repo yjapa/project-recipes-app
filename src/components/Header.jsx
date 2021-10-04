@@ -5,6 +5,7 @@ import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
 import Categories from './Categories';
 import HeaderInput from './HeaderInputs';
+// import { useLocation } from 'react-router-dom';
 
 function Header({ title, searchIcone }) {
   const [showFilter, setFilter] = useState(false);
@@ -22,6 +23,17 @@ function Header({ title, searchIcone }) {
     </button>
   );
 
+  //= ====Gildo, tentatando tirar o Header de pages explores =======
+
+  // const location = useLocation();
+  //  function offbutton() {
+  //   if(location.pathname == '/Explorar') {
+  //     return  <Categories />
+  //   }
+  // };
+
+  //= ===============================================================
+
   return (
     <header>
       <div className="top-header">
@@ -37,6 +49,7 @@ function Header({ title, searchIcone }) {
       </div>
       { showFilter && <HeaderInput />}
       <Categories />
+      {/* { !(offbutton) } */}
     </header>
   );
 }

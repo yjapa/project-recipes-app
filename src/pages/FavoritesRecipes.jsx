@@ -1,6 +1,6 @@
 import React from 'react';
 import Header from '../components/Header';
-import CardFavorite from '../components/CardFavorite';
+// import CardFavorite from '../components/CardFavorite';
 
 // Preciso saber de onde virão os dados favoritados sejam eles comidas ou bebidas
 

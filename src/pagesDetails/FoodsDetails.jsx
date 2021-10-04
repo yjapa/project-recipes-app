@@ -205,7 +205,7 @@ function FoodsDetails() {
               <span
                 data-testid="0-recomendation-card"
               >
-                Teste
+                Aqui vem o Carrossel
               </span>
             </div>
           </section>

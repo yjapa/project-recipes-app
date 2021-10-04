@@ -1,6 +1,6 @@
 import React from 'react';
 import Header from '../components/Header';
-import CardRecipe from '../components/CardRecipe';
+// import CardRecipe from '../components/CardRecipe';
 
 // Preciso saber de onde virão os dados ref. as receitas feitas, sejam eles comidas ou bebidas;
 

@@ -17,17 +17,17 @@ header {
 }
 
 .top-header {
+  align-items: flex-start;
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
   width: 100%;
 }
 
 .category-buttons {
-  display: flex;
-  width: 100%;
-  justify-content: center;
   align-items: flex-end;
+  display: flex;
+  justify-content: center;
+  width: 100%;
 }
 
 button:hover {
@@ -37,11 +37,24 @@ button:hover {
 .btn-style {
   background-color: rgb(159, 182, 182);
   bottom: 0;
+  left: 0%;
   padding: 20px;
   position: fixed;
   width: 150px;
-  left: 0%;
 }
 .risk {
   text-decoration: line-through;
+}
+
+.category-buttons {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: left;
+  max-width: 360px;
+}
+
+.category-button {
+  font-size: smaller;
+  max-width: inherit;
 }
