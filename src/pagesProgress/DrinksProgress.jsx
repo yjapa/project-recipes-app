@@ -60,6 +60,10 @@ function DrinksProgress() {
     }
   };
 
+  setTimeout(() => {
+    ingredientsInProgress();
+  });
+
   const setLocalStorage = () => {
     const LS = {
       cocktails: {
