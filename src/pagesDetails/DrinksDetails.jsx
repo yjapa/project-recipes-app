@@ -17,6 +17,7 @@ function DrinksDetails() {
   listIngredients(drinks, ingredients);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
   const setStorage = () => {
     const recipeArr = JSON.parse(localStorage.getItem('startedRecipes'));
     if (!recipeArr) {
@@ -34,6 +35,8 @@ function DrinksDetails() {
     }
     console.log(recipeArr);
 =======
+=======
+>>>>>>> fa27fa89f552649e8228df62473767bf16e2f8ff
   const handleClick = (idDrink) => {
     history.push(`/bebidas/${idDrink}/in-progress`);
     const saveProgress = JSON.parse(localStorage.getItem('inProgressRecipes'));
@@ -64,11 +67,15 @@ function DrinksDetails() {
     if (saveProgress === null) {
       localStorage.setItem('inProgressRecipes', JSON.stringify(LS));
     }
+<<<<<<< HEAD
+>>>>>>> fa27fa89f552649e8228df62473767bf16e2f8ff
+=======
 >>>>>>> fa27fa89f552649e8228df62473767bf16e2f8ff
   };
 
   useEffect(() => {
     fetchDataByIdDrink(drinkId);
+<<<<<<< HEAD
 <<<<<<< HEAD
     setStorage();
     checkRecipe();
@@ -128,6 +135,11 @@ function DrinksDetails() {
     section.appendChild(advise);
   }
 
+=======
+    setLocalStorage();
+  }, []);
+
+>>>>>>> fa27fa89f552649e8228df62473767bf16e2f8ff
 =======
     setLocalStorage();
   }, []);

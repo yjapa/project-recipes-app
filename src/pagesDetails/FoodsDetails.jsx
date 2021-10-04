@@ -17,6 +17,7 @@ function FoodsDetails() {
   listIngredients(meals, ingredients);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
   const setStorage = () => {
     localStorage.setItem('startButton', true);
     localStorage.setItem('inProgressRecipes',
@@ -53,6 +54,8 @@ function FoodsDetails() {
   const continueClick = (idMeal) => {
     (history.push(`/comidas/${idMeal}/in-progress`));
 =======
+=======
+>>>>>>> fa27fa89f552649e8228df62473767bf16e2f8ff
   const handleClick = (idMeal) => {
     const saveProgress = JSON.parse(localStorage.getItem('inProgressRecipes'));
     localStorage.inProgressRecipes = JSON.stringify({
@@ -75,11 +78,15 @@ function FoodsDetails() {
     if (saveProgress === null) {
       localStorage.inProgressRecipes = JSON.stringify(LS);
     }
+<<<<<<< HEAD
+>>>>>>> fa27fa89f552649e8228df62473767bf16e2f8ff
+=======
 >>>>>>> fa27fa89f552649e8228df62473767bf16e2f8ff
   };
 
   useEffect(() => {
     fetchDataByIdMeal(mealId);
+<<<<<<< HEAD
 <<<<<<< HEAD
     setStorage();
     checkRecipe();
@@ -127,6 +134,11 @@ function FoodsDetails() {
     section.appendChild(advise);
   }
 
+=======
+    setLocalStorage();
+  }, []);
+
+>>>>>>> fa27fa89f552649e8228df62473767bf16e2f8ff
 =======
     setLocalStorage();
   }, []);

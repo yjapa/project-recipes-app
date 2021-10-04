@@ -8,7 +8,10 @@ import '../css/pageProgress.css';
 function DrinksProgress() {
   const { drinkId } = useParams();
 <<<<<<< HEAD
+<<<<<<< HEAD
   const [checkboxSave, setCheckboxSave] = useState([]);
+=======
+>>>>>>> fa27fa89f552649e8228df62473767bf16e2f8ff
 =======
 >>>>>>> fa27fa89f552649e8228df62473767bf16e2f8ff
 
@@ -48,6 +51,7 @@ function DrinksProgress() {
   };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
   const saveIngredientChecked = (event, i) => {
     const checkbox = document.querySelectorAll('input[type=checkbox]')[i];
     const eve = event.target.value;
@@ -82,6 +86,23 @@ function DrinksProgress() {
         } return null;
       });
     }
+=======
+  const ingredientsInProgress = () => {
+    const saveProgress = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    const getCocktails = saveProgress.cocktails;
+    const arrayIngredients = getCocktails[drinkId];
+    if (arrayIngredients) {
+      arrayIngredients.map((idIngredient) => {
+        const checkboxChecked = document.getElementById(idIngredient);
+        if (checkboxChecked) {
+          console.log(checkboxChecked);
+          checkboxChecked.parentElement.classList.add('risk');
+          checkboxChecked.checked = true;
+          checkboxChecked.setAttribute('checked', 'true');
+        } return null;
+      });
+    }
+>>>>>>> fa27fa89f552649e8228df62473767bf16e2f8ff
   };
 
   const setLocalStorage = () => {
@@ -89,6 +110,9 @@ function DrinksProgress() {
       cocktails: {
         [drinkId]: [],
       },
+<<<<<<< HEAD
+>>>>>>> fa27fa89f552649e8228df62473767bf16e2f8ff
+=======
 >>>>>>> fa27fa89f552649e8228df62473767bf16e2f8ff
     };
     const saveProgress = JSON.parse(localStorage.getItem('inProgressRecipes'));
