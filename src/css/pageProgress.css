@@ -2,20 +2,20 @@
   text-decoration: line-through;
 }
 
-@media screen and ( min-width : 360px ) and ( min-height : 640px ) {
-}
+/* @media screen and ( min-width : 360px ) and ( min-height : 640px ) {
+} */
 
 body {
   background-color: lightgreen;
-  position: relative;
-  left: 20px;
-  width: 360px;
   height: 1034px;
+  left: 20px;
+  position: relative;
+  width: 360px;
 }
 
-#recipe-photo {
+/* #recipe-photo {
   width: 201px;
-}
+} */
 
 /* input[type=checkbox] {
   width: 50px;
