@@ -41,6 +41,28 @@ function FoodsProgress() {
     }
   };
 
+  const ingredientsInProgress = () => {
+    const saveProgress = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    const getCocktails = saveProgress.meals;
+    const arrayIngredients = getCocktails[mealId];
+    console.log(arrayIngredients);
+    if (arrayIngredients) {
+      arrayIngredients.map((idIngredient) => {
+        const checkboxChecked = document.getElementById(idIngredient);
+        if (checkboxChecked) {
+          console.log(checkboxChecked);
+          checkboxChecked.parentElement.classList.add('risk');
+          checkboxChecked.checked = true;
+          checkboxChecked.setAttribute('checked', 'true');
+        } return null;
+      });
+    }
+  };
+
+  setTimeout(() => {
+    ingredientsInProgress();
+  });
+
   const setLocalStorage = () => {
     const LS = {
       meals: {
@@ -56,6 +78,7 @@ function FoodsProgress() {
   useEffect(() => {
     fetchDataByIdMeal(mealId);
     setLocalStorage();
+    ingredientsInProgress();
   }, []);
 
   return (
