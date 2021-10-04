@@ -123,7 +123,7 @@ function FoodsDetails() {
           strMealThumb,
           strCategory,
           strInstructions,
-          // strYoutube,
+          strYoutube,
         } = item;
         return (
           <section key={ index }>

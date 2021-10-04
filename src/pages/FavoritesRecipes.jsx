@@ -12,7 +12,7 @@ const FavoritesRecipes = () => (
       <button data-testid="filter-by-food-btn" type="button">Food</button>
       <button data-testid="filter-by-drink-btn" type="button">Drinks</button>
     </div>
-    { arrayQueContemAListaDeFavoritos.map((item, index) => (
+    {/* { arrayQueContemAListaDeFavoritos.map((item, index) => (
       <CardFavorite
         Key={ index }
         indexProps={ index }
@@ -20,7 +20,7 @@ const FavoritesRecipes = () => (
         strCategory={ item }
         strRecipeName={ item }
       />
-    ))}
+    ))} */}
   </div>
 );
 

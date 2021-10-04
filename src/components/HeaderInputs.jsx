@@ -69,7 +69,7 @@ function HeaderInput() {
       break;
     case 'firstLetter':
       if (!searchRecipe || searchRecipe.length > 1) {
-        global.alert('Sua busca deve conter somente 1 (um) carácter');
+        global.alert('Sua busca deve conter somente 1 (um) caracter');
       } else {
         setLoading(true);
         resultApi = await queryFirstLetter(searchRecipe);
