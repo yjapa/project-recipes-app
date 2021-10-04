@@ -1,23 +1,21 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
-import { useEffect, useContext } from 'react';
 import MyContext from '../context/myContext';
 
-
 function SurpriseMeal() {
-  const { getMealsSurprise } = useContext(MyContext);
+  const { getMealSurprise } = useContext(MyContext);
 
-  // useEffect(() => {
-  //   getMealsSurprise()
-  // },[])
+  useEffect(() => {
+    getMealSurprise();
+  }, []);
 
-  return(
+  return (
     <section>
-      <Header title='Receita surpresa' />
+      <Header title="Receita surpresa" />
       <Footer />
     </section>
-  )
+  );
 }
 
 export default SurpriseMeal;

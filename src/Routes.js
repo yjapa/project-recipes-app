@@ -11,6 +11,8 @@ import FoodsDetails from './pagesDetails/FoodsDetails';
 import DrinksDetails from './pagesDetails/DrinksDetails';
 import FoodsProgress from './pagesProgress/FoodsProgress';
 import DrinksProgress from './pagesProgress/DrinksProgress';
+import RecipesDone from './pages/RecipesDone';
+import FavoriteRecipes from './pages/FavoritesRecipes';
 import IngredDrinks from './PagesExplorer/IngredDrinks';
 import IngredMeals from './PagesExplorer/IngredMeals';
 import MealsArea from './PagesExplorer/MealsArea';
@@ -18,51 +20,54 @@ import SurpriseDrink from './PagesExplorer/SurpriseDrink';
 import SurpriseMeal from './PagesExplorer/SurpriseMeal';
 import DrinksArea from './PagesExplorer/DrinksArea';
 
-
 function Routes() {
   return (
     <Switch>
-      <Route exact path='/' component={Login} />
-      <Route exact path='/comidas' component={Foods} />
-      <Route exact path='/comidas/:mealId' component={FoodsDetails} />
+      <Route exact path="/" component={ Login } />
+      <Route exact path="/comidas" component={ Foods } />
+      <Route exact path="/comidas/:mealId" component={ FoodsDetails } />
       <Route
         exact
-        path='/comidas/:mealId/in-progress'
-        component={FoodsProgress}
+        path="/comidas/:mealId/in-progress"
+        component={ FoodsProgress }
       />
-      <Route exact path='/bebidas' component={Drinks} />
-      <Route exact path='/bebidas/:drinkId' component={DrinksDetails} />
+      <Route exact path="/bebidas" component={ Drinks } />
+      <Route exact path="/bebidas/:drinkId" component={ DrinksDetails } />
       <Route
         exact
-        path='/bebidas/:drinkId/in-progress'
-        component={DrinksProgress}
+        path="/bebidas/:drinkId/in-progress"
+        component={ DrinksProgress }
       />
-      <Route exact path='/perfil' component={Perfil} />
-      <Route exact path='/explorar' component={Explore} />
-      <Route exact path='/explorar/comidas' component={ExploreMeals} />
-      <Route exact path='/explorar/bebidas' component={ExploreDrinks} />
+      <Route exact path="/perfil" component={ Perfil } />
+      <Route exact path="/explorar" component={ Explore } />
+      <Route exact path="/explorar/comidas" component={ ExploreMeals } />
+      <Route exact path="/explorar/bebidas" component={ ExploreDrinks } />
       <Route
         exact
-        path='/explorar/comidas/ingredientes'
-        component={IngredMeals}
-      />
-      <Route
-        exact
-        path='/explorar/bebidas/ingredientes'
-        component={IngredDrinks}
-      />
-      <Route exact path='/explorar/comidas/area' component={MealsArea} />
-      <Route exact path='/explorar/bebidas/area' component={DrinksArea} />
-      <Route
-        exact
-        path='/explorar/bebidas/receitaBebidaSurpresa'
-        component={SurpriseDrink}
+        path="/explorar/comidas/ingredientes"
+        component={ IngredMeals }
       />
       <Route
         exact
-        path='/explorar/comidas/receitaComidaSurpresa'
-        component={SurpriseMeal}
+        path="/explorar/bebidas/ingredientes"
+        component={ IngredDrinks }
       />
+      <Route exact path="/explorar/comidas/area" component={ MealsArea } />
+      <Route exact path="/explorar/bebidas/area" component={ DrinksArea } />
+      <Route
+        exact
+        path="/explorar/bebidas/receitaBebidaSurpresa"
+        component={ SurpriseDrink }
+      />
+      <Route
+        exact
+        path="/explorar/comidas/receitaComidaSurpresa"
+        component={ SurpriseMeal }
+      />
+      <Route exact path="/perfil" component={ Perfil } />
+      <Route exact path="/explorar" component={ Explore } />
+      <Route exact path="/receitas-feitas" component={ RecipesDone } />
+      <Route exact path="/receitas-favoritas" component={ FavoriteRecipes } />
     </Switch>
   );
 }

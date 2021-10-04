@@ -125,7 +125,7 @@ function Provider({ children }) {
     fetchDataMeals,
     fetchDataDrinks,
     getDrinkSurprise,
-    getMealSurprise, 
+    getMealSurprise,
     recipesApi: {
       queryDefaultMeals,
       queryFirstLetter,

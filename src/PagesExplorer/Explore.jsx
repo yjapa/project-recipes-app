@@ -13,7 +13,7 @@ function Explore() {
   function handleClick2() {
     history.push('/explorar/bebidas');
   }
-  
+
   return (
     <section>
       <div>
@@ -25,14 +25,14 @@ function Explore() {
         type="button"
         onClick={ handleClick }
       >
-        Explorar comidas
+        Explorar Comidas
       </button>
       <button
         data-testid="explore-drinks"
         type="button"
         onClick={ handleClick2 }
       >
-        Explorar bebidas
+        Explorar Bebidas
       </button>
     </section>
 

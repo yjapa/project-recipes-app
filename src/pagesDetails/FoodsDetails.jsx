@@ -16,7 +16,7 @@ function FoodsDetails() {
   const ingredients = [];
   listIngredients(meals, ingredients);
 
-<<<<<<< HEAD
+
   const setStorage = () => {
     localStorage.setItem('startButton', true);
     localStorage.setItem('inProgressRecipes',
@@ -32,15 +32,12 @@ function FoodsDetails() {
     localStorage.setItem('inProgressRecipes',
       JSON.stringify({ meals: { [mealId]: [] } }));
       // console.log(meals)
-=======
   // const setStorage = () => localStorage.setItem('startButton', true);
 
   const handleClick = (idMeal) => {
     const saveProgress = JSON.parse(localStorage.getItem('inProgressRecipes'));
     localStorage.setItem('startButton', false);
->>>>>>> 971648e3df059f224552383c0318f77c12880b61
-
-    if (saveProgress === null) {
+      if (saveProgress === null) {
       localStorage.inProgressRecipes = JSON.stringify({ meals: {
         [mealId]: [],
       } });
@@ -57,19 +54,16 @@ function FoodsDetails() {
   };
 
   const checkRecipe = () => {
-<<<<<<< HEAD
     const recipeArr = JSON.parse(localStorage.getItem('inProgressRecipes'));
     const mealKey = recipeArr.meals[mealId];
     // console.log(meals)
     mealKey.filter((item) => {
       if (item === mealId) {
-=======
     const saveProgress = JSON.parse(localStorage.getItem('inProgressRecipes'));
     const mealStorage = JSON.parse(localStorage.getItem('inProgressRecipes'));
     if (mealStorage !== null && mealStorage.meals !== undefined) {
       const storageMealIds = Object.keys(mealStorage.meals);
       if (storageMealIds.includes(mealId)) {
->>>>>>> 971648e3df059f224552383c0318f77c12880b61
         localStorage.setItem('startButton', false);
         console.log(saveProgress);
       } else {
@@ -149,7 +143,7 @@ function FoodsDetails() {
           strMealThumb,
           strCategory,
           strInstructions,
-          // strYoutube,
+          strYoutube,
         } = item;
         return (
           <section key={ index }>
@@ -215,41 +209,23 @@ function FoodsDetails() {
                     {strInstructions}
                   </p>
                 </div>
-                <iframe
-                  data-testid="video"
-                  width="339px"
-                  height="50%"
+                <video
                   src={ strYoutube }
-                  title="YouTube video player"
-                  frameBorder="0"
-                  allow="accelerometer"
-                  autoPlay
-                  clipboard-write
-                  encrypted-media
-                  gyroscope
-                  picture-in-picture
-                  allowFullScreen
-                />
-                <button
-                  data-testid="start-recipe-btn"
-                  type="button"
-                  onClick={ () => handleClick(mealId) }
+                  data-testid="video"
                 >
-                </button>  
-                {/* <video>  
                   <track
                     default
                     kind="captions"
                     src=""
                   />
                   Video
-                </video> */}
+                </video>
                 { renderButton() }
               </section>
               <span
                 data-testid="0-recomendation-card"
               >
-                Teste
+                Aqui vem o Carrossel
               </span>
             </div>
           </section>
@@ -258,4 +234,5 @@ function FoodsDetails() {
     </main>
   );
 }
-export default FoodsDetails;
+
+export defaul FoodsDetails;

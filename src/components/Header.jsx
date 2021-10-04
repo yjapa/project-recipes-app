@@ -10,7 +10,6 @@ import HeaderInput from './HeaderInputs';
 function Header({ title, searchIcone }) {
   const [showFilter, setFilter] = useState(false);
 
-
   const renderSearchBar = () => (
     <button
       type="button"
@@ -23,7 +22,8 @@ function Header({ title, searchIcone }) {
       />
     </button>
   );
-  //=====Gildo, tentatando tirar o Header de pages explores =======
+
+  //= ====Gildo, tentatando tirar o Header de pages explores =======
 
   // const location = useLocation();
   //  function offbutton() {
@@ -31,9 +31,9 @@ function Header({ title, searchIcone }) {
   //     return  <Categories />
   //   }
   // };
-  
-  //================================================================
-       
+
+  //= ===============================================================
+
   return (
     <header>
       <div className="top-header">

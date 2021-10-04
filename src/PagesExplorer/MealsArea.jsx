@@ -3,12 +3,12 @@ import Footer from '../components/Footer';
 import Header from '../components/Header';
 
 function MealsArea() {
-  return(
+  return (
     <section>
       <Header title="Local de Origem" />
-      <Footer />  
-    </section>  
-  )  
+      <Footer />
+    </section>
+  );
 }
 
 export default MealsArea;

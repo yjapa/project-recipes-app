@@ -191,7 +191,7 @@ function DrinksDetails() {
             <span
               data-testid="0-recomendation-card"
             >
-              Teste
+              Aqui vem o Carrossel
             </span>
           </section>
         );

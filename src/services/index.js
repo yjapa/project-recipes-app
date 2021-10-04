@@ -119,18 +119,17 @@ export const queryDrinkByID = async (idDaReceita) => {
   return results;
 };
 
-export const getDrinkSurprise = async() => {
+export const getDrinkSurprise = async () => {
   const url = 'https://www.thecocktaildb.com/api/json/v1/1/random.php';
   const request = await fetch(url);
   const results = request.json();
   return results;
-}
+};
 
-export const getMealSurprise = async() => {
+export const getMealSurprise = async () => {
   const url = 'https://www.themealdb.com/api/json/v1/1/random.php';
   const request = await fetch(url);
   const results = request.json()
-  .then();
+    .then();
   return results;
-}
-
+};

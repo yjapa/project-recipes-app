@@ -36,7 +36,6 @@ function Categories() {
     const fetchData = async () => ((location.pathname === '/comidas')
       ? fetchCategoriesMeals() : fetchCategoriesDrinks());
     fetchData();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const toggleButtons = async (strCategory) => {
@@ -75,6 +74,7 @@ function Categories() {
     <div className="category-buttons">
       <button
         type="button"
+        className="category-button"
         data-testid="All-category-filter"
         onClick={ () => handleClickDefault() }
       >
@@ -85,6 +85,7 @@ function Categories() {
 
           <button
             id={ index }
+            className="category-button"
             data-testid={ `${strCategory}-category-filter` }
             type="button"
             onClick={ () => handleClick(strCategory) }
