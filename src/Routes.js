@@ -9,6 +9,8 @@ import FoodsDetails from './pagesDetails/FoodsDetails';
 import DrinksDetails from './pagesDetails/DrinksDetails';
 import FoodsProgress from './pagesProgress/FoodsProgress';
 import DrinksProgress from './pagesProgress/DrinksProgress';
+import RecipesDone from './pages/RecipesDone';
+import FavoriteRecipes from './pages/FavoritesRecipes';
 
 function Routes() {
   return (
@@ -30,6 +32,8 @@ function Routes() {
       />
       <Route exact path="/perfil" component={ Perfil } />
       <Route exact path="/explorar" component={ Explore } />
+      <Route exact path="/receitas-feitas" component={ RecipesDone } />
+      <Route exact path="/receitas-favoritas" component={ FavoriteRecipes } />
     </Switch>
   );
 }
