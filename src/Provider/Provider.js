@@ -16,8 +16,6 @@ import {
   fetchCategoryDrink,
   queryRecipeByID,
   queryDrinkByID,
-  getDrinkSurprise,
-  getMealSurprise,
 } from '../services';
 
 function Provider({ children }) {
@@ -124,8 +122,6 @@ function Provider({ children }) {
     setStartRecipe,
     fetchDataMeals,
     fetchDataDrinks,
-    getDrinkSurprise,
-    getMealSurprise,
     recipesApi: {
       queryDefaultMeals,
       queryFirstLetter,

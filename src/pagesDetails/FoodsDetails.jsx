@@ -16,28 +16,13 @@ function FoodsDetails() {
   const ingredients = [];
   listIngredients(meals, ingredients);
 
-
-  const setStorage = () => {
-    localStorage.setItem('startButton', true);
-    localStorage.setItem('inProgressRecipes',
-      JSON.stringify({ meals: { [mealId]: [] } }));
-  };
-
-  const handleClick = (idMeal) => {
-    const recipeArr = JSON.parse(localStorage.getItem('startedRecipes'));
-    recipeArr.push(mealId);
-    localStorage.setItem('startedRecipes', JSON.stringify(recipeArr));
-    localStorage.setItem('startButton', false);
-
-    localStorage.setItem('inProgressRecipes',
-      JSON.stringify({ meals: { [mealId]: [] } }));
-      // console.log(meals)
   // const setStorage = () => localStorage.setItem('startButton', true);
 
   const handleClick = (idMeal) => {
     const saveProgress = JSON.parse(localStorage.getItem('inProgressRecipes'));
     localStorage.setItem('startButton', false);
-      if (saveProgress === null) {
+
+    if (saveProgress === null) {
       localStorage.inProgressRecipes = JSON.stringify({ meals: {
         [mealId]: [],
       } });
@@ -54,21 +39,16 @@ function FoodsDetails() {
   };
 
   const checkRecipe = () => {
-    const recipeArr = JSON.parse(localStorage.getItem('inProgressRecipes'));
-    const mealKey = recipeArr.meals[mealId];
-    // console.log(meals)
-    mealKey.filter((item) => {
-      if (item === mealId) {
     const saveProgress = JSON.parse(localStorage.getItem('inProgressRecipes'));
     const mealStorage = JSON.parse(localStorage.getItem('inProgressRecipes'));
     if (mealStorage !== null && mealStorage.meals !== undefined) {
       const storageMealIds = Object.keys(mealStorage.meals);
       if (storageMealIds.includes(mealId)) {
         localStorage.setItem('startButton', false);
-        console.log(saveProgress);
+        // console.log(saveProgress);
       } else {
         localStorage.setItem('startButton', true);
-        console.log(saveProgress);
+        // console.log(saveProgress);
 
         // console.log(storageMealIds);
         // console.log(mealId);
@@ -234,5 +214,9 @@ function FoodsDetails() {
     </main>
   );
 }
+export default FoodsDetails;
 
-export defaul FoodsDetails;
+
+
+
+

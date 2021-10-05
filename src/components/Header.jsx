@@ -49,7 +49,6 @@ function Header({ title, searchIcone }) {
       </div>
       { showFilter && <HeaderInput />}
       <Categories />
-      {/* { !(offbutton) } */}
     </header>
   );
 }

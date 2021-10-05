@@ -8,7 +8,6 @@ import '../css/pageProgress.css';
 function DrinksProgress() {
   const { pathname } = useLocation();
   const { drinkId } = useParams();
-  const [checkboxSave, setCheckboxSave] = useState([]);
   const { listIngredients,
     drinksApi: { fetchDataByIdDrink }, drinksById } = useContext(MyContext);
   const { drinks } = drinksById;
@@ -43,24 +42,6 @@ function DrinksProgress() {
     }
   };
 
-  const saveIngredientChecked = (event, i) => {
-    const checkbox = document.querySelectorAll('input[type=checkbox]')[i];
-    const eve = event.target.value;
-    const test = { cocktails: {
-      [drinkId]: [...checkboxSave, eve],
-    } };
-    const saveProgress = localStorage.getItem('inProgressRecipes');
-    const saveProgressParse = JSON.parse(saveProgress);
-    if (saveProgressParse === null) {
-      localStorage.inProgressRecipes = JSON.stringify(test);
-    }
-    const { cocktails } = saveProgressParse;
-    const saveDrinksLS = {
-      cocktails: { ...cocktails, [drinkId]: [...checkboxSave, eve] },
-    };
-
-    const removeDrinksLS = {
-      cocktails: { [drinkId]: checkboxSave },
   function copyUrl() {
     const THREESEC = 3000;
     const section = document.getElementById('sec-top');
@@ -101,7 +82,6 @@ function DrinksProgress() {
       cocktails: {
         [drinkId]: [],
       },
-
     };
     const saveProgress = JSON.parse(localStorage.getItem('inProgressRecipes'));
     if (saveProgress === null) {
