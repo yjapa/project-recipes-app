@@ -22,7 +22,8 @@
 
 .container-radio label {
   font-size: 17px;
-  margin-right: 12px;
+  margin-right: 9px;
+  font-family: 'Raleway', sans-serif;
 }
 
 .container-radio input[type=radio] {
