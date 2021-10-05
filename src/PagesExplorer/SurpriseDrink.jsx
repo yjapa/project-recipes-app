@@ -17,7 +17,6 @@ function SurpriseDrink() {
     }
     getDrink();
   }, []);
-
   function openDrink() {
     if (drink[0]) {
       const { strAlcoholic, strDrinkThumb, strDrink, strCategory } = drink[0];

@@ -28,6 +28,8 @@ function Provider({ children }) {
   const [loading, setLoading] = useState(false);
   const [startButton, setStartButton] = useState(true);
   const [startedRecipes, setStartRecipe] = useState([]);
+  const [drinkSurprise, setDrinkSurprise] = useState([]);
+  const [mealSurprise, setMealSurprise] = useState([]);
 
   const maxNumberIt = 12;
 
@@ -109,6 +111,16 @@ function Provider({ children }) {
 
   // ========================================================================================================
 
+  const fetchGetSurpriseDrink = async () => {
+    const dataToOpen = await getDrinkSurprise();
+    setDrinkSurprise(dataToOpen.drinks);
+  };
+
+  const fetchGetSurpriseFood = async () => {
+    const dataToOpen = await getMealSurprise();
+    setMealSurprise(dataToOpen);
+  };
+
   const contextValue = {
     ...data,
     dataDrinks,
@@ -124,8 +136,8 @@ function Provider({ children }) {
     setStartRecipe,
     fetchDataMeals,
     fetchDataDrinks,
-    getDrinkSurprise,
-    getMealSurprise,
+    drinkSurprise,
+    mealSurprise,
     recipesApi: {
       queryDefaultMeals,
       queryFirstLetter,
@@ -134,6 +146,7 @@ function Provider({ children }) {
       categoriesMeals,
       fetchDataMealsByCategory,
       fetchDataByIdMeal,
+      fetchGetSurpriseFood,
     },
     drinksApi: {
       queryDefaultDrinks,
@@ -143,6 +156,7 @@ function Provider({ children }) {
       categoriesDrinks,
       fetchDataDrinksByCategory,
       fetchDataByIdDrink,
+      fetchGetSurpriseDrink,
     },
     arrayFiltered,
     listIngredients,

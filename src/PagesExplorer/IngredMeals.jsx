@@ -12,7 +12,6 @@ function IngredMeals() {
         response.json().then((data) => {
           const results = data;
           console.log(results.meals, 'veja');
-          // setIngrediente(results.meals)
         });
       });
     }
