@@ -102,8 +102,8 @@ function Provider({ children }) {
     setMealsDataById(dados);
   };
 
-  const fetchDataByIdDrink = async (drinkId) => {
-    const dados = await queryDrinkByID(drinkId);
+  const fetchDataByIdDrink = async (drinkID) => {
+    const dados = await queryDrinkByID(drinkID);
     setDrinksById(dados);
   };
 
