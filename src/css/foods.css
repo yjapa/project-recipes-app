@@ -1,0 +1,29 @@
+.main-container {
+  background-color: rgb(235, 238, 235);
+}
+
+.container-foods {
+  display: flex;
+  text-align: center;
+  align-items: center;
+  flex-direction: column;
+  flex-wrap: wrap;
+  margin: 20px;
+  padding: 20px;
+  border-radius: 50% 20%;
+  background-color: rgb(207, 251, 207);
+}
+
+.container-foods h3 {
+  width: 150px;
+  font-size: 20px;
+}
+
+.link-foods {
+  color: black;
+  font-family: 'Raleway', sans-serif;
+}
+
+.image-foods {
+  border-radius: 30px;
+}
