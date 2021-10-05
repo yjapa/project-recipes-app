@@ -39,23 +39,16 @@ function FoodsDetails() {
   };
 
   const checkRecipe = () => {
-    const saveProgress = JSON.parse(localStorage.getItem('inProgressRecipes'));
     const mealStorage = JSON.parse(localStorage.getItem('inProgressRecipes'));
     if (mealStorage !== null && mealStorage.meals !== undefined) {
       const storageMealIds = Object.keys(mealStorage.meals);
       if (storageMealIds.includes(mealId)) {
         localStorage.setItem('startButton', false);
-        console.log(saveProgress);
       } else {
         localStorage.setItem('startButton', true);
-        console.log(saveProgress);
-
-        // console.log(storageMealIds);
-        // console.log(mealId);
       }
     } else {
       localStorage.setItem('startButton', true);
-      console.log('asasa');
     }
   };
 

@@ -20,16 +20,13 @@ function DrinksDetails() {
   // const setStorage = () => localStorage.setItem('startButton', true);
 
   const checkRecipe = () => {
-    const saveProgress = JSON.parse(localStorage.getItem('inProgressRecipes'));
     const drinkStorage = JSON.parse(localStorage.getItem('inProgressRecipes'));
     if (drinkStorage !== null && drinkStorage.cocktails !== undefined) {
       const storageDrinkIds = Object.keys(drinkStorage.cocktails);
       if (storageDrinkIds.includes(drinkId)) {
         localStorage.setItem('startButton', false);
-        console.log(saveProgress.cocktails);
       } else {
         localStorage.setItem('startButton', true);
-        console.log(saveProgress.cocktails);
       }
     } else {
       localStorage.setItem('startButton', true);

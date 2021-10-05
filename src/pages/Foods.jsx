@@ -35,8 +35,6 @@ function Foods() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  console.log(meals);
-
   const renderAll = () => {
     if (meals) {
       return arrayFiltered(meals).map((item, index) => {
