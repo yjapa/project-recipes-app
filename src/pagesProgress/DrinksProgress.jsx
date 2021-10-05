@@ -1,5 +1,5 @@
-import React, { useContext, useEffect } from 'react';
-import { useParams, useLocation } from 'react-router-dom';
+import React, { useContext, useEffect, useState } from 'react';
+import { useParams, useLocation, useHistory } from 'react-router-dom';
 import MyContext from '../context/myContext';
 import shareIcon from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
@@ -9,29 +9,34 @@ function DrinksProgress() {
   const { pathname } = useLocation();
   const { drinkId } = useParams();
   const { listIngredients,
-    drinksApi: { fetchDataByIdDrink }, drinksById } = useContext(MyContext);
+    drinksApi: { fetchDataByIdDrink },
+    drinksById } = useContext(MyContext);
   const { drinks } = drinksById;
   const ingredients = [];
+  const history = useHistory();
+  const [listIngredientsCocktails, setListIngredientCocktails] = useState([]);
+  const [finishRecipeCocktails, setFinishRecipeCocktails] = useState(true);
   listIngredients(drinks, ingredients);
-  const handleScratchedIngredient = (event, i) => {
-    const eve = event.target.value;
+
+  const handleScratchedIngredient = ({ target }, i) => {
     const scratched = document.querySelectorAll('.teste')[i];
     const checkbox = document.querySelectorAll('input[type=checkbox]')[i];
     if (checkbox.checked) {
+      scratched.classList.add('risk');
       const saveProgress = JSON.parse(localStorage.getItem('inProgressRecipes'));
       localStorage.inProgressRecipes = JSON.stringify({
         ...saveProgress,
         cocktails: {
           ...saveProgress.cocktails,
-          [drinkId]: [...saveProgress.cocktails[drinkId], eve],
+          [drinkId]: [...saveProgress.cocktails[drinkId], target.value],
         },
       });
-      scratched.classList.add('risk');
+      setListIngredientCocktails([...listIngredientsCocktails, target.value]);
     } else {
       const saveProgress = JSON.parse(localStorage.getItem('inProgressRecipes'));
       scratched.classList.remove('risk');
       const removeIngredient = saveProgress.cocktails[drinkId];
-      removeIngredient.splice(removeIngredient.indexOf(event.target.value), 1);
+      removeIngredient.splice(removeIngredient.indexOf(target.value), 1);
       localStorage.inProgressRecipes = JSON.stringify({
         ...saveProgress,
         cocktails: {
@@ -39,6 +44,7 @@ function DrinksProgress() {
           [drinkId]: removeIngredient,
         },
       });
+      setListIngredientCocktails([...removeIngredient]);
     }
   };
 
@@ -66,7 +72,6 @@ function DrinksProgress() {
       arrayIngredients.map((idIngredient) => {
         const checkboxChecked = document.getElementById(idIngredient);
         if (checkboxChecked) {
-          console.log(checkboxChecked);
           checkboxChecked.parentElement.classList.add('risk');
           checkboxChecked.checked = true;
           checkboxChecked.setAttribute('checked', 'true');
@@ -74,9 +79,11 @@ function DrinksProgress() {
       });
     }
   };
+
   setTimeout(() => {
     ingredientsInProgress();
   });
+
   const setLocalStorage = () => {
     const LS = {
       cocktails: {
@@ -85,13 +92,33 @@ function DrinksProgress() {
     };
     const saveProgress = JSON.parse(localStorage.getItem('inProgressRecipes'));
     if (saveProgress === null) {
-      localStorage.setItem('inProgressRecipes', JSON.stringify(LS));
+      localStorage.inProgressRecipes = JSON.stringify(LS);
     }
   };
+
   useEffect(() => {
     fetchDataByIdDrink(drinkId);
     setLocalStorage();
   }, []);
+
+  const switchFinishBtnCocktails = () => {
+    const saveProgress = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    const checkboxLength = document.querySelectorAll('input[type=checkbox]').length;
+    if (saveProgress.cocktails[drinkId].length === checkboxLength) {
+      setFinishRecipeCocktails(false);
+    } else {
+      setFinishRecipeCocktails(true);
+    }
+  };
+
+  useEffect(() => {
+    switchFinishBtnCocktails();
+  }, [listIngredientsCocktails]);
+
+  const handleClick = () => {
+    history.push('/receitas-feitas');
+  };
+
   return (
     <div>
       {drinks && drinks.map((item, index) => {
@@ -155,6 +182,8 @@ function DrinksProgress() {
             <button
               type="button"
               data-testid="finish-recipe-btn"
+              disabled={ finishRecipeCocktails }
+              onClick={ handleClick }
             >
               Finalizar Receita
             </button>

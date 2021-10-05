@@ -29,10 +29,12 @@ function HeaderInput() {
     setData(resultApiForMeals);
     setLoading(false);
   };
+
   const updateDataDrinks = (resultApiForDrinks) => {
     setDataDrinks(resultApiForDrinks);
     setLoading(false);
   };
+
   const displayAlertNotFoundList = () => {
     setLoading(false);
     global.alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
