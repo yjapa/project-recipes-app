@@ -11,7 +11,6 @@ function Foods() {
     fetchDataMeals,
     arrayFiltered,
   } = useContext(MyContext);
-  const isLoading = () => <p>loading...</p>;
   // Outra maneira para filtrar array
   // ===========================
   // useEffect(() => {
@@ -40,21 +39,13 @@ function Foods() {
       return arrayFiltered(meals).map((item, index) => {
         const { strMeal, strMealThumb, idMeal } = item;
         return (
-          <Link
-            to={ `/comidas/${idMeal}` }
-            key={ index }
-            className="link-foods"
-          >
-            <div
-              key={ index }
-              data-testid={ `${index}-recipe-card` }
-              className="container-foods"
-            >
+          <Link to={ `/comidas/${idMeal}` } key={ index }>
+            <div key={ index } data-testid={ `${index}-recipe-card` }>
               <h3 data-testid={ `${index}-card-name` }>{strMeal}</h3>
               <img
                 src={ strMealThumb }
                 alt={ strMeal }
-                style={ { width: '180px' } }
+                style={ { width: '250px' } }
                 data-testid={ `${index}-card-img` }
               />
             </div>
@@ -65,7 +56,7 @@ function Foods() {
   };
 
   const renderOne = () => {
-    if (meals && meals.length === 1) {
+    if (meals && meals.lenth === 1) {
       const { idMeal } = meals[0];
       return <Redirect to={ `/comidas/${idMeal}` } />;
     }
@@ -74,27 +65,8 @@ function Foods() {
   return (
     <div className="main-container">
       <Header title="Comidas" searchIcone meals="meals" />
-      { arrayFiltered(meals) && arrayFiltered(meals).map((item, index) => {
-        const { strMeal, strMealThumb, idMeal } = item;
-        return (
-          <Link to={ `/comidas/${idMeal}` } key={ index } className="link-foods">
-            <div
-              key={ index }
-              data-testid={ `${index}-recipe-card` }
-              className="container-foods"
-            >
-              <h3 data-testid={ `${index}-card-name` }>{strMeal}</h3>
-              <img
-                src={ strMealThumb }
-                alt={ strMeal }
-                className="image-foods"
-                style={ { width: '180px' } }
-                data-testid={ `${index}-card-img` }
-              />
-            </div>
-          </Link>
-        );
-      })}
+      {renderOne()}
+      {renderAll()}
       <Footer />
     </div>
   );

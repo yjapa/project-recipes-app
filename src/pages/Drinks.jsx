@@ -16,10 +16,8 @@ function Drinks() {
   }, []);
 
   const renderOne = () => {
-    if (drinks && drinks.length === 1) {
-      const { idDrink } = drinks[0];
-      return <Redirect to={ `/bebidas/${idDrink}` } />;
-    }
+    const { idDrink } = drinks[0];
+    return <Redirect to={ `/bebidas/${idDrink}` } />;
   };
 
   const renderAll = () => {
@@ -46,27 +44,7 @@ function Drinks() {
   return (
     <div className="main-container">
       <Header title="Bebidas" searchIcone />
-      {arrayFiltered(drinks) && arrayFiltered(drinks).map((item, index) => {
-        const { strDrink, strDrinkThumb, idDrink } = item;
-        return (
-          <Link to={ `/bebidas/${idDrink}` } key={ index } className="link-drinks">
-            <div
-              key={ index }
-              data-testid={ `${index}-recipe-card` }
-              className="container-drinks "
-            >
-              <h3 data-testid={ `${index}-card-name` }>{strDrink}</h3>
-              <img
-                src={ strDrinkThumb }
-                alt={ strDrink }
-                className="image-drinks"
-                style={ { width: '180px' } }
-                data-testid={ `${index}-card-img` }
-              />
-            </div>
-          </Link>
-        );
-      })}
+      {drinks && drinks.length === 1 ? renderOne() : renderAll()}
       <Footer />
     </div>
   );
