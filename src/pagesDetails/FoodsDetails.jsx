@@ -57,8 +57,8 @@ function FoodsDetails() {
       if (favoriteRecipes === null) {
         localStorage.favoriteRecipes = JSON.stringify(favoriteStorage());
       } else {
-        const test = [...favoriteRecipes, ...favoriteStorage()];
-        localStorage.setItem('favoriteRecipes', JSON.stringify(test));
+        const recipesArr = [...favoriteRecipes, ...favoriteStorage()];
+        localStorage.setItem('favoriteRecipes', JSON.stringify(recipesArr));
       }
     } else {
       localStorage.setItem('isFavorite', false);

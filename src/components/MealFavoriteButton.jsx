@@ -5,15 +5,12 @@ import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 export const checkFavorite = (recipeId) => {
   const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
   if (favoriteRecipes !== null) {
-    favoriteRecipes.map((item) => {
-      if (recipeId === item.id) {
-        localStorage.setItem('isFavorite', true);
-      } else {
-        localStorage.setItem('isFavorite', false);
-      } return ('');
-    });
+    if (favoriteRecipes.filter((e) => e.id === recipeId).length > 0) {
+      localStorage.setItem('isFavorite', true);
+    } else {
+      localStorage.setItem('isFavorite', false);
+    }
   }
-  localStorage.setItem('isFavorite', false);
 };
 
 export const renderFavorite = (favoriteClick) => {
@@ -21,11 +18,11 @@ export const renderFavorite = (favoriteClick) => {
   if (isFavorite) {
     return (
       <button
-        data-testid="favorite-btn"
         type="button"
         onClick={ favoriteClick }
       >
         <img
+          data-testid="favorite-btn"
           src={ blackHeartIcon }
           alt="Favoritar"
         />
@@ -34,11 +31,11 @@ export const renderFavorite = (favoriteClick) => {
   }
   return (
     <button
-      data-testid="favorite-btn"
       type="button"
       onClick={ favoriteClick }
     >
       <img
+        data-testid="favorite-btn"
         src={ whiteHeartIcon }
         alt="Favoritar"
       />
