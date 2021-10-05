@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from 'react';
-import { Link, Redirect } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import Header from '../components/Header';
 import MyContext from '../context/myContext';
 import Footer from '../components/Footer';
@@ -7,6 +7,7 @@ import Footer from '../components/Footer';
 function Drinks() {
   const { dataDrinks, fetchDataDrinks, arrayFiltered } = useContext(MyContext);
   const { drinks } = dataDrinks;
+  const history = useHistory();
 
   useEffect(() => {
     const fetchData = async () => fetchDataDrinks();
@@ -15,8 +16,10 @@ function Drinks() {
   }, []);
 
   const renderOne = () => {
-    const { idDrink } = drinks[0];
-    return <Redirect to={ `/bebidas/${idDrink}` } />;
+    if (drinks && drinks.length === 1) {
+      const { idDrink } = drinks[0];
+      return history.push(`/bebidas/${idDrink}`);
+    }
   };
 
   const renderAll = () => {
@@ -43,7 +46,8 @@ function Drinks() {
   return (
     <div>
       <Header title="Bebidas" searchIcone />
-      {drinks && drinks.length === 1 ? renderOne() : renderAll()}
+      {renderOne()}
+      {renderAll()}
       <Footer />
     </div>
   );
