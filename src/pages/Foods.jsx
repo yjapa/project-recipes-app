@@ -34,11 +34,6 @@ function Foods() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const renderOne = () => {
-    const { idMeal } = meals[0];
-    return <Redirect to={ `/comidas/${idMeal}` } />;
-  };
-
   const renderAll = () => {
     if (meals) {
       return arrayFiltered(meals).map((item, index) => {
@@ -60,10 +55,18 @@ function Foods() {
     }
   };
 
+  const renderOne = () => {
+    if (meals && meals.lenth === 1) {
+      const { idMeal } = meals[0];
+      return <Redirect to={ `/comidas/${idMeal}` } />;
+    }
+  };
+
   return (
     <div>
       <Header title="Comidas" searchIcone meals="meals" />
-      {meals && meals.length === 1 ? renderOne() : renderAll()}
+      {renderOne()}
+      {renderAll()}
       <Footer />
     </div>
   );
