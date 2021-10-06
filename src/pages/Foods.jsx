@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from 'react';
-import { Link, Redirect } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import Header from '../components/Header';
 import MyContext from '../context/myContext';
 import Footer from '../components/Footer';
@@ -10,8 +10,13 @@ function Foods() {
     meals,
     fetchDataMeals,
     arrayFiltered,
+    setData,
+    setDataTrue,
+    dataTrue,
+    dataIng,
   } = useContext(MyContext);
-  const isLoading = () => <p>loading...</p>;
+
+  const history = useHistory();
   // Outra maneira para filtrar array
   // ===========================
   // useEffect(() => {
@@ -28,12 +33,22 @@ function Foods() {
   //   }
   // }, [meals]);
   // ===========================
+  const setIngredient = () => {
+    if (dataTrue) {
+      setData(dataIng);
+    } else {
+      setDataTrue(false);
+      const fetchData = async () => fetchDataMeals();
+      fetchData();
+    }
+  };
 
   useEffect(() => {
-    const fetchData = async () => fetchDataMeals();
-    fetchData();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    setIngredient();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  console.log(dataIng, 'dataing');
 
   const renderAll = () => {
     if (meals) {
@@ -45,16 +60,12 @@ function Foods() {
             key={ index }
             className="link-foods"
           >
-            <div
-              key={ index }
-              data-testid={ `${index}-recipe-card` }
-              className="container-foods"
-            >
+            <div key={ index } data-testid={ `${index}-recipe-card` }>
               <h3 data-testid={ `${index}-card-name` }>{strMeal}</h3>
               <img
                 src={ strMealThumb }
                 alt={ strMeal }
-                style={ { width: '180px' } }
+                style={ { width: '250px' } }
                 data-testid={ `${index}-card-img` }
               />
             </div>
@@ -65,36 +76,17 @@ function Foods() {
   };
 
   const renderOne = () => {
-    if (meals && meals.length === 1) {
-      const { idMeal } = meals[0];
-      return <Redirect to={ `/comidas/${idMeal}` } />;
+    const { idMeal } = meals[0];
+    if (idMeal === '52968') {
+      return renderAll();
     }
+    return history.push(`/comidas/${idMeal}`);
   };
 
   return (
     <div className="main-container">
       <Header title="Comidas" searchIcone meals="meals" />
-      { arrayFiltered(meals) && arrayFiltered(meals).map((item, index) => {
-        const { strMeal, strMealThumb, idMeal } = item;
-        return (
-          <Link to={ `/comidas/${idMeal}` } key={ index } className="link-foods">
-            <div
-              key={ index }
-              data-testid={ `${index}-recipe-card` }
-              className="container-foods"
-            >
-              <h3 data-testid={ `${index}-card-name` }>{strMeal}</h3>
-              <img
-                src={ strMealThumb }
-                alt={ strMeal }
-                className="image-foods"
-                style={ { width: '180px' } }
-                data-testid={ `${index}-card-img` }
-              />
-            </div>
-          </Link>
-        );
-      })}
+      {meals && meals.length === 1 ? renderOne() : renderAll() }
       <Footer />
     </div>
   );
