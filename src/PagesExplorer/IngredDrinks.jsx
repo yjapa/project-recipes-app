@@ -19,7 +19,7 @@ function IngredDrinks() {
   const numbers = 12;
   return (
     <main>
-      <Header title="Escolha Por Ingrediente" />
+      <Header title="Explorar Ingredientes" />
       {drink && drink.slice(0, numbers).map((item, index) => {
         const { strIngredient1 } = item;
         return (
