@@ -5,6 +5,8 @@ import Header from '../components/Header';
 function MealsArea() {
 
   const [mealArea, setMealArea] = useState([]);
+  const [recipes, setRecipes] = useState([]);
+  console.log(recipes)
    const maxNumberIt = 12;
 
   // const url = 'https://www.themealdb.com/api/json/v1/1/filter.php?a=Canadian'
@@ -17,7 +19,8 @@ function MealsArea() {
       response.json().then((data) => {
         const results = data;
         // console.log(results.meals)
-        setMealArea(results.meals.slice(0, maxNumberIt));
+        setMealArea(results.meals);
+        console.log(results.meals)
       })
     })
   }
@@ -56,25 +59,26 @@ function MealsArea() {
   
   // <option id="" [data-testid="${area}-option"]>{ item }</option>  
   // 
+  const handleChange = ({ target: { id, value } }) => {
+    setRecipes({
+      [id]: value,
+      
+    });
+  };
+  console.log(mealArea)
   
   return (
     <section>
-      <Header title="Explorar Origem" />
-    {/* <select id="origem" data-testid="explore-by-area-dropdow">
-	<option value="pt" selected>brazil</option>
-	<option value="en">canadian</option>
-	<option value="es">indian</option>
-</select>  */}
-      {  mealArea && mealArea.map((item, index) => {
-        console.log(mealArea, 'aqui')
-     const { idMeal,strMeal, strMealThumb } = item;
+     <Header title="Explorar Origem" />
+     <select data-testid="explore-by-area-dropdow" onChange={ handleChange } >
+      { mealArea && mealArea.map((item, index) => {
+     const { strArea } = item;
      return (
-     <select key={ index } data-testid="explore-by-area-dropdow" >
-        <option id={ idMeal }>{ strMeal }</option>  
-     </select>
-      )
-    }) }
-      <Footer />
+     <option key={ index } value={ strArea } id={ index }>{ strArea }</option>  
+     )
+    }) } 
+    </select>
+    <Footer />
     </section>
   );
 }

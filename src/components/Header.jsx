@@ -47,13 +47,8 @@ function Header({ title, searchIcone }) {
         <h2 data-testid="page-title" className="title">{title}</h2>
         { searchIcone && renderSearchBar() }
       </div>
-<<<<<<< HEAD
-      { showFilter && <HeaderInput />}
-      <Categories />
-=======
       {showFilter && <HeaderInput />}
       {searchIcone && <Categories />}
->>>>>>> 155e662cfbf15764690a85372adefc3ff818fbb5
     </header>
   );
 }
