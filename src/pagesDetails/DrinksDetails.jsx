@@ -2,8 +2,8 @@ import React, { useEffect, useContext } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 import { useHistory } from 'react-router';
 import shareIcon from '../images/shareIcon.svg';
-import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import MyContext from '../context/myContext';
+import { checkFavorite, renderFavorite } from '../components/MealFavoriteButton';
 
 function DrinksDetails() {
   const { pathname } = useLocation();
@@ -16,20 +16,46 @@ function DrinksDetails() {
   const ingredients = [];
   listIngredients(drinks, ingredients);
 
-  // padwan
-  // const setStorage = () => localStorage.setItem('startButton', true);
+  const favoriteStorage = () => drinks.map((item) => {
+    const { idDrink, strCategory, strAlcoholic, strDrink, strDrinkThumb } = item;
+    return ({
+      id: idDrink,
+      type: 'bebida',
+      area: '',
+      category: strCategory,
+      alcoholicOrNot: strAlcoholic,
+      name: strDrink,
+      image: strDrinkThumb,
+    });
+  });
+
+  const favoriteClick = () => {
+    const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
+    const isFavorite = JSON.parse(localStorage.getItem('isFavorite'));
+    if (!isFavorite) {
+      localStorage.setItem('isFavorite', true);
+      if (favoriteRecipes === null) {
+        localStorage.favoriteRecipes = JSON.stringify(favoriteStorage());
+      } else {
+        const recipesArr = [...favoriteRecipes, ...favoriteStorage()];
+        localStorage.setItem('favoriteRecipes', JSON.stringify(recipesArr));
+      }
+    } else {
+      localStorage.setItem('isFavorite', false);
+      const index = favoriteRecipes.indexOf(favoriteStorage());
+      favoriteRecipes.splice(index, 1);
+      localStorage.setItem('favoriteRecipes', JSON.stringify(favoriteRecipes));
+    }
+  };
 
   const checkRecipe = () => {
-    const saveProgress = JSON.parse(localStorage.getItem('inProgressRecipes'));
     const drinkStorage = JSON.parse(localStorage.getItem('inProgressRecipes'));
     if (drinkStorage !== null && drinkStorage.cocktails !== undefined) {
       const storageDrinkIds = Object.keys(drinkStorage.cocktails);
       if (storageDrinkIds.includes(drinkId)) {
         localStorage.setItem('startButton', false);
-        console.log(saveProgress.cocktails);
       } else {
         localStorage.setItem('startButton', true);
-        console.log(saveProgress.cocktails);
       }
     } else {
       localStorage.setItem('startButton', true);
@@ -38,8 +64,8 @@ function DrinksDetails() {
 
   useEffect(() => {
     fetchDataByIdDrink(drinkId);
-    // setStorage();
     checkRecipe();
+    checkFavorite(drinkId);
   }, []);
 
   const handleClick = (idDrink) => {
@@ -153,15 +179,7 @@ function DrinksDetails() {
                     alt="Compartilhar"
                   />
                 </button>
-                <button
-                  data-testid="favorite-btn"
-                  type="button"
-                >
-                  <img
-                    src={ whiteHeartIcon }
-                    alt="Favoritar"
-                  />
-                </button>
+                { renderFavorite(favoriteClick) }
               </section>
               <section>
                 <div>

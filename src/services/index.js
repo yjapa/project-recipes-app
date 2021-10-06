@@ -62,6 +62,13 @@ export const queryRecipeByID = async (idDaReceita) => {
   return results;
 };
 
+export const queryMealsArea = async () => {
+  const url = 'https://www.themealdb.com/api/json/v1/1/filter.php?a=Canadian';
+  const request = await fetch(url);
+  const results = request.json();
+  return results;
+};
+
 // ===========================
 // Api's para as bebidas
 // ===========================
@@ -118,4 +125,3 @@ export const queryDrinkByID = async (idDaReceita) => {
   const results = request.json();
   return results;
 };
-
