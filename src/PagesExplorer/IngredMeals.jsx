@@ -32,7 +32,7 @@ function IngredMeals() {
   const numbers = 12;
   return (
     <section>
-      <Header title="Escolha Por Ingrediente" />
+      <Header title="Explorar Ingredientes" />
       {ingredients && ingredients.slice(0, numbers).map((item, index) => {
         const { strIngredient } = item;
         return (

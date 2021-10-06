@@ -17,7 +17,7 @@ function ExploreDrinks() {
   return (
     <section>
       <div>
-        <Header title="Explorar bebidas" />
+        <Header title="Explorar Bebidas" />
         <Footer />
       </div>
       <div>

@@ -18,7 +18,7 @@ function ExploreMeals() {
 
   return (
     <div>
-      <Header title="Explorar comidas" />
+      <Header title="Explorar Comidas" />
       <Footer />
       <div>
         <button

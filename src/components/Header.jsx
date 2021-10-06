@@ -1,14 +1,22 @@
 import PropTypes from 'prop-types';
-import React, { useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
 import Categories from './Categories';
 import HeaderInput from './HeaderInputs';
 import '../css/header.css';
+import MyContext from '../context/myContext';
 
 function Header({ title, searchIcone }) {
   const [showFilter, setFilter] = useState(false);
+  const { loginState } = useContext(MyContext);
+  useEffect(() => {
+    const userEmail = {
+      email: loginState.email,
+    };
+    localStorage.user = JSON.stringify(userEmail);
+  }, []);
 
   const renderSearchBar = () => (
     <div className="container-button">
