@@ -1,0 +1,11 @@
+.title {
+  font-family: Raleway , sans-serif;
+  font-weight: 500;
+  margin-top: 10px;
+}
+
+.container-button .search-button {
+  background-color: rgb(146, 146, 146);
+  border: none;
+  padding: 5px;
+}

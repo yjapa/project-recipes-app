@@ -19,7 +19,8 @@ header {
 .top-header {
   align-items: flex-start;
   display: flex;
-  justify-content: space-between;
+  align-items: center;
+  justify-content: space-around;
   width: 100%;
 }
 
@@ -42,19 +43,22 @@ button:hover {
   position: fixed;
   width: 150px;
 }
+
 .risk {
   text-decoration: line-through;
 }
 
 .category-buttons {
-  align-items: center;
   display: flex;
   flex-wrap: wrap;
-  justify-content: left;
-  max-width: 360px;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+  margin-top: 20px;
 }
 
 .category-button {
   font-size: smaller;
-  max-width: inherit;
+  margin: 10px;
+  min-width: 160px;
 }

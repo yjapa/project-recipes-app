@@ -3,7 +3,7 @@ import { useLocation, useParams } from 'react-router-dom';
 import { useHistory } from 'react-router';
 import shareIcon from '../images/shareIcon.svg';
 import MyContext from '../context/myContext';
-import { checkFavorite, renderFavorite } from '../components/MealFavoriteButton';
+import { checkFavorite, renderFavorite } from '../components/FavoriteButton';
 
 function FoodsDetails() {
   const { pathname } = useLocation();

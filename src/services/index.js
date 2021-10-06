@@ -2,22 +2,11 @@
 // Api's para as comidas
 // ===========================
 
-export const queryIngredientV = async (ingredient) => {
+export const queryIngredient = async (ingredient) => {
   const url = `https://www.themealdb.com/api/json/v1/1/filter.php?i=${ingredient}`;
   const request = await fetch(url);
   const results = request.json();
   return results;
-};
-
-export const queryIngredient = (ingredient) => {
-  const url = `https://www.themealdb.com/api/json/v1/1/filter.php?i=${ingredient}`;
-  fetch(url)
-    .then((res) => res.json())
-    .then((data) => {
-      const results = { ...data };
-      return results;
-    })
-    .catch((err) => console.log('tratamento do erro', err));
 };
 
 export const queryName = async (name) => {
@@ -116,20 +105,5 @@ export const queryDrinkByID = async (idDaReceita) => {
   const url = `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${idDaReceita}`;
   const request = await fetch(url);
   const results = request.json();
-  return results;
-};
-
-export const getDrinkSurprise = async () => {
-  const url = 'https://www.thecocktaildb.com/api/json/v1/1/random.php';
-  const request = await fetch(url);
-  const results = request.json();
-  return results;
-};
-
-export const getMealSurprise = async () => {
-  const url = 'https://www.themealdb.com/api/json/v1/1/random.php';
-  const request = await fetch(url);
-  const results = request.json()
-    .then();
   return results;
 };
