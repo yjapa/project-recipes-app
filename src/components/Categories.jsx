@@ -69,7 +69,7 @@ function Categories() {
   };
 
   return (
-    <div className="container-buttons-category">
+    <main className="container-buttons-category">
       <button
         type="button"
         data-testid="All-category-filter"
@@ -90,7 +90,7 @@ function Categories() {
           </button>
         </div>
       ))}
-    </div>
+    </main>
   );
 }
 

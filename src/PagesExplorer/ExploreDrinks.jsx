@@ -15,12 +15,9 @@ function ExploreDrinks() {
   }
 
   return (
-    <section>
-      <div>
-        <Header title="Explorar Bebidas" />
-        <Footer />
-      </div>
-      <div>
+    <main>
+      <Header title="Explorar bebidas" />
+      <section>
         <button
           type="button"
           data-testid="explore-by-ingredient"
@@ -35,8 +32,9 @@ function ExploreDrinks() {
         >
           Me Surpreenda!
         </button>
-      </div>
-    </section>
+      </section>
+      <Footer />
+    </main>
   );
 }
 
