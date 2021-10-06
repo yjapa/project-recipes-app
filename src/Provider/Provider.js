@@ -16,8 +16,6 @@ import {
   fetchCategoryDrink,
   queryRecipeByID,
   queryDrinkByID,
-  getDrinkSurprise,
-  getMealSurprise,
 } from '../services';
 
 function Provider({ children }) {
@@ -28,8 +26,8 @@ function Provider({ children }) {
   const [loading, setLoading] = useState(false);
   const [startButton, setStartButton] = useState(true);
   const [startedRecipes, setStartRecipe] = useState([]);
-  const [drinkSurprise, setDrinkSurprise] = useState([]);
-  const [mealSurprise, setMealSurprise] = useState([]);
+  const [dataIng, setDataIng] = useState([]);
+  const [dataTrue, setDataTrue] = useState(false);
 
   const maxNumberIt = 12;
 
@@ -110,22 +108,13 @@ function Provider({ children }) {
   };
 
   // ========================================================================================================
-
-  const fetchGetSurpriseDrink = async () => {
-    const dataToOpen = await getDrinkSurprise();
-    setDrinkSurprise(dataToOpen.drinks);
-  };
-
-  const fetchGetSurpriseFood = async () => {
-    const dataToOpen = await getMealSurprise();
-    setMealSurprise(dataToOpen);
-  };
-
   const contextValue = {
     ...data,
     dataDrinks,
     setData,
     setDataDrinks,
+    dataIng,
+    setDataIng,
     mealsDataById,
     drinksById,
     loading,
@@ -134,10 +123,10 @@ function Provider({ children }) {
     setStartButton,
     startedRecipes,
     setStartRecipe,
-    fetchDataMeals,
     fetchDataDrinks,
-    drinkSurprise,
-    mealSurprise,
+    fetchDataMeals,
+    dataTrue,
+    setDataTrue,
     recipesApi: {
       queryDefaultMeals,
       queryFirstLetter,
@@ -146,7 +135,6 @@ function Provider({ children }) {
       categoriesMeals,
       fetchDataMealsByCategory,
       fetchDataByIdMeal,
-      fetchGetSurpriseFood,
     },
     drinksApi: {
       queryDefaultDrinks,
@@ -156,7 +144,6 @@ function Provider({ children }) {
       categoriesDrinks,
       fetchDataDrinksByCategory,
       fetchDataByIdDrink,
-      fetchGetSurpriseDrink,
     },
     arrayFiltered,
     listIngredients,

@@ -10,6 +10,10 @@ function Foods() {
     meals,
     fetchDataMeals,
     arrayFiltered,
+    setData,
+    setDataTrue,
+    dataTrue,
+    dataIng,
   } = useContext(MyContext);
 
   const history = useHistory();
@@ -29,12 +33,22 @@ function Foods() {
   //   }
   // }, [meals]);
   // ===========================
+  const setIngredient = () => {
+    if (dataTrue) {
+      setData(dataIng);
+    } else {
+      setDataTrue(false);
+      const fetchData = async () => fetchDataMeals();
+      fetchData();
+    }
+  };
 
   useEffect(() => {
-    const fetchData = async () => fetchDataMeals();
-    fetchData();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    setIngredient();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  console.log(dataIng, 'dataing');
 
   const renderAll = () => {
     if (meals) {
