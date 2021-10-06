@@ -16,7 +16,7 @@ function ExploreDrinks() {
 
   return (
     <main>
-      <Header title="Explorar bebidas" />
+      <Header title="Explorar Bebidas" />
       <section>
         <button
           type="button"

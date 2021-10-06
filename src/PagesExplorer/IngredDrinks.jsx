@@ -19,7 +19,7 @@ function IngredDrinks() {
   const numbers = 12;
   return (
     <main>
-      <Header title="Escolha Por Ingrediente" />
+      <Header title="Explorar Ingredientes" />
       {drink && drink.slice(0, numbers).map((item, index) => {
         const { strIngredient1 } = item;
         return (
@@ -29,10 +29,10 @@ function IngredDrinks() {
             // onClick={ () => handleClick(strIngredient1) }
             className="link-foods"
           >
-            <section key={ index } data-testid={ `${index}-recipe-card` }>
+            <section key={ index } data-testid={ `${index}-ingredient-card` }>
               <h3 data-testid={ `${index}-card-name` }>{strIngredient1}</h3>
               <img
-                src={ `https://www.themealdb.com/images/ingredients/${strIngredient1}.png` }
+                src={ `https://www.thecocktaildb.com/images/ingredients/${strIngredient1}-Small.png` }
                 alt={ strIngredient1 }
                 style={ { width: '250px' } }
                 data-testid={ `${index}-card-img` }

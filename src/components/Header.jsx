@@ -11,11 +11,15 @@ import MyContext from '../context/myContext';
 function Header({ title, searchIcone }) {
   const [showFilter, setFilter] = useState(false);
   const { loginState } = useContext(MyContext);
+
   useEffect(() => {
-    const userEmail = {
-      email: loginState.email,
-    };
-    localStorage.user = JSON.stringify(userEmail);
+    const saveProgress = JSON.parse(localStorage.getItem('user'));
+    if (saveProgress === null) {
+      const userEmail = {
+        email: loginState.email,
+      };
+      localStorage.user = JSON.stringify(userEmail);
+    }
   }, []);
 
   const renderSearchBar = () => (

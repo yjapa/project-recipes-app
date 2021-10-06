@@ -32,7 +32,7 @@ function IngredMeals() {
   const numbers = 12;
   return (
     <main>
-      <Header title="Escolha Por Ingrediente" />
+      <Header title="Explorar Ingredientes" />
       {ingredients && ingredients.slice(0, numbers).map((item, index) => {
         const { strIngredient } = item;
         return (
@@ -42,10 +42,10 @@ function IngredMeals() {
             onClick={ () => handleClick(strIngredient) }
             className="link-foods"
           >
-            <section key={ index } data-testid={ `${index}-recipe-card` }>
+            <section key={ index } data-testid={ `${index}-ingredient-card` }>
               <h3 data-testid={ `${index}-card-name` }>{strIngredient}</h3>
               <img
-                src={ `https://www.themealdb.com/images/ingredients/${strIngredient}.png` }
+                src={ `https://www.themealdb.com/images/ingredients/${strIngredient}-Small.png` }
                 alt={ strIngredient }
                 style={ { width: '250px' } }
                 data-testid={ `${index}-card-img` }
