@@ -48,8 +48,6 @@ function Foods() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  console.log(dataIng, 'dataing');
-
   const renderAll = () => {
     if (meals) {
       return arrayFiltered(meals).map((item, index) => {
