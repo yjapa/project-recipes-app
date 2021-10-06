@@ -4,6 +4,7 @@ import MyContext from '../context/myContext';
 import shareIcon from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import '../css/pageProgress.css';
+import { checkFavorite, renderFavorite } from '../components/FavoriteButton';
 
 function DrinksProgress() {
   const { pathname } = useLocation();
@@ -45,6 +46,38 @@ function DrinksProgress() {
         },
       });
       setListIngredientCocktails([...removeIngredient]);
+    }
+  };
+
+  const favoriteStorage = () => drinks.map((item) => {
+    const { idDrink, strCategory, strAlcoholic, strDrink, strDrinkThumb } = item;
+    return ({
+      id: idDrink,
+      type: 'bebida',
+      area: '',
+      category: strCategory,
+      alcoholicOrNot: strAlcoholic,
+      name: strDrink,
+      image: strDrinkThumb,
+    });
+  });
+
+  const favoriteClick = () => {
+    const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
+    const isFavorite = JSON.parse(localStorage.getItem('isFavorite'));
+    if (!isFavorite) {
+      localStorage.setItem('isFavorite', true);
+      if (favoriteRecipes === null) {
+        localStorage.favoriteRecipes = JSON.stringify(favoriteStorage());
+      } else {
+        const recipesArr = [...favoriteRecipes, ...favoriteStorage()];
+        localStorage.setItem('favoriteRecipes', JSON.stringify(recipesArr));
+      }
+    } else {
+      localStorage.setItem('isFavorite', false);
+      const index = favoriteRecipes.indexOf(favoriteStorage());
+      favoriteRecipes.splice(index, 1);
+      localStorage.setItem('favoriteRecipes', JSON.stringify(favoriteRecipes));
     }
   };
 
@@ -143,17 +176,15 @@ function DrinksProgress() {
               <span data-testid="recipe-category">{strCategory}</span>
               <button
                 type="button"
-                data-testid="share-btn"
                 onClick={ copyUrl }
               >
-                <img src={ shareIcon } alt={ shareIcon } />
+                <img
+                  src={ shareIcon }
+                  alt={ shareIcon }
+                  data-testid="share-btn"
+                />
               </button>
-              <button
-                type="button"
-                data-testid="favorite-btn"
-              >
-                <img src={ whiteHeartIcon } alt={ whiteHeartIcon } />
-              </button>
+              {renderFavorite(favoriteClick)}
             </section>
             <section>
               <h3>Ingredients</h3>
