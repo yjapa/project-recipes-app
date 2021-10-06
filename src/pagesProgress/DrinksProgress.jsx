@@ -148,7 +148,58 @@ function DrinksProgress() {
     switchFinishBtnCocktails();
   }, [listIngredientsCocktails]);
 
+  const getCurrentDate = (separator) => {
+    // Source: https://stackoverflow.com/questions/43744312/react-js-get-current-date
+    const newDate = new Date();
+    const day = newDate.getDate();
+    const month = newDate.getMonth();
+    const year = newDate.getFullYear();
+    return `${year}${separator}${month<10?`0${month}`:`${month}`}${separator}${day}`
+}
+
+  const mountTemplateForSaveInLocalStorageDoneRecipes = () => {
+    console.log(drinks[0]);
+
+    const strFinishDate = getCurrentDate('/');
+
+    const {
+      idDrink,
+      strArea,
+      strAlcoholic,
+      strCategory,
+      strDrink,
+      strDrinkThumb,
+      strTags,
+    } = drinks[0];
+
+    return ([{
+      id: idDrink,
+      type: 'bebida',
+      area: '',
+      category: strCategory,
+      alcoholicOrNot: strAlcoholic,
+      name: strDrink,
+      image: strDrinkThumb,
+      doneDate: strFinishDate,
+      tags: [],
+    }]);
+
+  }
+
+  const feedDoneRecipesInLocalStorage = () => {
+    const actualFinishRecipe =  mountTemplateForSaveInLocalStorageDoneRecipes()
+    const doneRecipesInLocalStorage = JSON.parse(localStorage.getItem('doneRecipes'));
+    if(doneRecipesInLocalStorage) {
+      const doneRecipesToUpdate = [...doneRecipesInLocalStorage, ...actualFinishRecipe];
+      localStorage.setItem('doneRecipes', JSON.stringify(doneRecipesToUpdate));
+    } else {
+      localStorage.recipesDone = JSON.stringify([]);
+    }
+  }
+
+
   const handleClick = () => {
+    feedDoneRecipesInLocalStorage()
     history.push('/receitas-feitas');
   };
 
@@ -214,7 +265,7 @@ function DrinksProgress() {
               type="button"
               data-testid="finish-recipe-btn"
               disabled={ finishRecipeCocktails }
-              onClick={ handleClick }
+              onClick={ () => handleClick() }
             >
               Finalizar Receita
             </button>

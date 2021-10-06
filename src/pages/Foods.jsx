@@ -43,8 +43,16 @@ function Foods() {
     }
   };
 
+  const setLocalStorageForDoneRecipes = () => {
+    const doneRecipesInLocalStore = localStorage.doneRecipes;
+    if (!doneRecipesInLocalStore) {
+      localStorage.doneRecipes = JSON.stringify([]);
+    }
+  };
+
   useEffect(() => {
     setIngredient();
+    setLocalStorageForDoneRecipes();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

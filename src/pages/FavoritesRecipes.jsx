@@ -5,41 +5,77 @@ import CardFavorite from '../components/CardFavorite';
 const FavoritesRecipes = () => {
   // estado do componente que contém o array de receitas favoritas que será renderizado nos cards;
   const [favoriteRecipes, setFavoriteRecipes] = useState([]);
+  const [favoriteRecipesClone, setFavoriteRecipesClone] = useState([]);
+
   // função que atualiza o estado conforme o botão "desfavoritar" é acionado;
-  const updateFavoriteRecipesArray = () => {
+  const getFavoriteRecipesFromLocalStorage = () => {
     const json = localStorage.getItem('favoriteRecipes');
     const favoriteRecipesObj = JSON.parse(json);
     setFavoriteRecipes(favoriteRecipesObj);
-    console.log('favoriteRecipesObj', favoriteRecipesObj);
+    setFavoriteRecipesClone(favoriteRecipesObj);
+    // console.log('favoriteRecipesObj', favoriteRecipesObj);
   };
 
   const removeFavoriteRecipe = (strIdItem) => {
-    // obtem o array de receitas favoritas no localStorage
-    const arrayStringfyFavRecipes = localStorage.getItem('favoriteRecipes');
-    const arrayObjFavRecipes = JSON.parse(arrayStringfyFavRecipes);
-    // filtra pela exceção
-    console.log('arrayFavRecipes', arrayObjFavRecipes);
+    const arrayStringfyFavRecipes = localStorage.getItem('favoriteRecipes'); // obtem o array de receitas favoritas no localStorage
+    const arrayObjFavRecipes = JSON.parse(arrayStringfyFavRecipes); // transforma para objeto
+    // console.log('arrayFavRecipes', arrayObjFavRecipes);
     const favoriteArrayUpdated = arrayObjFavRecipes.filter((item) => (
       item.id !== strIdItem
-    ));
-    console.log(favoriteArrayUpdated);
-    // atualiza o localStorage
-    localStorage.setItem('favoriteRecipes', favoriteArrayUpdated);
-    // atualiza o estado que está no componente pai para chamar a renderização com o array atualizado
-    setFavoriteRecipes(favoriteArrayUpdated);
+    )); // filtra pela exceção
+    // console.log(favoriteArrayUpdated);
+    localStorage.setItem('favoriteRecipes', JSON.stringify(favoriteArrayUpdated)); // atualiza o localStorage
+    setFavoriteRecipes(favoriteArrayUpdated); // atualiza o estado que está no componente pai para chamar a renderização com o array atualizado
   };
 
   useEffect(() => (
-    updateFavoriteRecipesArray()
+    getFavoriteRecipesFromLocalStorage()
   ), []);
+
+  const showAllFavoriteRecipes = () => {
+    // Atualiza o estado com a mesma rotina do didMout
+    getFavoriteRecipesFromLocalStorage();
+  }
+
+  const filterOnlyFoods = () => {
+    const onlyFoods = favoriteRecipesClone.filter((item) => {
+      return item.type === 'comida';
+    })
+    setFavoriteRecipes(onlyFoods);
+  }
+
+  const filterOnlyDrinks = () => {
+    const onlyDrinks = favoriteRecipesClone.filter((item) => {
+      return item.type === 'bebida';
+    })
+    setFavoriteRecipes(onlyDrinks);
+  }
 
   return (
     <div>
       <Header title="Receitas Favoritas" />
       <div>
-        <button data-testid="filter-by-all-btn" type="button">All</button>
-        <button data-testid="filter-by-food-btn" type="button">Food</button>
-        <button data-testid="filter-by-drink-btn" type="button">Drinks</button>
+        <button
+          data-testid="filter-by-all-btn"
+          type="button"
+          onClick={ () => showAllFavoriteRecipes() }
+          >
+            All
+        </button>
+        <button
+          data-testid="filter-by-food-btn"
+          type="button"
+          onClick={() => filterOnlyFoods()}
+        >
+          Food
+        </button>
+        <button
+          data-testid="filter-by-drink-btn"
+          type="button"
+          onClick={() => filterOnlyDrinks()}
+        >
+          Drinks
+        </button>
       </div>
       { favoriteRecipes && favoriteRecipes.map((item, index) => (
         <CardFavorite

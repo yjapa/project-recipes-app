@@ -10,9 +10,17 @@ function Drinks() {
   const { drinks } = dataDrinks;
   const history = useHistory();
 
+  const setLocalStorageForDoneRecipes = () => {
+    const doneRecipesInLocalStore = localStorage.doneRecipes;
+    if (!doneRecipesInLocalStore) {
+      localStorage.doneRecipes = JSON.stringify([]);
+    }
+  };
+
   useEffect(() => {
     const fetchData = async () => fetchDataDrinks();
     fetchData();
+    setLocalStorageForDoneRecipes();
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
