@@ -78,7 +78,7 @@ function Categories() {
         All
       </button>
       {categories && categories.slice(0, MAX_BUTTONS).map(({ strCategory }, index) => (
-        <div key={ index }>
+        <div key={ index } className="container-buttons-category">
 
           <button
             id={ index }

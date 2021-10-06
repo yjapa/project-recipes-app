@@ -42,7 +42,7 @@ function IngredMeals() {
             onClick={ () => handleClick(strIngredient) }
             className="link-foods"
           >
-            <section key={ index } data-testid={ `${index}-recipe-card` }>
+            <section key={ index } data-testid={ `${index}-ingredient-card` }>
               <h3 data-testid={ `${index}-card-name` }>{strIngredient}</h3>
               <img
                 src={ `https://www.themealdb.com/images/ingredients/${strIngredient}.png` }

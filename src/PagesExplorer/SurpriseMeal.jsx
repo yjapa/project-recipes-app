@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
+import { Redirect } from 'react-router';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 
 function SurpriseMeal() {
   const [meal, setMeal] = useState([]);
-
   const url = 'https://www.themealdb.com/api/json/v1/1/random.php';
 
   useEffect(() => {
@@ -19,34 +19,17 @@ function SurpriseMeal() {
     getMeal();
   }, []);
 
-  function openMeal() {
-    if (meal[0]) {
-      const { strMeal, strArea, strCategory, strInstructions,
-        strMealThumb } = meal[0];
-      return (
-        <main>
-          <header>
-            <h3>{ strMeal }</h3>
-          </header>
-          <img
-            src={ strMealThumb }
-            alt={ strMeal }
-            style={ { width: '250px' } }
-          />
-          <section>
-            <span>{ strArea }</span>
-            <span>{ strCategory }</span>
-            <p>{ strInstructions }</p>
-          </section>
-        </main>
-      );
+  const renderOne = () => {
+    if (meal && meal.length === 1) {
+      const { idMeal } = meal[0];
+      return <Redirect to={ `/comidas/${idMeal}` } />;
     }
-  }
+  };
 
   return (
     <section>
       <Header title="Receita surpresa" />
-      { openMeal() }
+      { renderOne() }
       <Footer />
     </section>
   );

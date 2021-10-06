@@ -28,13 +28,22 @@ function Drinks() {
       return arrayFiltered(drinks).map((item, index) => {
         const { strDrink, strDrinkThumb, idDrink } = item;
         return (
-          <Link to={ `/bebidas/${idDrink}` } key={ index }>
-            <div key={ index } data-testid={ `${index}-recipe-card` }>
+          <Link
+            to={ `/bebidas/${idDrink}` }
+            className="link-drinks"
+            key={ index }
+          >
+            <div
+              key={ index }
+              className="container-drinks"
+              data-testid={ `${index}-recipe-card` }
+            >
               <h3 data-testid={ `${index}-card-name` }>{strDrink}</h3>
               <img
                 src={ strDrinkThumb }
                 alt={ strDrink }
-                style={ { width: '250px' } }
+                className="image-drinks"
+                style={ { width: '180px' } }
                 data-testid={ `${index}-card-img` }
               />
             </div>

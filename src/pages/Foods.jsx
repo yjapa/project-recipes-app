@@ -58,12 +58,17 @@ function Foods() {
             key={ index }
             className="link-foods"
           >
-            <div key={ index } data-testid={ `${index}-recipe-card` }>
+            <div
+              key={ index }
+              className="container-foods"
+              data-testid={ `${index}-recipe-card` }
+            >
               <h3 data-testid={ `${index}-card-name` }>{strMeal}</h3>
               <img
                 src={ strMealThumb }
                 alt={ strMeal }
-                style={ { width: '250px' } }
+                className="image-foods"
+                style={ { width: '180px' } }
                 data-testid={ `${index}-card-img` }
               />
             </div>
