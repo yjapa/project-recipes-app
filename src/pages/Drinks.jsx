@@ -6,14 +6,29 @@ import Footer from '../components/Footer';
 import '../css/drinks.css';
 
 function Drinks() {
-  const { dataDrinks, fetchDataDrinks, arrayFiltered } = useContext(MyContext);
+  const { dataDrinks,
+    drinksApi: { queryIngredientDrink },
+    arrayFiltered,
+    getIng,
+    dataTrue,
+    fetchDataDrinks,
+    setDataDrinks } = useContext(MyContext);
+
   const { drinks } = dataDrinks;
   const history = useHistory();
 
   useEffect(() => {
-    const fetchData = async () => fetchDataDrinks();
-    fetchData();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    const setIngredient = async () => {
+      if (dataTrue === true) {
+        const dataIngredients = await queryIngredientDrink(getIng);
+        setDataDrinks(dataIngredients);
+      } else {
+        const fetchData = async () => fetchDataDrinks();
+        fetchData();
+      }
+    };
+    setIngredient();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const renderOne = () => {

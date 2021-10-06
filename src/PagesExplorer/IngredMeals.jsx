@@ -5,10 +5,10 @@ import Header from '../components/Header';
 import MyContext from '../context/myContext';
 
 function IngredMeals() {
-  const { setDataIng, recipesApi: { queryIngredient },
-    setDataTrue } = useContext(MyContext);
-  const [ingredients, setIngredient] = useState([]);
   const history = useHistory();
+  const [ingredients, setIngredient] = useState([]);
+  const { setDataTrue, setGetIng } = useContext(MyContext);
+
   useEffect(() => {
     function getIng() {
       const url = 'https://www.themealdb.com/api/json/v1/1/list.php?i=list';
@@ -20,12 +20,12 @@ function IngredMeals() {
       });
     }
     getIng();
+    setDataTrue(false);
   }, []);
 
-  const handleClick = async (str) => {
+  const handleClick = (strIngredient) => {
     setDataTrue(true);
-    const results = await queryIngredient(str);
-    setDataIng(results.meals);
+    setGetIng(strIngredient);
     history.push('/comidas');
   };
 

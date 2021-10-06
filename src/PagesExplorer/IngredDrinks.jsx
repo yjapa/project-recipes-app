@@ -1,9 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
+import { useHistory } from 'react-router';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
+import MyContext from '../context/myContext';
 
 function IngredDrinks() {
+  const history = useHistory();
   const [drink, setDrink] = useState([]);
+  const { setDataTrue, setGetIng } = useContext(MyContext);
+
   useEffect(() => {
     function getCocktails() {
       const url = 'https://www.thecocktaildb.com/api/json/v1/1/list.php?i=list';
@@ -15,7 +20,15 @@ function IngredDrinks() {
       });
     }
     getCocktails();
+    setDataTrue(false);
   }, []);
+
+  const handleClick = (strIngredient) => {
+    setDataTrue(true);
+    setGetIng(strIngredient);
+    history.push('/bebidas');
+  };
+
   const numbers = 12;
   return (
     <main>
@@ -26,7 +39,7 @@ function IngredDrinks() {
           <button
             type="button"
             key={ index }
-            // onClick={ () => handleClick(strIngredient1) }
+            onClick={ () => handleClick(strIngredient1) }
             className="link-foods"
           >
             <section key={ index } data-testid={ `${index}-ingredient-card` }>
