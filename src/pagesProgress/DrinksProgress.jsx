@@ -2,7 +2,6 @@ import React, { useContext, useEffect, useState } from 'react';
 import { useParams, useLocation, useHistory } from 'react-router-dom';
 import MyContext from '../context/myContext';
 import shareIcon from '../images/shareIcon.svg';
-import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import '../css/pageProgress.css';
 import { checkFavorite, renderFavorite } from '../components/FavoriteButton';
 
@@ -132,6 +131,7 @@ function DrinksProgress() {
   useEffect(() => {
     fetchDataByIdDrink(drinkId);
     setLocalStorage();
+    checkFavorite(drinkId);
   }, []);
 
   const switchFinishBtnCocktails = () => {
