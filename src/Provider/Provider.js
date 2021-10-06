@@ -26,8 +26,12 @@ function Provider({ children }) {
   const [loading, setLoading] = useState(false);
   const [startButton, setStartButton] = useState(true);
   const [startedRecipes, setStartRecipe] = useState([]);
-  const [dataIng, setDataIng] = useState([]);
   const [dataTrue, setDataTrue] = useState(false);
+  const [getIng, setGetIng] = useState('');
+  const [loginState, setLoginState] = useState({
+    email: '',
+    password: '',
+  });
 
   const maxNumberIt = 12;
 
@@ -113,8 +117,6 @@ function Provider({ children }) {
     dataDrinks,
     setData,
     setDataDrinks,
-    dataIng,
-    setDataIng,
     mealsDataById,
     drinksById,
     loading,
@@ -125,8 +127,12 @@ function Provider({ children }) {
     setStartRecipe,
     fetchDataDrinks,
     fetchDataMeals,
-    dataTrue,
+    setLoginState,
+    loginState,
     setDataTrue,
+    dataTrue,
+    setGetIng,
+    getIng,
     recipesApi: {
       queryDefaultMeals,
       queryFirstLetter,

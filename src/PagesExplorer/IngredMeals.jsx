@@ -5,10 +5,10 @@ import Header from '../components/Header';
 import MyContext from '../context/myContext';
 
 function IngredMeals() {
-  const { setDataIng, recipesApi: { queryIngredient },
-    setDataTrue } = useContext(MyContext);
-  const [ingredients, setIngredient] = useState([]);
   const history = useHistory();
+  const [ingredients, setIngredient] = useState([]);
+  const { setDataTrue, setGetIng } = useContext(MyContext);
+
   useEffect(() => {
     function getIng() {
       const url = 'https://www.themealdb.com/api/json/v1/1/list.php?i=list';
@@ -20,19 +20,19 @@ function IngredMeals() {
       });
     }
     getIng();
+    setDataTrue(false);
   }, []);
 
-  const handleClick = async (str) => {
+  const handleClick = (strIngredient) => {
     setDataTrue(true);
-    const results = await queryIngredient(str);
-    setDataIng(results.meals);
+    setGetIng(strIngredient);
     history.push('/comidas');
   };
 
   const numbers = 12;
   return (
-    <section>
-      <Header title="Escolha Por Ingrediente" />
+    <main>
+      <Header title="Explorar Ingredientes" />
       {ingredients && ingredients.slice(0, numbers).map((item, index) => {
         const { strIngredient } = item;
         return (
@@ -42,20 +42,20 @@ function IngredMeals() {
             onClick={ () => handleClick(strIngredient) }
             className="link-foods"
           >
-            <div key={ index } data-testid={ `${index}-recipe-card` }>
+            <section key={ index } data-testid={ `${index}-ingredient-card` }>
               <h3 data-testid={ `${index}-card-name` }>{strIngredient}</h3>
               <img
-                src={ `https://www.themealdb.com/images/ingredients/${strIngredient}.png` }
+                src={ `https://www.themealdb.com/images/ingredients/${strIngredient}-Small.png` }
                 alt={ strIngredient }
                 style={ { width: '250px' } }
                 data-testid={ `${index}-card-img` }
               />
-            </div>
+            </section>
           </button>
         );
       })}
       <Footer />
-    </section>
+    </main>
   );
 }
 

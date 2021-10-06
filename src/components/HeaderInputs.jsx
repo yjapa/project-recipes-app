@@ -55,6 +55,7 @@ function HeaderInput() {
 
   const handleClick = async () => {
     const { recipeFilter, searchRecipe } = recipe;
+    console.log(searchRecipe);
     let resultApi;
     let resultApiDrinks;
     switch (recipeFilter) {

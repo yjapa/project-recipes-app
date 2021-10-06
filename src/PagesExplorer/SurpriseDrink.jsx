@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
+import { Redirect } from 'react-router';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 
 function SurpriseDrink() {
   const [drink, setDrink] = useState([]);
-
   const url = 'https://www.thecocktaildb.com/api/json/v1/1/random.php';
   useEffect(() => {
     function getDrink() {
@@ -17,30 +17,19 @@ function SurpriseDrink() {
     }
     getDrink();
   }, []);
-  function openDrink() {
-    if (drink[0]) {
-      const { strAlcoholic, strDrinkThumb, strDrink, strCategory } = drink[0];
-      return (
-        <div>
-          <h3>{strDrink}</h3>
-          <span>{strAlcoholic}</span>
-          <br />
-          <span>{ strCategory }</span>
-          <img
-            src={ strDrinkThumb }
-            alt={ strDrink }
-            style={ { width: '300px' } }
-          />
-        </div>
-      );
+
+  const renderOne = () => {
+    if (drink && drink.length === 1) {
+      const { idDrink } = drink[0];
+      return <Redirect to={ `/bebidas/${idDrink}` } />;
     }
-  }
+  };
 
   return (
     <section>
       <div>
         <Header title="Receita surpresa" />
-        { openDrink() }
+        { renderOne() }
         <Footer />
       </div>
     </section>

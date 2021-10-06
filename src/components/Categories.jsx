@@ -69,7 +69,7 @@ function Categories() {
   };
 
   return (
-    <div className="container-buttons-category">
+    <main className="container-buttons-category">
       <button
         type="button"
         data-testid="All-category-filter"
@@ -78,7 +78,7 @@ function Categories() {
         All
       </button>
       {categories && categories.slice(0, MAX_BUTTONS).map(({ strCategory }, index) => (
-        <div key={ index }>
+        <div key={ index } className="container-buttons-category">
 
           <button
             id={ index }
@@ -90,7 +90,7 @@ function Categories() {
           </button>
         </div>
       ))}
-    </div>
+    </main>
   );
 }
 

@@ -15,26 +15,26 @@ function Explore() {
   }
 
   return (
-    <section>
-      <div>
-        <Header title="Explorar" />
-        <Footer />
-      </div>
-      <button
-        data-testid="explore-food"
-        type="button"
-        onClick={ handleClick }
-      >
-        Explorar Comidas
-      </button>
-      <button
-        data-testid="explore-drinks"
-        type="button"
-        onClick={ handleClick2 }
-      >
-        Explorar Bebidas
-      </button>
-    </section>
+    <main>
+      <Header title="Explorar" />
+      <section>
+        <button
+          data-testid="explore-food"
+          type="button"
+          onClick={ handleClick }
+        >
+          Explorar Comidas
+        </button>
+        <button
+          data-testid="explore-drinks"
+          type="button"
+          onClick={ handleClick2 }
+        >
+          Explorar Bebidas
+        </button>
+      </section>
+      <Footer />
+    </main>
 
   );
 }

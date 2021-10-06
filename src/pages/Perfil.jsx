@@ -18,9 +18,10 @@ function Perfil() {
     return email.email;
   };
   const clearLocalStorage = () => {
-    history.push('/');
     localStorage.clear();
+    history.push('/');
   };
+
   return (
     <main>
       <Header title="Perfil" />

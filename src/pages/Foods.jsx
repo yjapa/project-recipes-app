@@ -11,9 +11,9 @@ function Foods() {
     fetchDataMeals,
     arrayFiltered,
     setData,
-    setDataTrue,
     dataTrue,
-    dataIng,
+    recipesApi: { queryIngredient },
+    getIng,
   } = useContext(MyContext);
 
   const history = useHistory();
@@ -33,15 +33,6 @@ function Foods() {
   //   }
   // }, [meals]);
   // ===========================
-  const setIngredient = () => {
-    if (dataTrue) {
-      setData(dataIng);
-    } else {
-      setDataTrue(false);
-      const fetchData = async () => fetchDataMeals();
-      fetchData();
-    }
-  };
 
   const setLocalStorageForDoneRecipes = () => {
     const doneRecipesInLocalStore = localStorage.doneRecipes;
@@ -51,6 +42,15 @@ function Foods() {
   };
 
   useEffect(() => {
+    const setIngredient = async () => {
+      if (dataTrue === true) {
+        const dataIngredients = await queryIngredient(getIng);
+        setData(dataIngredients);
+      } else {
+        const fetchData = async () => fetchDataMeals();
+        fetchData();
+      }
+    };
     setIngredient();
     setLocalStorageForDoneRecipes();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -66,12 +66,17 @@ function Foods() {
             key={ index }
             className="link-foods"
           >
-            <div key={ index } data-testid={ `${index}-recipe-card` }>
+            <div
+              key={ index }
+              className="container-foods"
+              data-testid={ `${index}-recipe-card` }
+            >
               <h3 data-testid={ `${index}-card-name` }>{strMeal}</h3>
               <img
                 src={ strMealThumb }
                 alt={ strMeal }
-                style={ { width: '250px' } }
+                className="image-foods"
+                style={ { width: '180px' } }
                 data-testid={ `${index}-card-img` }
               />
             </div>

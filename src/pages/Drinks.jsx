@@ -6,7 +6,14 @@ import Footer from '../components/Footer';
 import '../css/drinks.css';
 
 function Drinks() {
-  const { dataDrinks, fetchDataDrinks, arrayFiltered } = useContext(MyContext);
+  const { dataDrinks,
+    drinksApi: { queryIngredientDrink },
+    arrayFiltered,
+    getIng,
+    dataTrue,
+    fetchDataDrinks,
+    setDataDrinks } = useContext(MyContext);
+
   const { drinks } = dataDrinks;
   const history = useHistory();
 
@@ -18,10 +25,18 @@ function Drinks() {
   };
 
   useEffect(() => {
-    const fetchData = async () => fetchDataDrinks();
-    fetchData();
     setLocalStorageForDoneRecipes();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    const setIngredient = async () => {
+      if (dataTrue === true) {
+        const dataIngredients = await queryIngredientDrink(getIng);
+        setDataDrinks(dataIngredients);
+      } else {
+        const fetchData = async () => fetchDataDrinks();
+        fetchData();
+      }
+    };
+    setIngredient();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const renderOne = () => {
@@ -36,13 +51,22 @@ function Drinks() {
       return arrayFiltered(drinks).map((item, index) => {
         const { strDrink, strDrinkThumb, idDrink } = item;
         return (
-          <Link to={ `/bebidas/${idDrink}` } key={ index }>
-            <div key={ index } data-testid={ `${index}-recipe-card` }>
+          <Link
+            to={ `/bebidas/${idDrink}` }
+            className="link-drinks"
+            key={ index }
+          >
+            <div
+              key={ index }
+              className="container-drinks"
+              data-testid={ `${index}-recipe-card` }
+            >
               <h3 data-testid={ `${index}-card-name` }>{strDrink}</h3>
               <img
                 src={ strDrinkThumb }
                 alt={ strDrink }
-                style={ { width: '250px' } }
+                className="image-drinks"
+                style={ { width: '180px' } }
                 data-testid={ `${index}-card-img` }
               />
             </div>
