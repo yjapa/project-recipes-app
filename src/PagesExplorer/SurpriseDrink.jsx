@@ -19,18 +19,23 @@ function SurpriseDrink() {
   }, []);
   function openDrink() {
     if (drink[0]) {
-      const { strAlcoholic, strDrinkThumb, strDrink, strCategory } = drink[0];
+      const { strAlcoholic, strDrinkThumb, strDrink,
+        strInstructions, strArea } = drink[0];
       return (
         <div>
-          <h3>{strDrink}</h3>
-          <span>{strAlcoholic}</span>
-          <br />
-          <span>{ strCategory }</span>
+          <header>
+            <h3>{strDrink}</h3>
+          </header>
           <img
             src={ strDrinkThumb }
             alt={ strDrink }
             style={ { width: '300px' } }
           />
+          <section>
+            <span>{strArea}</span>
+            <span>{strAlcoholic}</span>
+            <p>{strInstructions}</p>
+          </section>
         </div>
       );
     }

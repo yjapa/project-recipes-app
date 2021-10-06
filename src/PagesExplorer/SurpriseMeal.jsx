@@ -21,21 +21,23 @@ function SurpriseMeal() {
 
   function openMeal() {
     if (meal[0]) {
-      const { strMeal, strArea, strCategory, strInstructions, strSource,
+      const { strMeal, strArea, strCategory, strInstructions,
         strMealThumb } = meal[0];
       return (
         <div>
-          <h3>{ strMeal }</h3>
-          <span>{ strArea }</span>
-          <span>{ strCategory }</span>
-          <p>{ strSource }</p>
-          {/* <p>{ srtYoutube }</p> */}
+          <header>
+            <h3>{ strMeal }</h3>
+          </header>
           <img
             src={ strMealThumb }
             alt={ strMeal }
-            style={ { width: '300px' } }
+            style={ { width: '250px' } }
           />
-          <p>{ strInstructions }</p>
+          <section>
+            <span>{ strArea }</span>
+            <span>{ strCategory }</span>
+            <p>{ strInstructions }</p>
+          </section>
         </div>
       );
     }
