@@ -5,34 +5,26 @@ import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
 import Categories from './Categories';
 import HeaderInput from './HeaderInputs';
-// import { useLocation } from 'react-router-dom';
+import '../css/header.css';
 
 function Header({ title, searchIcone }) {
   const [showFilter, setFilter] = useState(false);
 
   const renderSearchBar = () => (
-    <button
-      type="button"
-      onClick={ () => setFilter(!showFilter) }
-    >
-      <img
-        alt="search-icon"
-        data-testid="search-top-btn"
-        src={ searchIcon }
-      />
-    </button>
+    <div className="container-button">
+      <button
+        type="button"
+        onClick={ () => setFilter(!showFilter) }
+        className="search-button"
+      >
+        <img
+          alt="search-icon"
+          data-testid="search-top-btn"
+          src={ searchIcon }
+        />
+      </button>
+    </div>
   );
-
-  //= ====Gildo, tentatando tirar o Header de pages explores =======
-
-  // const location = useLocation();
-  //  function offbutton() {
-  //   if(location.pathname == '/Explorar') {
-  //     return  <Categories />
-  //   }
-  // };
-
-  //= ===============================================================
 
   return (
     <header>
@@ -44,12 +36,11 @@ function Header({ title, searchIcone }) {
             src={ profileIcon }
           />
         </Link>
-        <h1 data-testid="page-title">{title}</h1>
+        <h2 data-testid="page-title" className="title">{title}</h2>
         { searchIcone && renderSearchBar() }
       </div>
-      { showFilter && <HeaderInput />}
-      <Categories />
-      {/* { !(offbutton) } */}
+      {showFilter && <HeaderInput />}
+      {searchIcone && <Categories />}
     </header>
   );
 }

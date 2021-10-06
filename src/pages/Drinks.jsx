@@ -3,6 +3,7 @@ import { Link, useHistory } from 'react-router-dom';
 import Header from '../components/Header';
 import MyContext from '../context/myContext';
 import Footer from '../components/Footer';
+import '../css/drinks.css';
 
 function Drinks() {
   const { dataDrinks, fetchDataDrinks, arrayFiltered } = useContext(MyContext);
@@ -44,7 +45,7 @@ function Drinks() {
   };
 
   return (
-    <div>
+    <div className="main-container">
       <Header title="Bebidas" searchIcone />
       {renderOne()}
       {renderAll()}
