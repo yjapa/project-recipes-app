@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import '../App.css';
+import MyContext from '../context/myContext';
 
 const Login = () => {
   const history = useHistory();
+  const { loginState, setLoginState } = useContext(MyContext);
 
   // const recipeStorage = () => {
   //   localStorage.setItem('startButton', true);
@@ -14,11 +16,6 @@ const Login = () => {
   // useEffect(() => {
   //   recipeStorage();
   // }, []);
-
-  const [loginState, setLoginState] = useState({
-    email: '',
-    password: '',
-  });
 
   const handleChange = ({ target: { name, value } }) => {
     setLoginState({

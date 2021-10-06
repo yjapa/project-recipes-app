@@ -28,6 +28,10 @@ function Provider({ children }) {
   const [startedRecipes, setStartRecipe] = useState([]);
   const [dataIng, setDataIng] = useState([]);
   const [dataTrue, setDataTrue] = useState(false);
+  const [loginState, setLoginState] = useState({
+    email: '',
+    password: '',
+  });
 
   const maxNumberIt = 12;
 
@@ -125,6 +129,8 @@ function Provider({ children }) {
     setStartRecipe,
     fetchDataDrinks,
     fetchDataMeals,
+    setLoginState,
+    loginState,
     dataTrue,
     setDataTrue,
     recipesApi: {

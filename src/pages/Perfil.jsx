@@ -1,32 +1,33 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useHistory } from 'react-router';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import '../css/Perfil.css';
+import MyContext from '../context/myContext';
 
 function Perfil() {
+  const { loginState } = useContext(MyContext);
   const history = useHistory();
 
   const handleRecipesFinished = () => {
     history.push('/receitas-feitas');
   };
+
   const handleRecipeFavorites = () => {
     history.push('/receitas-favoritas');
   };
-  const renderEmailLocalStorage = () => {
-    const email = JSON.parse(localStorage.getItem('user'));
-    return email.email;
-  };
+
   const clearLocalStorage = () => {
     history.push('/');
     localStorage.clear();
   };
+
   return (
     <main>
       <Header title="Perfil" />
       <section>
         <div className="container-buttons">
-          <span data-testid="profile-email">{renderEmailLocalStorage()}</span>
+          <span data-testid="profile-email">{loginState.email}</span>
           <button
             type="button"
             data-testid="profile-done-btn"
