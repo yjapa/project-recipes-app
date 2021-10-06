@@ -22,7 +22,7 @@ function SurpriseDrink() {
       const { strAlcoholic, strDrinkThumb, strDrink,
         strInstructions, strArea } = drink[0];
       return (
-        <div>
+        <main>
           <header>
             <h3>{strDrink}</h3>
           </header>
@@ -36,7 +36,7 @@ function SurpriseDrink() {
             <span>{strAlcoholic}</span>
             <p>{strInstructions}</p>
           </section>
-        </div>
+        </main>
       );
     }
   }

@@ -24,7 +24,7 @@ function SurpriseMeal() {
       const { strMeal, strArea, strCategory, strInstructions,
         strMealThumb } = meal[0];
       return (
-        <div>
+        <main>
           <header>
             <h3>{ strMeal }</h3>
           </header>
@@ -38,7 +38,7 @@ function SurpriseMeal() {
             <span>{ strCategory }</span>
             <p>{ strInstructions }</p>
           </section>
-        </div>
+        </main>
       );
     }
   }
