@@ -45,7 +45,7 @@ function IngredMeals() {
             <section key={ index } data-testid={ `${index}-ingredient-card` }>
               <h3 data-testid={ `${index}-card-name` }>{strIngredient}</h3>
               <img
-                src={ `https://www.themealdb.com/images/ingredients/${strIngredient}.png` }
+                src={ `https://www.themealdb.com/images/ingredients/${strIngredient}-Small.png` }
                 alt={ strIngredient }
                 style={ { width: '250px' } }
                 data-testid={ `${index}-card-img` }

@@ -32,7 +32,7 @@ function IngredDrinks() {
             <section key={ index } data-testid={ `${index}-ingredient-card` }>
               <h3 data-testid={ `${index}-card-name` }>{strIngredient1}</h3>
               <img
-                src={ `https://www.themealdb.com/images/ingredients/${strIngredient1}.png` }
+                src={ `https://www.thecocktaildb.com/images/ingredients/${strIngredient1}-Small.png` }
                 alt={ strIngredient1 }
                 style={ { width: '250px' } }
                 data-testid={ `${index}-card-img` }
