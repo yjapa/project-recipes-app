@@ -230,3 +230,8 @@ function FoodsDetails() {
   );
 }
 export default FoodsDetails;
+
+
+
+
+
