@@ -54,12 +54,14 @@ function HeaderInput() {
 
   const handleClick = async () => {
     const { recipeFilter, searchRecipe } = recipe;
+    console.log(searchRecipe);
     let resultApi;
     let resultApiDrinks;
     switch (recipeFilter) {
     case 'ingredient':
       setLoading(true);
       resultApi = await queryIngredient(searchRecipe);
+      console.log(resultApi);
       resultApiDrinks = await queryIngredientDrink(searchRecipe);
       updateStates(resultApi, resultApiDrinks);
       break;
