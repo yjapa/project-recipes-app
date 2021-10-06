@@ -63,6 +63,3 @@ Header.propTypes = {
 };
 
 export default Header;
-
-// '{"email":"email@mail.com"}'
-// '{ "email": "email@mail.com" }'
