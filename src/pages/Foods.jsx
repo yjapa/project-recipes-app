@@ -3,12 +3,17 @@ import { Link, useHistory } from 'react-router-dom';
 import Header from '../components/Header';
 import MyContext from '../context/myContext';
 import Footer from '../components/Footer';
+import '../css/foods.css';
 
 function Foods() {
   const {
     meals,
     fetchDataMeals,
     arrayFiltered,
+    setData,
+    setDataTrue,
+    dataTrue,
+    dataIng,
   } = useContext(MyContext);
 
   const history = useHistory();
@@ -28,11 +33,19 @@ function Foods() {
   //   }
   // }, [meals]);
   // ===========================
+  const setIngredient = () => {
+    if (dataTrue) {
+      setData(dataIng);
+    } else {
+      setDataTrue(false);
+      const fetchData = async () => fetchDataMeals();
+      fetchData();
+    }
+  };
 
   useEffect(() => {
-    const fetchData = async () => fetchDataMeals();
-    fetchData();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    setIngredient();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const renderAll = () => {
@@ -40,7 +53,11 @@ function Foods() {
       return arrayFiltered(meals).map((item, index) => {
         const { strMeal, strMealThumb, idMeal } = item;
         return (
-          <Link to={ `/comidas/${idMeal}` } key={ index }>
+          <Link
+            to={ `/comidas/${idMeal}` }
+            key={ index }
+            className="link-foods"
+          >
             <div key={ index } data-testid={ `${index}-recipe-card` }>
               <h3 data-testid={ `${index}-card-name` }>{strMeal}</h3>
               <img
@@ -65,7 +82,7 @@ function Foods() {
   };
 
   return (
-    <div>
+    <div className="main-container">
       <Header title="Comidas" searchIcone meals="meals" />
       {meals && meals.length === 1 ? renderOne() : renderAll() }
       <Footer />

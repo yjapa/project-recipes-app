@@ -3,6 +3,7 @@ import React, { useContext, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { withRouter } from 'react-router';
 import MyContext from '../context/myContext';
+import '../css/headerInputs.css';
 
 function HeaderInput() {
   const [recipe, setRecipe] = useState('');
@@ -95,52 +96,58 @@ function HeaderInput() {
   };
 
   return (
-    <div>
-      <label htmlFor="search-input">
-        <input
-          data-testid="search-input"
-          id="search-input"
-          name="searchRecipe"
-          onChange={ handleChange }
-          type="text"
-        />
-      </label>
-      <label htmlFor="ingredient-search-radio">
-        Ingrediente
-        <input
-          data-testid="ingredient-search-radio"
-          id="ingredient-search-radio"
-          name="recipeFilter"
-          onChange={ handleChange }
-          type="radio"
-          value="ingredient"
-        />
-      </label>
-      <label htmlFor="name-search-radio">
-        Nome
-        <input
-          data-testid="name-search-radio"
-          id="name-search-radio"
-          name="recipeFilter"
-          onChange={ handleChange }
-          type="radio"
-          value="name"
-        />
-      </label>
-      <label htmlFor="primeiraLetra">
-        Primeira letra
-        <input
-          data-testid="first-letter-search-radio"
-          id="primeiraLetra"
-          name="recipeFilter"
-          onChange={ handleChange }
-          type="radio"
-          value="firstLetter"
-        />
-      </label>
+    <div className="query-container-inputs">
+      <div className="query-container">
+        <label htmlFor="search-input">
+          <input
+            data-testid="search-input"
+            id="search-input"
+            placeholder="Pesquise aqui"
+            name="searchRecipe"
+            onChange={ handleChange }
+            type="text"
+          />
+        </label>
+      </div>
+      <div className="container-radio">
+        <label htmlFor="ingredient-search-radio">
+          Ingrediente
+          <input
+            data-testid="ingredient-search-radio"
+            id="ingredient-search-radio"
+            name="recipeFilter"
+            onChange={ handleChange }
+            type="radio"
+            value="ingredient"
+          />
+        </label>
+        <label htmlFor="name-search-radio">
+          Nome
+          <input
+            data-testid="name-search-radio"
+            id="name-search-radio"
+            name="recipeFilter"
+            onChange={ handleChange }
+            type="radio"
+            value="name"
+          />
+        </label>
+        <label htmlFor="primeiraLetra">
+          Primeira letra
+          <input
+            data-testid="first-letter-search-radio"
+            id="primeiraLetra"
+            name="recipeFilter"
+            onChange={ handleChange }
+            type="radio"
+            value="firstLetter"
+          />
+        </label>
+      </div>
       <button
         data-testid="exec-search-btn"
         type="button"
+        className="button-entry"
         onClick={ handleClick }
       >
         Entrar
