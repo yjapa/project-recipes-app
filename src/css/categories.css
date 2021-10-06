@@ -1,0 +1,16 @@
+.container-buttons-category {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.container-buttons-category button {
+  background-color: rgb(226, 228, 226);
+  border-radius: 5px;
+  box-shadow: 2px 5px 10px rgb(75, 72, 72);
+  font-family: Raleway , sans-serif;
+  margin: 5px;
+  padding: 8px;
+  width: 170px;
+}

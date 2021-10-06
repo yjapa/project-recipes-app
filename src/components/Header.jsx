@@ -1,38 +1,38 @@
 import PropTypes from 'prop-types';
-import React, { useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
 import Categories from './Categories';
 import HeaderInput from './HeaderInputs';
-// import { useLocation } from 'react-router-dom';
+import '../css/header.css';
+import MyContext from '../context/myContext';
 
 function Header({ title, searchIcone }) {
   const [showFilter, setFilter] = useState(false);
+  const { loginState } = useContext(MyContext);
+  useEffect(() => {
+    const userEmail = {
+      email: loginState.email,
+    };
+    localStorage.user = JSON.stringify(userEmail);
+  }, []);
 
   const renderSearchBar = () => (
-    <button
-      type="button"
-      onClick={ () => setFilter(!showFilter) }
-    >
-      <img
-        alt="search-icon"
-        data-testid="search-top-btn"
-        src={ searchIcon }
-      />
-    </button>
+    <div className="container-button">
+      <button
+        type="button"
+        onClick={ () => setFilter(!showFilter) }
+        className="search-button"
+      >
+        <img
+          alt="search-icon"
+          data-testid="search-top-btn"
+          src={ searchIcon }
+        />
+      </button>
+    </div>
   );
-
-  //= ====Gildo, tentatando tirar o Header de pages explores =======
-
-  // const location = useLocation();
-  //  function offbutton() {
-  //   if(location.pathname == '/Explorar') {
-  //     return  <Categories />
-  //   }
-  // };
-
-  //= ===============================================================
 
   return (
     <header>
@@ -44,11 +44,16 @@ function Header({ title, searchIcone }) {
             src={ profileIcon }
           />
         </Link>
-        <h1 data-testid="page-title">{title}</h1>
+        <h2 data-testid="page-title" className="title">{title}</h2>
         { searchIcone && renderSearchBar() }
       </div>
+<<<<<<< HEAD
       { showFilter && <HeaderInput />}
       <Categories />
+=======
+      {showFilter && <HeaderInput />}
+      {searchIcone && <Categories />}
+>>>>>>> 155e662cfbf15764690a85372adefc3ff818fbb5
     </header>
   );
 }

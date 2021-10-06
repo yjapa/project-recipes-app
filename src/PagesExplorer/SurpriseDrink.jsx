@@ -3,9 +3,8 @@ import Footer from '../components/Footer';
 import Header from '../components/Header';
 
 function SurpriseDrink() {
-
   const [drink, setDrink] = useState([]);
- 
+
   const url = 'https://www.thecocktaildb.com/api/json/v1/1/random.php';
   useEffect(() => {
     function getDrink() {
@@ -13,42 +12,44 @@ function SurpriseDrink() {
         r.json().then((re) => {
           const results = re;
           setDrink(results.drinks);
-          // console.log(results.drinks)
         });
       });
     }
     getDrink();
   }, []);
-
-   function openDrink() {
+  function openDrink() {
     if (drink[0]) {
-    const { strAlcoholic, strDrinkThumb, strDrink, strCategory } = drink[0];
-   return ( 
-          <div>
+      const { strAlcoholic, strDrinkThumb, strDrink,
+        strInstructions, strArea } = drink[0];
+      return (
+        <main>
+          <header>
             <h3>{strDrink}</h3>
+          </header>
+          <img
+            src={ strDrinkThumb }
+            alt={ strDrink }
+            style={ { width: '300px' } }
+          />
+          <section>
+            <span>{strArea}</span>
             <span>{strAlcoholic}</span>
-            <br/>
-            <span>{ strCategory }</span>
-            <img
-              src={ strDrinkThumb }
-              alt={ strDrink }
-              style={ { width: '300px' } }
-              />
-          </div>
-        )
-   }
-
+            <p>{strInstructions}</p>
+          </section>
+        </main>
+      );
+    }
   }
 
   return (
     <section>
       <div>
         <Header title="Receita surpresa" />
-        {  openDrink() } 
+        { openDrink() }
         <Footer />
       </div>
     </section>
   );
-} 
+}
 
 export default SurpriseDrink;

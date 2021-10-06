@@ -16,7 +16,6 @@ import {
   fetchCategoryDrink,
   queryRecipeByID,
   queryDrinkByID,
-  queryMealsArea,
 } from '../services';
 
 function Provider({ children }) {
@@ -27,7 +26,12 @@ function Provider({ children }) {
   const [loading, setLoading] = useState(false);
   const [startButton, setStartButton] = useState(true);
   const [startedRecipes, setStartRecipe] = useState([]);
-  const [mealsArea, setMealsArea] = useState([]);
+  const [dataIng, setDataIng] = useState([]);
+  const [dataTrue, setDataTrue] = useState(false);
+  const [loginState, setLoginState] = useState({
+    email: '',
+    password: '',
+  });
 
   const maxNumberIt = 12;
 
@@ -102,26 +106,19 @@ function Provider({ children }) {
     setMealsDataById(dados);
   };
 
-  const fetchDataByIdDrink = async (drinkId) => {
-    const dados = await queryDrinkByID(drinkId);
+  const fetchDataByIdDrink = async (drinkID) => {
+    const dados = await queryDrinkByID(drinkID);
     setDrinksById(dados);
   };
 
   // ========================================================================================================
-  // Fetch para buscar Comida por área
-
-//   export const queryMealsArea = async () => {
-//   const url = 'https://www.themealdb.com/api/json/v1/1/filter.php?a=Canadian';
-//   const request = await fetch(url);
-//   const results = request.json();
-//   return results;
-// };
-
   const contextValue = {
     ...data,
     dataDrinks,
     setData,
     setDataDrinks,
+    dataIng,
+    setDataIng,
     mealsDataById,
     drinksById,
     loading,
@@ -130,9 +127,12 @@ function Provider({ children }) {
     setStartButton,
     startedRecipes,
     setStartRecipe,
-    fetchDataMeals,
     fetchDataDrinks,
-    queryMealsArea,
+    fetchDataMeals,
+    setLoginState,
+    loginState,
+    dataTrue,
+    setDataTrue,
     recipesApi: {
       queryDefaultMeals,
       queryFirstLetter,

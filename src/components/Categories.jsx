@@ -1,6 +1,7 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import MyContext from '../context/myContext';
+import '../css/categories.css';
 
 function Categories() {
   const {
@@ -36,6 +37,7 @@ function Categories() {
     const fetchData = async () => ((location.pathname === '/comidas')
       ? fetchCategoriesMeals() : fetchCategoriesDrinks());
     fetchData();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const toggleButtons = async (strCategory) => {
@@ -66,15 +68,10 @@ function Categories() {
     defaultRecipes(strCategory);
   };
 
-  // if(location.pathname !== '/explore') {
-  //   return <Categories />
-  // }
-
   return (
-    <div className="category-buttons">
+    <main className="container-buttons-category">
       <button
         type="button"
-        className="category-button"
         data-testid="All-category-filter"
         onClick={ () => handleClickDefault() }
       >
@@ -85,7 +82,6 @@ function Categories() {
 
           <button
             id={ index }
-            className="category-button"
             data-testid={ `${strCategory}-category-filter` }
             type="button"
             onClick={ () => handleClick(strCategory) }
@@ -94,7 +90,7 @@ function Categories() {
           </button>
         </div>
       ))}
-    </div>
+    </main>
   );
 }
 

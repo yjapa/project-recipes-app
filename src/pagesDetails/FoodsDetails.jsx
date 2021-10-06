@@ -2,8 +2,8 @@ import React, { useEffect, useContext } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 import { useHistory } from 'react-router';
 import shareIcon from '../images/shareIcon.svg';
-import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import MyContext from '../context/myContext';
+import { checkFavorite, renderFavorite } from '../components/FavoriteButton';
 
 function FoodsDetails() {
   const { pathname } = useLocation();
@@ -15,8 +15,6 @@ function FoodsDetails() {
   const { meals } = mealsDataById;
   const ingredients = [];
   listIngredients(meals, ingredients);
-
-  // const setStorage = () => localStorage.setItem('startButton', true);
 
   const handleClick = (idMeal) => {
     const saveProgress = JSON.parse(localStorage.getItem('inProgressRecipes'));
@@ -38,24 +36,49 @@ function FoodsDetails() {
     (history.push(`/comidas/${idMeal}/in-progress`));
   };
 
+  const favoriteStorage = () => meals.map((item) => {
+    const { idMeal, strArea, strCategory, strMeal, strMealThumb } = item;
+    return ({
+      id: idMeal,
+      type: 'comida',
+      area: strArea,
+      category: strCategory,
+      alcoholicOrNot: '',
+      name: strMeal,
+      image: strMealThumb,
+    });
+  });
+
+  const favoriteClick = () => {
+    const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
+    const isFavorite = JSON.parse(localStorage.getItem('isFavorite'));
+    if (!isFavorite) {
+      localStorage.setItem('isFavorite', true);
+      if (favoriteRecipes === null) {
+        localStorage.favoriteRecipes = JSON.stringify(favoriteStorage());
+      } else {
+        const recipesArr = [...favoriteRecipes, ...favoriteStorage()];
+        localStorage.setItem('favoriteRecipes', JSON.stringify(recipesArr));
+      }
+    } else {
+      localStorage.setItem('isFavorite', false);
+      const index = favoriteRecipes.indexOf(favoriteStorage());
+      favoriteRecipes.splice(index, 1);
+      localStorage.setItem('favoriteRecipes', JSON.stringify(favoriteRecipes));
+    }
+  };
+
   const checkRecipe = () => {
-    const saveProgress = JSON.parse(localStorage.getItem('inProgressRecipes'));
     const mealStorage = JSON.parse(localStorage.getItem('inProgressRecipes'));
     if (mealStorage !== null && mealStorage.meals !== undefined) {
       const storageMealIds = Object.keys(mealStorage.meals);
       if (storageMealIds.includes(mealId)) {
         localStorage.setItem('startButton', false);
-        // console.log(saveProgress);
       } else {
         localStorage.setItem('startButton', true);
-        // console.log(saveProgress);
-
-        // console.log(storageMealIds);
-        // console.log(mealId);
       }
     } else {
       localStorage.setItem('startButton', true);
-      console.log('asasa');
     }
   };
 
@@ -65,8 +88,8 @@ function FoodsDetails() {
 
   useEffect(() => {
     fetchDataByIdMeal(mealId);
-    // setStorage();
     checkRecipe();
+    checkFavorite(mealId);
   }, []);
 
   const renderButton = () => {
@@ -157,15 +180,7 @@ function FoodsDetails() {
                     alt="Compartilhar"
                   />
                 </button>
-                <button
-                  data-testid="favorite-btn"
-                  type="button"
-                >
-                  <img
-                    src={ whiteHeartIcon }
-                    alt="Favoritar"
-                  />
-                </button>
+                { renderFavorite(favoriteClick) }
               </section>
               <section>
                 <div>
