@@ -102,11 +102,9 @@ function FoodsProgress() {
       });
     }
   };
-
   setTimeout(() => {
     ingredientsInProgress();
   });
-
   const setLocalStorage = () => {
     const LS = {
       meals: {
@@ -119,7 +117,6 @@ function FoodsProgress() {
       localStorage.inProgressRecipes = JSON.stringify(LS);
     }
   };
-
   function copyUrl() {
     const THREESEC = 3000;
     const section = document.getElementById('sec-top');
@@ -136,12 +133,10 @@ function FoodsProgress() {
       section.removeChild(advise);
     }, THREESEC);
   }
-
   useEffect(() => {
     fetchDataByIdMeal(mealId);
     setLocalStorage();
   }, []);
-
   const switchFinishBtnFoods = () => {
     const saveProgress = JSON.parse(localStorage.getItem('inProgressRecipes'));
     const checkboxLength = document.querySelectorAll('input[type=checkbox]').length;
@@ -151,7 +146,6 @@ function FoodsProgress() {
       setFinishRecipeFoods(true);
     }
   };
-
   useEffect(() => {
     switchFinishBtnFoods();
   }, [listIngredientFoods]);
@@ -164,7 +158,6 @@ function FoodsProgress() {
     feedDoneRecipesInLocalStorageFoods(meals);
     history.push('/receitas-feitas');
   };
-
   return (
     <div>
       {meals && meals.map((item, index) => {
