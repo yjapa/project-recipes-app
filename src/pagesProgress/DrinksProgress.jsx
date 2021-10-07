@@ -10,7 +10,7 @@ function DrinksProgress() {
   const { drinkId } = useParams();
   const { listIngredients,
     drinksApi: { fetchDataByIdDrink },
-    drinksById } = useContext(MyContext);
+    drinksById, feedDoneRecipesInLocalStorageDrinks } = useContext(MyContext);
   const { drinks } = drinksById;
   const ingredients = [];
   const history = useHistory();
@@ -149,6 +149,7 @@ function DrinksProgress() {
   }, [listIngredientsCocktails]);
 
   const handleClick = () => {
+    feedDoneRecipesInLocalStorageDrinks(drinks);
     history.push('/receitas-feitas');
   };
 
@@ -214,7 +215,7 @@ function DrinksProgress() {
               type="button"
               data-testid="finish-recipe-btn"
               disabled={ finishRecipeCocktails }
-              onClick={ handleClick }
+              onClick={ () => handleClick() }
             >
               Finalizar Receita
             </button>

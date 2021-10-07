@@ -4,29 +4,28 @@ import Header from '../components/Header';
 import { Link } from 'react-router-dom';
 
 function MealsArea() {
-
   const [mealArea, setMealArea] = useState([]);
-  const [recipes, setRecipes] = useState([]);
-  // console.log(recipes)
-   const maxNumberIt = 12;
+  const [recipes, setRecipes] = useState({
+    country: 'American',
+  });
+  console.log(recipes);
+  // const maxNumberIt = 12;
 
   // const url = 'https://www.themealdb.com/api/json/v1/1/filter.php?a=Canadian'
   // const urlALL = 'www.themealdb.com/api/json/v1/1/list.php?a=list'
-
+  console.log(recipes);
   useEffect(() => {
     function getMealArea() {
       fetch('https://www.themealdb.com/api/json/v1/1/list.php?a=list')
-      .then((response) => {
-      response.json().then((data) => {
-        const results = data;
-        // console.log(results.meals)
-        setMealArea(results.meals);
-        // console.log(results.meals)
-      })
-    })
-  }
+        .then((response) => {
+          response.json().then((data) => {
+            const results = data;
+            setMealArea(results.meals);
+          });
+        });
+    }
     getMealArea();
-  },[]);
+  }, []);
 
   useEffect((recipes) => {
     function getrecipe() {
@@ -74,4 +73,3 @@ function MealsArea() {
   );
 }
 export default MealsArea;
-

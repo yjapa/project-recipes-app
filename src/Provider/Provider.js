@@ -26,8 +26,8 @@ function Provider({ children }) {
   const [loading, setLoading] = useState(false);
   const [startButton, setStartButton] = useState(true);
   const [startedRecipes, setStartRecipe] = useState([]);
-  const [dataIng, setDataIng] = useState([]);
   const [dataTrue, setDataTrue] = useState(false);
+  const [getIng, setGetIng] = useState('');
   const [loginState, setLoginState] = useState({
     email: '',
     password: '',
@@ -111,14 +111,81 @@ function Provider({ children }) {
     setDrinksById(dados);
   };
 
+  const getCurrentDate = (separator) => {
+    // Source: https://stackoverflow.com/questions/43744312/react-js-get-current-date
+    const newDate = new Date();
+    const day = newDate.getDate();
+    const month = newDate.getMonth();
+    const year = newDate.getFullYear();
+    const numberTen = 10;
+    return `${year}${separator}${month < numberTen ? `0${month}`
+      : `${month}`}${separator}${day}`;
+  };
+
+  const mountTemplateForSaveInLocalStorageDoneRecipesDrinks = (obj) => {
+    const strFinishDate = getCurrentDate('/');
+
+    const { idDrink, strAlcoholic, strCategory, strDrink, strDrinkThumb } = obj[0];
+
+    return ([{
+      id: idDrink,
+      type: 'bebida',
+      area: '',
+      category: strCategory,
+      alcoholicOrNot: strAlcoholic,
+      name: strDrink,
+      image: strDrinkThumb,
+      doneDate: strFinishDate,
+      tags: [],
+    }]);
+  };
+
+  const feedDoneRecipesInLocalStorageDrinks = (obj) => {
+    const actualFinishRecipe = mountTemplateForSaveInLocalStorageDoneRecipesDrinks(obj);
+    const doneRecipesInLocalStorage = JSON.parse(localStorage.getItem('doneRecipes'));
+    if (doneRecipesInLocalStorage) {
+      const doneRecipesToUpdate = [...doneRecipesInLocalStorage, ...actualFinishRecipe];
+      localStorage.setItem('doneRecipes', JSON.stringify(doneRecipesToUpdate));
+    } else {
+      localStorage.doneRecipes = JSON.stringify([]);
+    }
+  };
+
+  const mountTemplateForSaveInLocalStorageDoneRecipesFoods = (obj) => {
+    const strFinishDate = getCurrentDate('/');
+
+    const { idMeal, strArea, strCategory, strMeal, strMealThumb, strTags } = obj[0];
+
+    return ([{
+      id: idMeal,
+      type: 'comida',
+      area: strArea,
+      category: strCategory,
+      alcoholicOrNot: '',
+      name: strMeal,
+      image: strMealThumb,
+      doneDate: strFinishDate,
+      tags: strTags,
+    }]);
+  };
+
+  const feedDoneRecipesInLocalStorageFoods = (obj) => {
+    const actualFinishRecipe = mountTemplateForSaveInLocalStorageDoneRecipesFoods(obj);
+    const doneRecipesInLocalStorage = JSON.parse(localStorage.getItem('doneRecipes'));
+    if (doneRecipesInLocalStorage) {
+      const doneRecipesToUpdate = [...doneRecipesInLocalStorage, ...actualFinishRecipe];
+      localStorage.setItem('doneRecipes', JSON.stringify(doneRecipesToUpdate));
+    } else {
+      localStorage.doneRecipes = JSON.stringify([]);
+    }
+  };
+
   // ========================================================================================================
   const contextValue = {
     ...data,
     dataDrinks,
     setData,
     setDataDrinks,
-    dataIng,
-    setDataIng,
     mealsDataById,
     drinksById,
     loading,
@@ -131,8 +198,10 @@ function Provider({ children }) {
     fetchDataMeals,
     setLoginState,
     loginState,
-    dataTrue,
     setDataTrue,
+    dataTrue,
+    setGetIng,
+    getIng,
     recipesApi: {
       queryDefaultMeals,
       queryFirstLetter,
@@ -153,6 +222,8 @@ function Provider({ children }) {
     },
     arrayFiltered,
     listIngredients,
+    feedDoneRecipesInLocalStorageDrinks,
+    feedDoneRecipesInLocalStorageFoods,
   };
 
   return (

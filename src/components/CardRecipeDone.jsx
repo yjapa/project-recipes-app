@@ -2,21 +2,20 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import shareIcon from '../images/shareIcon.svg';
-import blackHeartIcon from '../images/blackHeartIcon.svg';
-// import FavoritesRecipes from '../pages/FavoritesRecipes';
 
-const CardFavorite = (
+const CardRecipeDone = (
   {
-    key,
-    indexProps,
+    Key,
     strID,
     strType,
+    indexProps,
     sourceImage,
     strRecipeName,
     strCategory,
     strArea,
+    dtFinishDate,
+    arrTags,
     strAlcoholicOrNot,
-    fnRemoveFavoriteRecipe,
   },
 ) => {
   // Source: https://newbedev.com/copy-url-to-clipboard-react-code-example
@@ -26,8 +25,8 @@ const CardFavorite = (
   };
 
   return (
-    <div>
-      <div key={ key }>
+    <div Key={ Key }>
+      <div>
         <Link
           to={ strType === 'comida' ? `/comidas/${strID}` : `/bebidas/${strID}` }
         >
@@ -46,6 +45,7 @@ const CardFavorite = (
           { strType === 'comida' ? strCategory : strAlcoholicOrNot }
         </p>
         { strType === 'comida' ? <p>{ strArea }</p> : null }
+        <p data-testid={ `${indexProps}-horizontal-done-date` }>{ dtFinishDate }</p>
         <button type="button" onClick={ handleClickShareIcon }>
           <img
             alt="search-icon"
@@ -53,32 +53,36 @@ const CardFavorite = (
             src={ shareIcon }
           />
         </button>
-        <button type="button" onClick={ () => fnRemoveFavoriteRecipe(strID.toString()) }>
-          <img
-            alt="black-heart"
-            src={ blackHeartIcon }
-            data-testid="favorite-btn"
-          />
-        </button>
+      </div>
+      <div>
+        {strType === 'comida' ? arrTags.split(', ').map((tagName, index) => (
+          <button
+            data-testid={ `${index}-${tagName}-horizontal-tag` }
+            type="button"
+            key={ index }
+          >
+            { tagName }
+          </button>
+        )) : null }
       </div>
     </div>
-
   );
 };
 
-CardFavorite.propTypes = {
-  fnRemoveFavoriteRecipe: PropTypes.func,
+CardRecipeDone.propTypes = {
+  Key: PropTypes.string,
+  arrTags: PropTypes.shape({
+    split: PropTypes.func,
+  }),
+  dtFinishDate: PropTypes.string,
   indexProps: PropTypes.string,
-  key: PropTypes.string,
   sourceImage: PropTypes.string,
   strAlcoholicOrNot: PropTypes.string,
   strArea: PropTypes.string,
   strCategory: PropTypes.string,
-  strID: PropTypes.shape({
-    toString: PropTypes.func,
-  }),
+  strID: PropTypes.string,
   strRecipeName: PropTypes.string,
   strType: PropTypes.string,
 }.isRequired;
 
-export default CardFavorite;
+export default CardRecipeDone;

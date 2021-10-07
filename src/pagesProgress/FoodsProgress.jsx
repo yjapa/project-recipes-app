@@ -10,7 +10,7 @@ function FoodsProgress() {
   const { mealId } = useParams();
   const { listIngredients,
     recipesApi: { fetchDataByIdMeal },
-    mealsDataById } = useContext(MyContext);
+    mealsDataById, feedDoneRecipesInLocalStorageFoods } = useContext(MyContext);
   const { meals } = mealsDataById;
   const ingredients = [];
   const history = useHistory();
@@ -49,15 +49,21 @@ function FoodsProgress() {
   };
 
   const favoriteStorage = () => meals.map((item) => {
-    const { idMeal, strArea, strCategory, strMeal, strMealThumb } = item;
+    const {
+      idMeal,
+      strArea,
+      strCategory,
+      strMeal,
+      strMealThumb,
+    } = item;
     return ({
       id: idMeal,
       type: 'comida',
-      area: strArea,
-      category: strCategory,
-      alcoholicOrNot: '',
-      name: strMeal,
       image: strMealThumb,
+      name: strMeal,
+      category: strCategory,
+      area: strArea,
+      alcoholicOrNot: '',
     });
   });
 
@@ -95,11 +101,9 @@ function FoodsProgress() {
       });
     }
   };
-
   setTimeout(() => {
     ingredientsInProgress();
   });
-
   const setLocalStorage = () => {
     const LS = {
       meals: {
@@ -111,7 +115,6 @@ function FoodsProgress() {
       localStorage.inProgressRecipes = JSON.stringify(LS);
     }
   };
-
   function copyUrl() {
     const THREESEC = 3000;
     const section = document.getElementById('sec-top');
@@ -128,12 +131,10 @@ function FoodsProgress() {
       section.removeChild(advise);
     }, THREESEC);
   }
-
   useEffect(() => {
     fetchDataByIdMeal(mealId);
     setLocalStorage();
   }, []);
-
   const switchFinishBtnFoods = () => {
     const saveProgress = JSON.parse(localStorage.getItem('inProgressRecipes'));
     const checkboxLength = document.querySelectorAll('input[type=checkbox]').length;
@@ -143,7 +144,6 @@ function FoodsProgress() {
       setFinishRecipeFoods(true);
     }
   };
-
   useEffect(() => {
     switchFinishBtnFoods();
   }, [listIngredientFoods]);
@@ -153,9 +153,9 @@ function FoodsProgress() {
   });
 
   const handleClick = () => {
+    feedDoneRecipesInLocalStorageFoods(meals);
     history.push('/receitas-feitas');
   };
-
   return (
     <div>
       {meals && meals.map((item, index) => {
@@ -220,7 +220,7 @@ function FoodsProgress() {
               type="button"
               data-testid="finish-recipe-btn"
               disabled={ finishRecipeFoods }
-              onClick={ handleClick }
+              onClick={ () => handleClick() }
             >
               Finalizar Receita
             </button>
