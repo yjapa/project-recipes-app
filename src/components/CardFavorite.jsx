@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import { Link } from 'react-router-dom';
 import shareIcon from '../images/shareIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
-import { Link } from 'react-router-dom';
 // import FavoritesRecipes from '../pages/FavoritesRecipes';
 
 const CardFavorite = (
@@ -19,7 +19,6 @@ const CardFavorite = (
     fnRemoveFavoriteRecipe,
   },
 ) => {
-
   // Source: https://newbedev.com/copy-url-to-clipboard-react-code-example
   const handleClickShareIcon = () => {
     const fullURL = window.location.href;
@@ -30,7 +29,7 @@ const CardFavorite = (
     <div>
       <div key={ key }>
         <Link
-            to={ strType === 'comida' ? `/comidas/${strID}` : `/bebidas/${strID}` }
+          to={ strType === 'comida' ? `/comidas/${strID}` : `/bebidas/${strID}` }
         >
           <img
             alt={ sourceImage }
@@ -39,7 +38,7 @@ const CardFavorite = (
           />
         </Link>
         <Link
-            to={ strType === 'comida' ? `/comidas/${strID}` : `/bebidas/${strID}` }
+          to={ strType === 'comida' ? `/comidas/${strID}` : `/bebidas/${strID}` }
         >
           <p data-testid={ `${indexProps}-horizontal-name` }>{ strRecipeName }</p>
         </Link>
@@ -76,10 +75,10 @@ CardFavorite.propTypes = {
   strArea: PropTypes.string,
   strCategory: PropTypes.string,
   strID: PropTypes.shape({
-    toString: PropTypes.func
+    toString: PropTypes.func,
   }),
   strRecipeName: PropTypes.string,
-  strType: PropTypes.string
-}.isRequired
+  strType: PropTypes.string,
+}.isRequired;
 
 export default CardFavorite;

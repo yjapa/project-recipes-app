@@ -8,6 +8,11 @@ function MealsArea() {
     country: 'American',
   });
   console.log(recipes);
+  // const maxNumberIt = 12;
+
+  // const url = 'https://www.themealdb.com/api/json/v1/1/filter.php?a=Canadian'
+  // const urlALL = 'www.themealdb.com/api/json/v1/1/list.php?a=list'
+
   useEffect(() => {
     function getMealArea() {
       fetch('https://www.themealdb.com/api/json/v1/1/list.php?a=list')
