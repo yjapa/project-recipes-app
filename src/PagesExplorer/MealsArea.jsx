@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
+import { Link } from 'react-router-dom';
 
 function MealsArea() {
 
   const [mealArea, setMealArea] = useState([]);
   const [recipes, setRecipes] = useState([]);
-  console.log(recipes)
+  // console.log(recipes)
    const maxNumberIt = 12;
 
   // const url = 'https://www.themealdb.com/api/json/v1/1/filter.php?a=Canadian'
@@ -20,53 +21,34 @@ function MealsArea() {
         const results = data;
         // console.log(results.meals)
         setMealArea(results.meals);
-        console.log(results.meals)
+        // console.log(results.meals)
       })
     })
   }
     getMealArea();
   },[]);
 
-  
-//    const maxNumberIt = 12;
+  useEffect((recipes) => {
+    function getrecipe() {
+      fetch(`https://www.themealdb.com/api/json/v1/1/list.php?a=${recipes}`)
+      .then((response) => {
+      response.json().then((data) => {
+        const results = data;
+        // console.log(results.meals)
+        setMealArea(results.meals);
+        // console.log(results.meals)
+      })
+    })
+  }
+    getrecipe();
+  },[recipes]);
 
-// const filteredArea() {
-//     if (arr && arr.length > maxNumberIt) {
-//       return arr.filter((_, index) => (
-//         index < maxNumberIt
-//       ));
-//     }
-//     return filteredArea;
-//   };
-
-  //    mealArea && mealArea.map((item, index) => {
-  //    const { idMeal,strMeal, strMealThumb } = item;
-  //    return (
-  //    <select key={ index } data-testid="explore-by-area-dropdow" >
-  //       <option id={ idMeal }>{ strMeal }</option>  
-  //    </select>
-  //     )
-  //   })
-  // }
-     
-      
-   // <img
-        //   src={ strMealThumb }
-        //   alt={ item }
-        //   style={ { width: '100px' } }
-        //   data-testid="explore-by-area-dropdow"
-        // />
-  
-  // <option id="" [data-testid="${area}-option"]>{ item }</option>  
-  // 
   const handleChange = ({ target: { id, value } }) => {
     setRecipes({
       [id]: value,
-      
     });
   };
-  console.log(mealArea)
-  
+  console.log(recipes, 'aquiooo')
   return (
     <section>
      <Header title="Explorar Origem" />
@@ -76,8 +58,17 @@ function MealsArea() {
      return (
      <option key={ index } value={ strArea } id={ index }>{ strArea }</option>  
      )
-    }) } 
+    }) }
     </select>
+    {/* <Link to="`/comidas/:${mealId}`" > */}
+     { recipes[0] && recipes[0].Object.entries(recipes)
+     .map((item, index) => {
+       return (
+        <div key={ index }>{item}</div>
+      )
+    }) }
+    {/* </Link>  */}
+   
     <Footer />
     </section>
   );
