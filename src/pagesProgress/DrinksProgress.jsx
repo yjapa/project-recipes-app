@@ -96,6 +96,7 @@ function DrinksProgress() {
       section.removeChild(advise);
     }, THREESEC);
   }
+
   const ingredientsInProgress = () => {
     const saveProgress = JSON.parse(localStorage.getItem('inProgressRecipes'));
     const getCocktails = saveProgress.cocktails;
