@@ -11,7 +11,7 @@ function MealsArea() {
 
   // const url = 'https://www.themealdb.com/api/json/v1/1/filter.php?a=Canadian'
   // const urlALL = 'www.themealdb.com/api/json/v1/1/list.php?a=list'
-
+  console.log(recipes);
   useEffect(() => {
     function getMealArea() {
       fetch('https://www.themealdb.com/api/json/v1/1/list.php?a=list')

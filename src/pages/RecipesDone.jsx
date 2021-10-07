@@ -12,74 +12,70 @@ const RecipesDone = () => {
     const recipesDoneObj = JSON.parse(json);
     setRecipesDone(recipesDoneObj);
     setRecipesDoneClone(recipesDoneObj);
-  }
+  };
 
   useEffect(() => {
-    getRecipesDoneFromLocalStorage()
-  }, [])
+    getRecipesDoneFromLocalStorage();
+  }, []);
 
   const showAllRecipesDone = () => {
     // Atualiza o estado com a mesma rotina do didMout
     getRecipesDoneFromLocalStorage();
-  }
+  };
 
   const filterOnlyFoods = () => {
-    const onlyFoods = recipesDoneClone.filter((item) => {
-      return item.type === 'comida';
-    })
+    const onlyFoods = recipesDoneClone.filter((item) => item.type === 'comida');
     setRecipesDone(onlyFoods);
-  }
+  };
 
   const filterOnlyDrinks = () => {
-    const onlyDrinks = recipesDoneClone.filter((item) => {
-      return item.type === 'bebida';
-    })
+    const onlyDrinks = recipesDoneClone.filter((item) => item.type === 'bebida');
     setRecipesDone(onlyDrinks);
-  }
+  };
 
   return (
-  <div>
-    <Header title="Receitas Feitas" />
     <div>
-      <button
-        data-testid="filter-by-all-btn"
-        type="button"
-        onClick={ () => showAllRecipesDone() }
+      <Header title="Receitas Feitas" />
+      <div>
+        <button
+          data-testid="filter-by-all-btn"
+          type="button"
+          onClick={ () => showAllRecipesDone() }
         >
           All
-      </button>
-      <button
-        data-testid="filter-by-food-btn"
-        type="button"
-        onClick={() => filterOnlyFoods()}
+        </button>
+        <button
+          data-testid="filter-by-food-btn"
+          type="button"
+          onClick={ () => filterOnlyFoods() }
         >
           Food
-      </button>
-      <button
-        data-testid="filter-by-drink-btn"
-        type="button"
-        onClick={() => filterOnlyDrinks()}
+        </button>
+        <button
+          data-testid="filter-by-drink-btn"
+          type="button"
+          onClick={ () => filterOnlyDrinks() }
         >
           Drinks
-      </button>
+        </button>
+      </div>
+      { recipesDone && recipesDone.map((item, index) => (
+        <CardRecipeDone
+          Key={ index }
+          indexProps={ index }
+          strID={ item.id }
+          strType={ item.type }
+          sourceImage={ item.image }
+          strRecipeName={ item.name }
+          strCategory={ item.category }
+          strArea={ item.area }
+          dtFinishDate={ item.doneDate } // "finishDate" é uma sugestão
+          strAlcoholicOrNot={ item.alcoholicOrNot }
+          arrTags={ item.tags }
+        />
+      ))}
     </div>
-    { recipesDone && recipesDone.map((item, index) => (
-      <CardRecipeDone
-        Key={ index }
-        indexProps={ index }
-        strID={ item.id }
-        strType={ item.type }
-        sourceImage={ item.image }
-        strRecipeName={ item.name }
-        strCategory={ item.category }
-        strArea={ item.area }
-        dtFinishDate={ item.doneDate } // "finishDate" é uma sugestão
-        strAlcoholicOrNot={ item.alcoholicOrNot }
-        arrTags={ item.tags }
-      />
-    ))}
-  </div>
-  )
+  );
 };
 
 export default RecipesDone;
