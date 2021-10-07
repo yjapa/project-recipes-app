@@ -41,9 +41,7 @@ const CardRecipeDone = (
         >
           <p data-testid={ `${indexProps}-horizontal-name` }>{ strRecipeName }</p>
         </Link>
-        <p
-          data-testid={ `${indexProps}-horizontal-top-text` }
-        >
+        <p data-testid={ `${indexProps}-horizontal-top-text` }>
           { strType === 'comida' ? strCategory : strAlcoholicOrNot }
         </p>
         { strType === 'comida' ? <p>{ strArea }</p> : null }

@@ -7,6 +7,7 @@ function MealsArea() {
   const [recipes, setRecipes] = useState({
     country: 'American',
   });
+  console.log(recipes);
   // const maxNumberIt = 12;
 
   // const url = 'https://www.themealdb.com/api/json/v1/1/filter.php?a=Canadian'
