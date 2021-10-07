@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import shareIcon from '../images/shareIcon.svg';
 
@@ -18,33 +18,36 @@ const CardRecipeDone = (
     strAlcoholicOrNot,
   },
 ) => {
+  const [boolLinkCopied, setBoolLinkCopied] = useState(false);
+
+  const detailsPath = (type, id) => (type === 'comida' ? `/comidas/${id}`
+    : `/bebidas/${id}`);
+
   // Source: https://newbedev.com/copy-url-to-clipboard-react-code-example
   const handleClickShareIcon = () => {
-    const fullURL = window.location.href;
+    const domain = `${window.location.protocol}//${window.location.host}`;
+    const fullURL = `${domain}${detailsPath(strType, strID)}`;
     navigator.clipboard.writeText(fullURL);
+    setBoolLinkCopied(true);
   };
 
   return (
     <div Key={ Key }>
       <div>
         <Link
-          to={ strType === 'comida' ? `/comidas/${strID}` : `/bebidas/${strID}` }
+          to={ detailsPath(strType, strID) }
         >
           <img
             alt={ sourceImage }
             data-testid={ `${indexProps}-horizontal-image` }
             src={ sourceImage }
+            style={ { width: '180px' } }
           />
-        </Link>
-        <Link
-          to={ strType === 'comida' ? `/comidas/${strID}` : `/bebidas/${strID}` }
-        >
           <p data-testid={ `${indexProps}-horizontal-name` }>{ strRecipeName }</p>
         </Link>
         <p data-testid={ `${indexProps}-horizontal-top-text` }>
-          { strType === 'comida' ? strCategory : strAlcoholicOrNot }
+          { strType === 'comida' ? `${strArea} - ${strCategory}` : strAlcoholicOrNot }
         </p>
-        { strType === 'comida' ? <p>{ strArea }</p> : null }
         <p data-testid={ `${indexProps}-horizontal-done-date` }>{ dtFinishDate }</p>
         <button type="button" onClick={ handleClickShareIcon }>
           <img
@@ -53,17 +56,18 @@ const CardRecipeDone = (
             src={ shareIcon }
           />
         </button>
+        <span>{ boolLinkCopied ? 'Link copiado!' : null}</span>
       </div>
       <div>
-        {strType === 'comida' ? arrTags.split(', ').map((tagName, index) => (
-          <button
-            data-testid={ `${index}-${tagName}-horizontal-tag` }
-            type="button"
+        {console.log('arrTags dentro do card', arrTags)}
+        { arrTags && arrTags.map((tagName, index) => (
+          <div
+            data-testid={ `${indexProps}-${tagName}-horizontal-tag` }
             key={ index }
           >
             { tagName }
-          </button>
-        )) : null }
+          </div>
+        )) }
       </div>
     </div>
   );
