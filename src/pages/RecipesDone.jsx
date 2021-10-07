@@ -19,7 +19,7 @@ const RecipesDone = () => {
   }, []);
 
   const showAllRecipesDone = () => {
-    // Atualiza o estado com a mesma rotina do didMout
+    // Atualiza o estado com a mesma rotina do didMount
     getRecipesDoneFromLocalStorage();
   };
 
