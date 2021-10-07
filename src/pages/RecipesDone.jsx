@@ -1,29 +1,85 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Header from '../components/Header';
-// import CardRecipe from '../components/CardRecipe';
+import CardRecipeDone from '../components/CardRecipeDone';
 
-// Preciso saber de onde virão os dados ref. as receitas feitas, sejam eles comidas ou bebidas;
+const RecipesDone = () => {
+  // Estado do componente que contém o array de receitas feitas (array para renderização via map)
+  const [recipesDone, setRecipesDone] = useState([]);
+  const [recipesDoneClone, setRecipesDoneClone] = useState([]);
 
-const RecipesDone = () => (
+  const getRecipesDoneFromLocalStorage = () => {
+    const json = localStorage.getItem('doneRecipes');
+    const recipesDoneObj = JSON.parse(json);
+    setRecipesDone(recipesDoneObj);
+    setRecipesDoneClone(recipesDoneObj);
+  }
+
+  useEffect(() => {
+    getRecipesDoneFromLocalStorage()
+  }, [])
+
+  const showAllRecipesDone = () => {
+    // Atualiza o estado com a mesma rotina do didMout
+    getRecipesDoneFromLocalStorage();
+  }
+
+  const filterOnlyFoods = () => {
+    const onlyFoods = recipesDoneClone.filter((item) => {
+      return item.type === 'comida';
+    })
+    setRecipesDone(onlyFoods);
+  }
+
+  const filterOnlyDrinks = () => {
+    const onlyDrinks = recipesDoneClone.filter((item) => {
+      return item.type === 'bebida';
+    })
+    setRecipesDone(onlyDrinks);
+  }
+
+  return (
   <div>
     <Header title="Receitas Feitas" />
     <div>
-      <button data-testid="filter-by-all-btn" type="button">All</button>
-      <button data-testid="filter-by-food-btn" type="button">Food</button>
-      <button data-testid="filter-by-drink-btn" type="button">Drinks</button>
+      <button
+        data-testid="filter-by-all-btn"
+        type="button"
+        onClick={ () => showAllRecipesDone() }
+        >
+          All
+      </button>
+      <button
+        data-testid="filter-by-food-btn"
+        type="button"
+        onClick={() => filterOnlyFoods()}
+        >
+          Food
+      </button>
+      <button
+        data-testid="filter-by-drink-btn"
+        type="button"
+        onClick={() => filterOnlyDrinks()}
+        >
+          Drinks
+      </button>
     </div>
-    {/* { arrayQueContemAListaDeFavoritos.map((item, index) => (
-      <CardRecipe
+    { recipesDone && recipesDone.map((item, index) => (
+      <CardRecipeDone
         Key={ index }
-        arrTags={ item }
-        dtRecipeDone={ item }
-        indexProps={ item }
-        sourceImage={ item }
-        strCategory={ item }
-        strRecipeName={ item }
+        indexProps={ index }
+        strID={ item.id }
+        strType={ item.type }
+        sourceImage={ item.image }
+        strRecipeName={ item.name }
+        strCategory={ item.category }
+        strArea={ item.area }
+        dtFinishDate={ item.doneDate } // "finishDate" é uma sugestão
+        strAlcoholicOrNot={ item.alcoholicOrNot }
+        arrTags={ item.tags }
       />
-    ))} */}
+    ))}
   </div>
-);
+  )
+};
 
 export default RecipesDone;

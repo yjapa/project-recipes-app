@@ -11,9 +11,9 @@ function Foods() {
     fetchDataMeals,
     arrayFiltered,
     setData,
-    setDataTrue,
     dataTrue,
-    dataIng,
+    recipesApi: { queryIngredient },
+    getIng,
   } = useContext(MyContext);
 
   const history = useHistory();
@@ -33,17 +33,26 @@ function Foods() {
   //   }
   // }, [meals]);
   // ===========================
-  const setIngredient = () => {
-    if (dataTrue) {
-      setData(dataIng);
-    } else {
-      setDataTrue(false);
-      const fetchData = async () => fetchDataMeals();
-      fetchData();
+
+  const setLocalStorageForDoneRecipes = () => {
+    const doneRecipesInLocalStore = localStorage.doneRecipes;
+    if (!doneRecipesInLocalStore) {
+      localStorage.doneRecipes = JSON.stringify([]);
     }
   };
 
   useEffect(() => {
+    setLocalStorageForDoneRecipes();
+    const setIngredient = async () => {
+      if (dataTrue === true) {
+        const dataIngredients = await queryIngredient(getIng);
+        setData(dataIngredients);
+      } else {
+        const fetchData = async () => fetchDataMeals();
+        fetchData();
+        console.log('meals', meals);
+      }
+    };
     setIngredient();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

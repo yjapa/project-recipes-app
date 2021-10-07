@@ -62,7 +62,6 @@ function HeaderInput() {
     case 'ingredient':
       setLoading(true);
       resultApi = await queryIngredient(searchRecipe);
-      console.log(resultApi);
       resultApiDrinks = await queryIngredientDrink(searchRecipe);
       updateStates(resultApi, resultApiDrinks);
       break;
