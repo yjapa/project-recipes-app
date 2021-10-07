@@ -111,6 +111,16 @@ function Provider({ children }) {
     setDrinksById(dados);
   };
 
+  const buildArrTags = (strTags) => {
+    const typeValue = typeof (strTags);
+    if (typeValue === 'string') {
+      const tagsToArray = strTags.trim().split(',');
+      console.log(tagsToArray);
+      return tagsToArray;
+    }
+    return [];
+  };
+
   const getCurrentDate = (separator) => {
     // Source: https://stackoverflow.com/questions/43744312/react-js-get-current-date
     const newDate = new Date();
@@ -124,9 +134,7 @@ function Provider({ children }) {
 
   const mountTemplateForSaveInLocalStorageDoneRecipesDrinks = (obj) => {
     const strFinishDate = getCurrentDate('/');
-
     const { idDrink, strAlcoholic, strCategory, strDrink, strDrinkThumb } = obj[0];
-
     return ([{
       id: idDrink,
       type: 'bebida',
@@ -153,9 +161,8 @@ function Provider({ children }) {
 
   const mountTemplateForSaveInLocalStorageDoneRecipesFoods = (obj) => {
     const strFinishDate = getCurrentDate('/');
-
     const { idMeal, strArea, strCategory, strMeal, strMealThumb, strTags } = obj[0];
-
+    const arrayOfTags = buildArrTags(strTags);
     return ([{
       id: idMeal,
       type: 'comida',
@@ -165,7 +172,7 @@ function Provider({ children }) {
       name: strMeal,
       image: strMealThumb,
       doneDate: strFinishDate,
-      tags: strTags,
+      tags: arrayOfTags,
     }]);
   };
 
