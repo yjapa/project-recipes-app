@@ -179,7 +179,7 @@ function DrinksDetails() {
                     alt="Compartilhar"
                   />
                 </button>
-                { renderFavorite(favoriteClick) }
+                {renderFavorite(favoriteClick)}
               </section>
               <section>
                 <div>
