@@ -83,6 +83,9 @@ function Foods() {
     if (idMeal === '52968') {
       return renderAll();
     }
+    if (dataTrue === true) {
+      return renderAll();
+    }
     return history.push(`/comidas/${idMeal}`);
   };
 
@@ -90,6 +93,7 @@ function Foods() {
     <div className="main-container">
       <Header title="Comidas" searchIcone meals="meals" />
       {meals && meals.length === 1 ? renderOne() : renderAll() }
+      {/* { renderAll() } */}
       <Footer />
     </div>
   );
