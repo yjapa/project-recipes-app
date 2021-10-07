@@ -68,10 +68,18 @@ const CardFavorite = (
 };
 
 CardFavorite.propTypes = {
-  indexProps: PropTypes.number,
+  fnRemoveFavoriteRecipe: PropTypes.func,
+  indexProps: PropTypes.string,
+  key: PropTypes.string,
   sourceImage: PropTypes.string,
+  strAlcoholicOrNot: PropTypes.string,
+  strArea: PropTypes.string,
   strCategory: PropTypes.string,
+  strID: PropTypes.shape({
+    toString: PropTypes.func
+  }),
   strRecipeName: PropTypes.string,
-}.isRequired;
+  strType: PropTypes.string
+}.isRequired
 
 export default CardFavorite;

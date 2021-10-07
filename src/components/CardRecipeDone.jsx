@@ -3,7 +3,7 @@ import React from 'react';
 import shareIcon from '../images/shareIcon.svg';
 import { Link } from 'react-router-dom';
 
-const CardRecipe = (
+const CardRecipeDone = (
   {
     Key,
     strID,
@@ -68,13 +68,20 @@ const CardRecipe = (
   )
 };
 
-CardRecipe.propTypes = {
-  arrTags: PropTypes.array,
-  dtRecipeDone: PropTypes.date,
-  index: PropTypes.number,
+CardRecipeDone.propTypes = {
+  Key: PropTypes.string,
+  arrTags: PropTypes.shape({
+    split: PropTypes.func
+  }),
+  dtFinishDate: PropTypes.string,
+  indexProps: PropTypes.string,
   sourceImage: PropTypes.string,
+  strAlcoholicOrNot: PropTypes.string,
+  strArea: PropTypes.string,
   strCategory: PropTypes.string,
+  strID: PropTypes.string,
   strRecipeName: PropTypes.string,
-}.isRequired;
+  strType: PropTypes.string
+}.isRequired
 
 export default CardRecipe;
