@@ -10,7 +10,7 @@ function FoodsProgress() {
   const { mealId } = useParams();
   const { listIngredients,
     recipesApi: { fetchDataByIdMeal },
-    mealsDataById } = useContext(MyContext);
+    mealsDataById, feedDoneRecipesInLocalStorageFoods } = useContext(MyContext);
   const { meals } = mealsDataById;
   const ingredients = [];
   const history = useHistory();
@@ -55,7 +55,7 @@ function FoodsProgress() {
       strCategory,
       strMeal,
       strMealThumb,
-     } = item;
+    } = item;
     return ({
       id: idMeal,
       type: 'comida',
@@ -158,56 +158,8 @@ function FoodsProgress() {
     checkFavorite(mealId);
   });
 
-  const getCurrentDate = (separator) => {
-    // Source: https://stackoverflow.com/questions/43744312/react-js-get-current-date
-    const newDate = new Date();
-    const day = newDate.getDate();
-    const month = newDate.getMonth();
-    const year = newDate.getFullYear();
-    return `${year}${separator}${month<10?`0${month}`:`${month}`}${separator}${day}`
-}
-
-  const mountTemplateForSaveInLocalStorageDoneRecipes = () => {
-    // console.log(meals[0]);
-
-    const strFinishDate = getCurrentDate('/');
-
-    const {
-      idMeal,
-      strArea,
-      strCategory,
-      strMeal,
-      strMealThumb,
-      strTags,
-    } = meals[0];
-
-    return ([{
-      id: idMeal,
-      type: 'comida',
-      area: strArea,
-      category: strCategory,
-      alcoholicOrNot: '',
-      name: strMeal,
-      image: strMealThumb,
-      doneDate: strFinishDate,
-      tags: strTags,
-    }]);
-
-  }
-
-  const feedDoneRecipesInLocalStorage = () => {
-    const actualFinishRecipe =  mountTemplateForSaveInLocalStorageDoneRecipes()
-    const doneRecipesInLocalStorage = JSON.parse(localStorage.getItem('doneRecipes'));
-    if(doneRecipesInLocalStorage) {
-      const doneRecipesToUpdate = [...doneRecipesInLocalStorage, ...actualFinishRecipe];
-      localStorage.setItem('doneRecipes', JSON.stringify(doneRecipesToUpdate));
-    } else {
-      localStorage.recipesDone = JSON.stringify([]);
-    }
-  }
-
   const handleClick = () => {
-    feedDoneRecipesInLocalStorage()
+    feedDoneRecipesInLocalStorageFoods(meals);
     history.push('/receitas-feitas');
   };
 
