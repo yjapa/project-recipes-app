@@ -140,6 +140,7 @@ function FoodsDetails() {
 
   return (
     <main>
+      {console.log('meals in foodDetails', meals)}
       {meals && meals.map((item, index) => {
         const {
           strMeal,

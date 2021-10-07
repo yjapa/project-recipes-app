@@ -17,8 +17,16 @@ function Drinks() {
   const { drinks } = dataDrinks;
   const history = useHistory();
 
+  const setLocalStorageForDoneRecipes = () => {
+    const doneRecipesInLocalStore = localStorage.doneRecipes;
+    if (!doneRecipesInLocalStore) {
+      localStorage.doneRecipes = JSON.stringify([]);
+    }
+  };
+
   useEffect(() => {
-    const setIngredient = async () => {
+  setLocalStorageForDoneRecipes();
+  const setIngredient = async () => {
       if (dataTrue === true) {
         const dataIngredients = await queryIngredientDrink(getIng);
         setDataDrinks(dataIngredients);

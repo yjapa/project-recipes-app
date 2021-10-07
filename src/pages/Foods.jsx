@@ -34,7 +34,15 @@ function Foods() {
   // }, [meals]);
   // ===========================
 
+  const setLocalStorageForDoneRecipes = () => {
+    const doneRecipesInLocalStore = localStorage.doneRecipes;
+    if (!doneRecipesInLocalStore) {
+      localStorage.doneRecipes = JSON.stringify([]);
+    }
+  };
+
   useEffect(() => {
+    setLocalStorageForDoneRecipes();
     const setIngredient = async () => {
       if (dataTrue === true) {
         const dataIngredients = await queryIngredient(getIng);
@@ -42,6 +50,7 @@ function Foods() {
       } else {
         const fetchData = async () => fetchDataMeals();
         fetchData();
+        console.log('meals', meals);
       }
     };
     setIngredient();
