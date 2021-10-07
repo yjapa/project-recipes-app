@@ -7,11 +7,7 @@ function MealsArea() {
   const [recipes, setRecipes] = useState({
     country: 'American',
   });
-  // const maxNumberIt = 12;
-
-  // const url = 'https://www.themealdb.com/api/json/v1/1/filter.php?a=Canadian'
-  // const urlALL = 'www.themealdb.com/api/json/v1/1/list.php?a=list'
-
+  console.log(recipes);
   useEffect(() => {
     function getMealArea() {
       fetch('https://www.themealdb.com/api/json/v1/1/list.php?a=list')
@@ -25,36 +21,6 @@ function MealsArea() {
     getMealArea();
   }, []);
 
-  //    const maxNumberIt = 12;
-
-  // const filteredArea() {
-  //     if (arr && arr.length > maxNumberIt) {
-  //       return arr.filter((_, index) => (
-  //         index < maxNumberIt
-  //       ));
-  //     }
-  //     return filteredArea;
-  //   };
-
-  //    mealArea && mealArea.map((item, index) => {
-  //    const { idMeal,strMeal, strMealThumb } = item;
-  //    return (
-  //    <select key={ index } data-testid="explore-by-area-dropdow" >
-  //       <option id={ idMeal }>{ strMeal }</option>
-  //    </select>
-  //     )
-  //   })
-  // }
-
-  // <img
-  //   src={ strMealThumb }
-  //   alt={ item }
-  //   style={ { width: '100px' } }
-  //   data-testid="explore-by-area-dropdow"
-  // />
-
-  // <option id="" [data-testid="${area}-option"]>{ item }</option>
-  //
   const handleChange = ({ target: { value } }) => {
     setRecipes({
       country: value,

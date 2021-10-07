@@ -154,8 +154,11 @@ function DrinksProgress() {
     const day = newDate.getDate();
     const month = newDate.getMonth();
     const year = newDate.getFullYear();
-    return `${year}${separator}${month<10?`0${month}`:`${month}`}${separator}${day}`
-}
+    const teen = 10;
+    return (
+      `${year}${separator}${month < teen ? `0${month}` : `${month}`}${separator}${day}`
+    );
+  };
 
   const mountTemplateForSaveInLocalStorageDoneRecipes = () => {
     console.log(drinks[0]);
@@ -183,23 +186,21 @@ function DrinksProgress() {
       doneDate: strFinishDate,
       tags: [],
     }]);
-
-  }
+  };
 
   const feedDoneRecipesInLocalStorage = () => {
-    const actualFinishRecipe =  mountTemplateForSaveInLocalStorageDoneRecipes()
+    const actualFinishRecipe = mountTemplateForSaveInLocalStorageDoneRecipes();
     const doneRecipesInLocalStorage = JSON.parse(localStorage.getItem('doneRecipes'));
-    if(doneRecipesInLocalStorage) {
+    if (doneRecipesInLocalStorage) {
       const doneRecipesToUpdate = [...doneRecipesInLocalStorage, ...actualFinishRecipe];
       localStorage.setItem('doneRecipes', JSON.stringify(doneRecipesToUpdate));
     } else {
       localStorage.recipesDone = JSON.stringify([]);
     }
-  }
-
+  };
 
   const handleClick = () => {
-    feedDoneRecipesInLocalStorage()
+    feedDoneRecipesInLocalStorage();
     history.push('/receitas-feitas');
   };
 

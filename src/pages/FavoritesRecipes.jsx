@@ -36,21 +36,17 @@ const FavoritesRecipes = () => {
   const showAllFavoriteRecipes = () => {
     // Atualiza o estado com a mesma rotina do didMout
     getFavoriteRecipesFromLocalStorage();
-  }
+  };
 
   const filterOnlyFoods = () => {
-    const onlyFoods = favoriteRecipesClone.filter((item) => {
-      return item.type === 'comida';
-    })
+    const onlyFoods = favoriteRecipesClone.filter((item) => item.type === 'comida');
     setFavoriteRecipes(onlyFoods);
-  }
+  };
 
   const filterOnlyDrinks = () => {
-    const onlyDrinks = favoriteRecipesClone.filter((item) => {
-      return item.type === 'bebida';
-    })
+    const onlyDrinks = favoriteRecipesClone.filter((item) => item.type === 'bebida');
     setFavoriteRecipes(onlyDrinks);
-  }
+  };
 
   return (
     <div>
@@ -60,20 +56,20 @@ const FavoritesRecipes = () => {
           data-testid="filter-by-all-btn"
           type="button"
           onClick={ () => showAllFavoriteRecipes() }
-          >
-            All
+        >
+          All
         </button>
         <button
           data-testid="filter-by-food-btn"
           type="button"
-          onClick={() => filterOnlyFoods()}
+          onClick={ () => filterOnlyFoods() }
         >
           Food
         </button>
         <button
           data-testid="filter-by-drink-btn"
           type="button"
-          onClick={() => filterOnlyDrinks()}
+          onClick={ () => filterOnlyDrinks() }
         >
           Drinks
         </button>

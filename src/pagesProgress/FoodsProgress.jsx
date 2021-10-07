@@ -50,12 +50,8 @@ function FoodsProgress() {
 
   const favoriteStorage = () => meals.map((item) => {
     const {
-      idMeal,
-      strArea,
-      strCategory,
-      strMeal,
-      strMealThumb,
-     } = item;
+      idMeal, strArea, strCategory, strMeal, strMealThumb,
+    } = item;
     return ({
       id: idMeal,
       type: 'comida',
@@ -101,11 +97,9 @@ function FoodsProgress() {
       });
     }
   };
-
   setTimeout(() => {
     ingredientsInProgress();
   });
-
   const setLocalStorage = () => {
     const LS = {
       meals: {
@@ -117,7 +111,6 @@ function FoodsProgress() {
       localStorage.inProgressRecipes = JSON.stringify(LS);
     }
   };
-
   function copyUrl() {
     const THREESEC = 3000;
     const section = document.getElementById('sec-top');
@@ -134,12 +127,10 @@ function FoodsProgress() {
       section.removeChild(advise);
     }, THREESEC);
   }
-
   useEffect(() => {
     fetchDataByIdMeal(mealId);
     setLocalStorage();
   }, []);
-
   const switchFinishBtnFoods = () => {
     const saveProgress = JSON.parse(localStorage.getItem('inProgressRecipes'));
     const checkboxLength = document.querySelectorAll('input[type=checkbox]').length;
@@ -149,7 +140,6 @@ function FoodsProgress() {
       setFinishRecipeFoods(true);
     }
   };
-
   useEffect(() => {
     switchFinishBtnFoods();
   }, [listIngredientFoods]);
@@ -157,30 +147,22 @@ function FoodsProgress() {
   useEffect(() => {
     checkFavorite(mealId);
   });
-
   const getCurrentDate = (separator) => {
     // Source: https://stackoverflow.com/questions/43744312/react-js-get-current-date
     const newDate = new Date();
     const day = newDate.getDate();
     const month = newDate.getMonth();
     const year = newDate.getFullYear();
-    return `${year}${separator}${month<10?`0${month}`:`${month}`}${separator}${day}`
-}
-
+    const teen = 10;
+    return (
+      `${year}${separator}${month < teen ? `0${month}` : `${month}`}${separator}${day}`
+    );
+  };
   const mountTemplateForSaveInLocalStorageDoneRecipes = () => {
-    // console.log(meals[0]);
-
     const strFinishDate = getCurrentDate('/');
-
     const {
-      idMeal,
-      strArea,
-      strCategory,
-      strMeal,
-      strMealThumb,
-      strTags,
+      idMeal, strArea, strCategory, strMeal, strMealThumb, strTags,
     } = meals[0];
-
     return ([{
       id: idMeal,
       type: 'comida',
@@ -192,25 +174,21 @@ function FoodsProgress() {
       doneDate: strFinishDate,
       tags: strTags,
     }]);
-
-  }
-
+  };
   const feedDoneRecipesInLocalStorage = () => {
-    const actualFinishRecipe =  mountTemplateForSaveInLocalStorageDoneRecipes()
+    const actualFinishRecipe = mountTemplateForSaveInLocalStorageDoneRecipes();
     const doneRecipesInLocalStorage = JSON.parse(localStorage.getItem('doneRecipes'));
-    if(doneRecipesInLocalStorage) {
+    if (doneRecipesInLocalStorage) {
       const doneRecipesToUpdate = [...doneRecipesInLocalStorage, ...actualFinishRecipe];
       localStorage.setItem('doneRecipes', JSON.stringify(doneRecipesToUpdate));
     } else {
       localStorage.recipesDone = JSON.stringify([]);
     }
-  }
-
+  };
   const handleClick = () => {
-    feedDoneRecipesInLocalStorage()
+    feedDoneRecipesInLocalStorage();
     history.push('/receitas-feitas');
   };
-
   return (
     <div>
       {meals && meals.map((item, index) => {
