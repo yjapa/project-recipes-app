@@ -21,7 +21,7 @@ function IngredDrinks() {
     }
     getCocktails();
     setDataTrue(false);
-  }, []);
+  }, [setDataTrue]);
 
   const handleClick = (strIngredient) => {
     setDataTrue(true);
