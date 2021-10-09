@@ -11,7 +11,6 @@ function FavoriteDrink({ drinks, typeCategory }) {
     return ({
       id: idDrink,
       type: typeCategory,
-      area: '',
       category: strCategory,
       alcoholicOrNot: strAlcoholic,
       name: strDrink,

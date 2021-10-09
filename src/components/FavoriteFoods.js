@@ -12,7 +12,6 @@ function FavoriteFood({ meals, typeCategory }) {
       type: typeCategory,
       area: strArea,
       category: strCategory,
-      alcoholicOrNot: '',
       name: strMeal,
       image: strMealThumb,
     });
@@ -70,13 +69,3 @@ FavoriteFood.propTypes = {
 }.isRequired;
 
 export default FavoriteFood;
-// const checkFavorite = (recipeId) => {
-//   const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
-//   if (favoriteRecipes !== null) {
-//     if (favoriteRecipes.filter((e) => e.id === recipeId).length > 0) {
-//       localStorage.setItem('isFavorite', true);
-//     } else {
-//       localStorage.setItem('isFavorite', false);
-//     }
-//   }
-// };
