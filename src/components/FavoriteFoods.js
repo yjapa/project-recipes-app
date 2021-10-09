@@ -12,6 +12,7 @@ function FavoriteFood({ meals, typeCategory }) {
       type: typeCategory,
       area: strArea,
       category: strCategory,
+      alcoholicOrNot: '',
       name: strMeal,
       image: strMealThumb,
     });
