@@ -8,10 +8,9 @@ import HeaderInput from './HeaderInputs';
 import '../css/header.css';
 import MyContext from '../context/myContext';
 
-function Header({ title, searchIcone, searchCategory }) {
+function Header({ title, searchIcone, hiddenCategory }) {
   const [showFilter, setFilter] = useState(false);
   const { loginState } = useContext(MyContext);
-
   useEffect(() => {
     const saveProgress = JSON.parse(localStorage.getItem('user'));
     if (saveProgress === null) {
@@ -52,14 +51,14 @@ function Header({ title, searchIcone, searchCategory }) {
         { searchIcone && renderSearchBar() }
       </div>
       {showFilter && <HeaderInput />}
-      {searchIcone && searchCategory && <Categories />}
+      {hiddenCategory && <Categories />}
     </header>
   );
 }
 
 Header.propTypes = {
   searchIcone: PropTypes.bool.isRequired,
-  searchCategory: PropTypes.bool.isRequired,
+  hiddenCategory: PropTypes.bool.isRequired,
   title: PropTypes.string.isRequired,
 };
 

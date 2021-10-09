@@ -80,7 +80,7 @@ function Drinks() {
 
   return (
     <div className="main-container">
-      <Header title="Bebidas" searchIcone />
+      <Header title="Bebidas" searchIcone hiddenCategory />
       {renderOne()}
       {renderAll()}
       <Footer />

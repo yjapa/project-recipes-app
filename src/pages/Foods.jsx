@@ -85,9 +85,8 @@ function Foods() {
 
   return (
     <div className="main-container">
-      <Header title="Comidas" searchIcone meals="meals" />
+      <Header title="Comidas" searchIcone hiddenCategory />
       {meals && meals.length === 1 ? renderOne() : renderAll() }
-      {/* { renderAll() } */}
       <Footer />
     </div>
   );
