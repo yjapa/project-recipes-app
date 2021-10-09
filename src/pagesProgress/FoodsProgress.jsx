@@ -105,18 +105,7 @@ function FoodsProgress() {
   setTimeout(() => {
     ingredientsInProgress();
   });
-  const setLocalStorage = () => {
-    const LS = {
-      meals: {
-        [mealId]: [],
-      },
-    };
 
-    const saveProgress = JSON.parse(localStorage.getItem('inProgressRecipes'));
-    if (saveProgress === null) {
-      localStorage.inProgressRecipes = JSON.stringify(LS);
-    }
-  };
   function copyUrl() {
     const THREESEC = 3000;
     const section = document.getElementById('sec-top');
@@ -134,21 +123,37 @@ function FoodsProgress() {
     }, THREESEC);
   }
   useEffect(() => {
-    fetchDataByIdMeal(mealId);
-    setLocalStorage();
-  }, []);
-  const switchFinishBtnFoods = () => {
-    const saveProgress = JSON.parse(localStorage.getItem('inProgressRecipes'));
-    const checkboxLength = document.querySelectorAll('input[type=checkbox]').length;
-    if (saveProgress.meals[mealId].length === checkboxLength) {
-      setFinishRecipeFoods(false);
-    } else {
-      setFinishRecipeFoods(true);
-    }
-  };
+    const fetchData = async () => fetchDataByIdMeal(mealId);
+    fetchData();
+  }, [fetchDataByIdMeal, mealId]);
+
   useEffect(() => {
+    const setLocalStorage = () => {
+      const LS = {
+        meals: {
+          [mealId]: [],
+        },
+      };
+      const saveProgress = JSON.parse(localStorage.getItem('inProgressRecipes'));
+      if (saveProgress === null) {
+        localStorage.inProgressRecipes = JSON.stringify(LS);
+      }
+    };
+    setLocalStorage();
+  }, [mealId]);
+
+  useEffect(() => {
+    const switchFinishBtnFoods = () => {
+      const saveProgress = JSON.parse(localStorage.getItem('inProgressRecipes'));
+      const checkboxLength = document.querySelectorAll('input[type=checkbox]').length;
+      if (saveProgress.meals[mealId].length === checkboxLength) {
+        setFinishRecipeFoods(false);
+      } else {
+        setFinishRecipeFoods(true);
+      }
+    };
     switchFinishBtnFoods();
-  }, [listIngredientFoods]);
+  }, [mealId]);
 
   useEffect(() => {
     checkFavorite(mealId);

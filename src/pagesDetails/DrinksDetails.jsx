@@ -48,25 +48,31 @@ function DrinksDetails() {
     }
   };
 
-  const checkRecipe = () => {
-    const drinkStorage = JSON.parse(localStorage.getItem('inProgressRecipes'));
-    if (drinkStorage !== null && drinkStorage.cocktails !== undefined) {
-      const storageDrinkIds = Object.keys(drinkStorage.cocktails);
-      if (storageDrinkIds.includes(drinkId)) {
-        localStorage.setItem('startButton', false);
+  useEffect(() => {
+    const checkRecipe = () => {
+      const drinkStorage = JSON.parse(localStorage.getItem('inProgressRecipes'));
+      if (drinkStorage !== null && drinkStorage.cocktails !== undefined) {
+        const storageDrinkIds = Object.keys(drinkStorage.cocktails);
+        if (storageDrinkIds.includes(drinkId)) {
+          localStorage.setItem('startButton', false);
+        } else {
+          localStorage.setItem('startButton', true);
+        }
       } else {
         localStorage.setItem('startButton', true);
       }
-    } else {
-      localStorage.setItem('startButton', true);
-    }
-  };
+    };
+    checkRecipe();
+  }, [drinkId]);
 
   useEffect(() => {
-    fetchDataByIdDrink(drinkId);
-    checkRecipe();
     checkFavorite(drinkId);
-  }, []);
+  }, [drinkId]);
+
+  useEffect(() => {
+    const fetchData = async () => fetchDataByIdDrink(drinkId);
+    fetchData();
+  }, [fetchDataByIdDrink, drinkId]);
 
   const handleClick = (idDrink) => {
     const saveProgress = JSON.parse(localStorage.getItem('inProgressRecipes'));

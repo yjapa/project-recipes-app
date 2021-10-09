@@ -17,22 +17,6 @@ function Foods() {
   } = useContext(MyContext);
 
   const history = useHistory();
-  // Outra maneira para filtrar array
-  // ===========================
-  // useEffect(() => {
-  //   const newArray = [];
-  //   const MAX_FOODS = 12;
-  //   if (meals) {
-  //     meals.map((item, index) => {
-  //       if (index < MAX_FOODS) {
-  //         return newArray.push(item);
-  //       }
-  //       return newArray;
-  //     });
-  //     setNewData(newArray);
-  //   }
-  // }, [meals]);
-  // ===========================
 
   const setLocalStorageForDoneRecipes = () => {
     const doneRecipesInLocalStore = localStorage.doneRecipes;
@@ -43,6 +27,9 @@ function Foods() {
 
   useEffect(() => {
     setLocalStorageForDoneRecipes();
+  }, []);
+
+  useEffect(() => {
     const setIngredient = async () => {
       if (dataTrue === true) {
         const dataIngredients = await queryIngredient(getIng);
@@ -50,11 +37,10 @@ function Foods() {
       } else {
         const fetchData = async () => fetchDataMeals();
         fetchData();
-        console.log('meals', meals);
       }
     };
     setIngredient();
-  }, []);
+  }, [dataTrue, queryIngredient, fetchDataMeals, getIng, setData]);
 
   const renderAll = () => {
     if (meals) {

@@ -26,6 +26,9 @@ function Drinks() {
 
   useEffect(() => {
     setLocalStorageForDoneRecipes();
+  }, []);
+
+  useEffect(() => {
     const setIngredient = async () => {
       if (dataTrue === true) {
         const dataIngredients = await queryIngredientDrink(getIng);
@@ -36,7 +39,7 @@ function Drinks() {
       }
     };
     setIngredient();
-  }, []);
+  }, [dataTrue, queryIngredientDrink, fetchDataDrinks, getIng, setDataDrinks]);
 
   const renderOne = () => {
     if (drinks && drinks.length === 1) {

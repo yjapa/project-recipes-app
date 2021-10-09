@@ -117,37 +117,42 @@ function DrinksProgress() {
     ingredientsInProgress();
   });
 
-  const setLocalStorage = () => {
-    const LS = {
-      cocktails: {
-        [drinkId]: [],
-      },
+  useEffect(() => {
+    const setLocalStorage = () => {
+      const LS = {
+        cocktails: {
+          [drinkId]: [],
+        },
+      };
+      const saveProgress = JSON.parse(localStorage.getItem('inProgressRecipes'));
+      if (saveProgress === null) {
+        localStorage.inProgressRecipes = JSON.stringify(LS);
+      }
     };
-    const saveProgress = JSON.parse(localStorage.getItem('inProgressRecipes'));
-    if (saveProgress === null) {
-      localStorage.inProgressRecipes = JSON.stringify(LS);
-    }
-  };
-
-  useEffect(() => {
-    fetchDataByIdDrink(drinkId);
     setLocalStorage();
-    checkFavorite(drinkId);
-  }, []);
-
-  const switchFinishBtnCocktails = () => {
-    const saveProgress = JSON.parse(localStorage.getItem('inProgressRecipes'));
-    const checkboxLength = document.querySelectorAll('input[type=checkbox]').length;
-    if (saveProgress.cocktails[drinkId].length === checkboxLength) {
-      setFinishRecipeCocktails(false);
-    } else {
-      setFinishRecipeCocktails(true);
-    }
-  };
+  }, [drinkId]);
 
   useEffect(() => {
+    const fetchData = async () => fetchDataByIdDrink(drinkId);
+    fetchData();
+  }, [fetchDataByIdDrink, drinkId]);
+
+  useEffect(() => {
+    checkFavorite(drinkId);
+  }, [drinkId]);
+
+  useEffect(() => {
+    const switchFinishBtnCocktails = () => {
+      const saveProgress = JSON.parse(localStorage.getItem('inProgressRecipes'));
+      const checkboxLength = document.querySelectorAll('input[type=checkbox]').length;
+      if (saveProgress.cocktails[drinkId].length === checkboxLength) {
+        setFinishRecipeCocktails(false);
+      } else {
+        setFinishRecipeCocktails(true);
+      }
+    };
     switchFinishBtnCocktails();
-  }, [listIngredientsCocktails]);
+  }, [drinkId]);
 
   const handleClick = () => {
     feedDoneRecipesInLocalStorageDrinks(drinks);

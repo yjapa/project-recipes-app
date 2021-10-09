@@ -20,7 +20,7 @@ function Header({ title, searchIcone }) {
       };
       localStorage.user = JSON.stringify(userEmail);
     }
-  }, []);
+  }, [loginState]);
 
   const renderSearchBar = () => (
     <div className="container-button">
