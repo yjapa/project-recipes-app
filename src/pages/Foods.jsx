@@ -40,7 +40,7 @@ function Foods() {
       }
     };
     setIngredient();
-  }, [dataTrue, queryIngredient, fetchDataMeals, getIng, setData]);
+  }, []);
 
   const renderAll = () => {
     if (meals) {

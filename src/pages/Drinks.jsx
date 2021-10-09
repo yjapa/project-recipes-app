@@ -39,7 +39,7 @@ function Drinks() {
       }
     };
     setIngredient();
-  }, [dataTrue, queryIngredientDrink, fetchDataDrinks, getIng, setDataDrinks]);
+  }, []);
 
   const renderOne = () => {
     if (drinks && drinks.length === 1) {

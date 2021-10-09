@@ -23,19 +23,22 @@ function Categories() {
 
   const MAX_BUTTONS = 5;
 
+  const fetchCategoriesMeals = async () => {
+    const dataCategoriesMeals = await categoriesMeals();
+    setCategories(dataCategoriesMeals.meals);
+  };
+
+  const fetchCategoriesDrinks = async () => {
+    const dataCategoriesDrinks = await categoriesDrinks();
+    setCategories(dataCategoriesDrinks.drinks);
+  };
+
   useEffect(() => {
-    const fetchCategoriesDrinks = async () => {
-      const dataCategoriesDrinks = await categoriesDrinks();
-      setCategories(dataCategoriesDrinks.drinks);
-    };
-    const fetchCategoriesMeals = async () => {
-      const dataCategoriesMeals = await categoriesMeals();
-      setCategories(dataCategoriesMeals.meals);
-    };
     const fetchData = async () => ((location.pathname === '/comidas')
       ? fetchCategoriesMeals() : fetchCategoriesDrinks());
     fetchData();
-  }, [categoriesDrinks, categoriesMeals, location]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const toggleButtons = async (strCategory) => {
     if (location.pathname === '/comidas') {
