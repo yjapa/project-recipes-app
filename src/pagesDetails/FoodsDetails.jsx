@@ -3,7 +3,8 @@ import { useLocation, useParams } from 'react-router-dom';
 import { useHistory } from 'react-router';
 import shareIcon from '../images/shareIcon.svg';
 import MyContext from '../context/myContext';
-import { checkFavorite, renderFavorite } from '../components/FavoriteButton';
+import { checkFavorite } from '../components/FavoriteButton';
+import FavoriteFood from '../components/FavoriteFoods';
 
 function FoodsDetails() {
   const { pathname } = useLocation();
@@ -42,38 +43,6 @@ function FoodsDetails() {
       });
     }
     (history.push(`/comidas/${idMeal}/in-progress`));
-  };
-
-  const favoriteStorage = () => meals.map((item) => {
-    const { idMeal, strArea, strCategory, strMeal, strMealThumb } = item;
-    return ({
-      id: idMeal,
-      type: 'comida',
-      area: strArea,
-      category: strCategory,
-      alcoholicOrNot: '',
-      name: strMeal,
-      image: strMealThumb,
-    });
-  });
-
-  const favoriteClick = () => {
-    const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
-    const isFavorite = JSON.parse(localStorage.getItem('isFavorite'));
-    if (!isFavorite) {
-      localStorage.setItem('isFavorite', true);
-      if (favoriteRecipes === null) {
-        localStorage.favoriteRecipes = JSON.stringify(favoriteStorage());
-      } else {
-        const recipesArr = [...favoriteRecipes, ...favoriteStorage()];
-        localStorage.setItem('favoriteRecipes', JSON.stringify(recipesArr));
-      }
-    } else {
-      localStorage.setItem('isFavorite', false);
-      const index = favoriteRecipes.indexOf(favoriteStorage());
-      favoriteRecipes.splice(index, 1);
-      localStorage.setItem('favoriteRecipes', JSON.stringify(favoriteRecipes));
-    }
   };
 
   const continueClick = (idMeal) => {
@@ -188,7 +157,10 @@ function FoodsDetails() {
                     alt="Compartilhar"
                   />
                 </button>
-                { renderFavorite(favoriteClick) }
+                <FavoriteFood
+                  meals={ meals }
+                  typeCategory="comida"
+                />
               </section>
               <section>
                 <div>

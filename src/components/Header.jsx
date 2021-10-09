@@ -50,7 +50,7 @@ function Header({ title, searchIcone, hiddenCategory }) {
         <h2 data-testid="page-title" className="title">{title}</h2>
         { searchIcone && renderSearchBar() }
       </div>
-      {showFilter && <HeaderInput />}
+      { showFilter && <HeaderInput />}
       {hiddenCategory && <Categories />}
     </header>
   );

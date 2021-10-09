@@ -3,7 +3,8 @@ import { useParams, useLocation, useHistory } from 'react-router-dom';
 import MyContext from '../context/myContext';
 import shareIcon from '../images/shareIcon.svg';
 import '../css/pageProgress.css';
-import { checkFavorite, renderFavorite } from '../components/FavoriteButton';
+import { checkFavorite } from '../components/FavoriteButton';
+import FavoriteFood from '../components/FavoriteFoods';
 
 function FoodsProgress() {
   const { pathname } = useLocation();
@@ -46,40 +47,6 @@ function FoodsProgress() {
         },
       });
       setListIngredientFoods([...removeIngredient]);
-    }
-  };
-
-  const favoriteStorage = () => meals.map((item) => {
-    const {
-      idMeal, strArea, strCategory,
-      strMeal, strMealThumb } = item;
-    return ({
-      id: idMeal,
-      type: 'comida',
-      image: strMealThumb,
-      name: strMeal,
-      category: strCategory,
-      area: strArea,
-      alcoholicOrNot: '',
-    });
-  });
-
-  const favoriteClick = () => {
-    const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
-    const isFavorite = JSON.parse(localStorage.getItem('isFavorite'));
-    if (!isFavorite) {
-      localStorage.setItem('isFavorite', true);
-      if (favoriteRecipes === null) {
-        localStorage.favoriteRecipes = JSON.stringify(favoriteStorage());
-      } else {
-        const recipesArr = [...favoriteRecipes, ...favoriteStorage()];
-        localStorage.setItem('favoriteRecipes', JSON.stringify(recipesArr));
-      }
-    } else {
-      localStorage.setItem('isFavorite', false);
-      const index = favoriteRecipes.indexOf(favoriteStorage());
-      favoriteRecipes.splice(index, 1);
-      localStorage.setItem('favoriteRecipes', JSON.stringify(favoriteRecipes));
     }
   };
 
@@ -199,7 +166,10 @@ function FoodsProgress() {
 
                 />
               </button>
-              {renderFavorite(favoriteClick)}
+              <FavoriteFood
+                meals={ meals }
+                typeCategory="comida"
+              />
             </section>
             <section>
               <h3>Ingredients</h3>
