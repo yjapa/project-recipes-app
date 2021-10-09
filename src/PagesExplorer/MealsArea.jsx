@@ -19,7 +19,7 @@ function MealsArea() {
 
   return (
     <div>
-      <Header title="Explorar Origem" />
+      <Header title="Explorar Origem" searchIcone />
       <Dropdown setUrlRequest={ setUrlRequest } />
       { (mealsArea.length !== 0) && mealsArea
         .filter((_, index) => index < Number('12'))

@@ -15,7 +15,7 @@ function Perfil() {
   };
   const renderEmailLocalStorage = () => {
     const email = JSON.parse(localStorage.getItem('user'));
-    return email.email;
+    if (email) { return email.email; }
   };
   const clearLocalStorage = () => {
     localStorage.clear();
@@ -25,7 +25,7 @@ function Perfil() {
   return (
     <main>
       <Header title="Perfil" />
-      <section>
+      <section className="container-main-perfil">
         <div className="container-buttons">
           <span data-testid="profile-email">{renderEmailLocalStorage()}</span>
           <button
