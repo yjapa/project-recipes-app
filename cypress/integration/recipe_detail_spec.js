@@ -136,12 +136,12 @@ describe('35 - Desenvolva a tela de forma que contenha uma imagem da receita, o 
     cy.get('[data-testid="2-ingredient-name-and-measure"]').contains('1 oz');
 
     cy.get('[data-testid="instructions"]').contains(oneDrink.drinks[0].strInstructions);
-    
+
     cy.get('[data-testid*="recomendation-card"]').should('exist');
   });
 });
 
-describe.skip('36 - Implemente as recomendações, para receitas de comida, a recomendação deverá ser bebida e vice-versa', () => {
+describe('36 - Implemente as recomendações, para receitas de comida, a recomendação deverá ser bebida e vice-versa', () => {
   it('Verifica se a requisição para a API de bebidas foi realizada', () => {
     cy.visit('http://localhost:3000/comidas/52771', {
       onBeforeLoad(win) {
@@ -167,7 +167,7 @@ describe.skip('36 - Implemente as recomendações, para receitas de comida, a re
   });
 });
 
-describe.skip('37 - Implemente os cards de recomendação, onde serão 6 cards, mas mostrando apenas 2 e o scroll é horizontal, similar a um `carousel`', () => {
+describe('37 - Implemente os cards de recomendação, onde serão 6 cards, mas mostrando apenas 2 e o scroll é horizontal, similar a um `carousel`', () => {
   it('Verifica se existem todas as recomendações na tela de detalhes de uma comida', () => {
     cy.visit('http://localhost:3000/comidas/52771', {
       onBeforeLoad(win) {
