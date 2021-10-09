@@ -15,20 +15,6 @@ export const checkFavorite = (recipeId) => {
 
 export const renderFavorite = (favoriteClick) => {
   const isFavorite = JSON.parse(localStorage.getItem('isFavorite'));
-  if (isFavorite) {
-    return (
-      <button
-        type="button"
-        onClick={ favoriteClick }
-      >
-        <img
-          data-testid="favorite-btn"
-          src={ blackHeartIcon }
-          alt="Favoritar"
-        />
-      </button>
-    );
-  }
   return (
     <button
       type="button"
@@ -36,7 +22,7 @@ export const renderFavorite = (favoriteClick) => {
     >
       <img
         data-testid="favorite-btn"
-        src={ whiteHeartIcon }
+        src={ (!isFavorite) ? whiteHeartIcon : blackHeartIcon }
         alt="Favoritar"
       />
     </button>

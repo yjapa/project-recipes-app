@@ -103,7 +103,6 @@ function FoodsDetails() {
 
   const renderButton = () => {
     const startBtnStorage = JSON.parse(localStorage.getItem('startButton'));
-
     if (startBtnStorage) {
       return (
         <button
@@ -149,7 +148,6 @@ function FoodsDetails() {
 
   return (
     <main>
-      {console.log('meals in foodDetails', meals)}
       {meals && meals.map((item, index) => {
         const {
           strMeal,

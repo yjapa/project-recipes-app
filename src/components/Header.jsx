@@ -8,7 +8,7 @@ import HeaderInput from './HeaderInputs';
 import '../css/header.css';
 import MyContext from '../context/myContext';
 
-function Header({ title, searchIcone }) {
+function Header({ title, searchIcone, searchCategory }) {
   const [showFilter, setFilter] = useState(false);
   const { loginState } = useContext(MyContext);
 
@@ -52,13 +52,14 @@ function Header({ title, searchIcone }) {
         { searchIcone && renderSearchBar() }
       </div>
       {showFilter && <HeaderInput />}
-      {searchIcone && <Categories />}
+      {searchIcone && searchCategory && <Categories />}
     </header>
   );
 }
 
 Header.propTypes = {
   searchIcone: PropTypes.bool.isRequired,
+  searchCategory: PropTypes.bool.isRequired,
   title: PropTypes.string.isRequired,
 };
 
