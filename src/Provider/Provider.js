@@ -84,7 +84,7 @@ function Provider({ children }) {
     const dataToOpen = await arrayFiltered(fetchCategoryDrink(strCategory));
     setDataDrinks(dataToOpen);
   };
-  // ========================================================================================================
+  // =========================================================================================================
   // Fetch realizado pelo ID
 
   const fetchDataByIdMeal = async (mealID) => {
