@@ -10,7 +10,7 @@ import '../css/Caouresel.css';
 function FoodsDetails() {
   const { pathname } = useLocation();
   const [mealsDataById, setMealsDataById] = useState([]);
-  const [carouselData, setCarouselData] = useState([]);
+  // const [carouselData, setCarouselData] = useState([]);
   const { listIngredients,
     recipesApi: { fetchDataByIdMeal } } = useContext(MyContext);
   const { mealId } = useParams();
@@ -21,12 +21,12 @@ function FoodsDetails() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const url = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
+      // const url = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
       const idFood = await fetchDataByIdMeal(mealId);
       setMealsDataById(idFood);
-      const request = await fetch(url);
-      const json = await request.json();
-      setCarouselData(json.drinks);
+      // const request = await fetch(url);
+      // const json = await request.json();
+      // setCarouselData(json.drinks);
     };
     fetchData();
   }, [fetchDataByIdMeal, mealId]);
@@ -181,7 +181,7 @@ function FoodsDetails() {
                 { renderButton() }
               </section>
               <div className="recomendation-container">
-                {carouselData.slice(0, Number('6')).map((itemCarousel, i) => (
+                {/* {carouselData.slice(0, Number('6')).map((itemCarousel, i) => (
                   <div
                     key={ `${i}-${itemCarousel}` }
                     data-testid={ `${i}-recomendation-card` }
@@ -197,7 +197,8 @@ function FoodsDetails() {
                       width="150px"
                     />
                   </div>
-                ))}
+                ))} */}
+                vem aqui o carrosel
               </div>
             </div>
           </section>

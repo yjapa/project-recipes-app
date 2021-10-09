@@ -11,7 +11,7 @@ function DrinksDetails() {
   const { pathname } = useLocation();
   const { drinkId } = useParams();
   const [drinksById, setDrinksById] = useState([]);
-  const [carouselData, setCarouselData] = useState([]);
+  // const [carouselData, setCarouselData] = useState([]);
   const { listIngredients,
     drinksApi: { fetchDataByIdDrink },
   } = useContext(MyContext);
@@ -22,12 +22,12 @@ function DrinksDetails() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const url = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
+      // const url = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
       const idDrink = await fetchDataByIdDrink(drinkId);
       setDrinksById(idDrink);
-      const request = await fetch(url);
-      const json = await request.json();
-      setCarouselData(json.meals);
+      // const request = await fetch(url);
+      // const json = await request.json();
+      // setCarouselData(json.meals);
     };
     fetchData();
   }, [fetchDataByIdDrink, drinkId]);
@@ -177,7 +177,8 @@ function DrinksDetails() {
               </section>
             </div>
             <div className="recomendation-container">
-              {carouselData.slice(0, Number('6')).map((itemCarousel, i) => (
+              vem aqui o carrosel
+              {/* {carouselData.slice(0, Number('6')).map((itemCarousel, i) => (
                 <div
                   key={ `${i}-${itemCarousel}` }
                   data-testid={ `${i}-recomendation-card` }
@@ -193,7 +194,7 @@ function DrinksDetails() {
                     width="150px"
                   />
                 </div>
-              ))}
+              ))} */}
             </div>
           </section>
         );
