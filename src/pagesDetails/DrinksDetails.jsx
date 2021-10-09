@@ -3,7 +3,7 @@ import { useLocation, useParams } from 'react-router-dom';
 import { useHistory } from 'react-router';
 import shareIcon from '../images/shareIcon.svg';
 import MyContext from '../context/myContext';
-import { checkFavorite } from '../components/FavoriteButton';
+import { checkFavorite } from '../components/CheckFavorite';
 import FavoriteDrink from '../components/FavoriteDrink';
 
 function DrinksDetails() {
@@ -54,6 +54,7 @@ function DrinksDetails() {
       localStorage.inProgressRecipes = JSON.stringify({ cocktails: {
         [drinkId]: [],
       } });
+      (history.push(`/bebidas/${idDrink}/in-progress`));
     } else {
       localStorage.inProgressRecipes = JSON.stringify({
         ...saveProgress,
@@ -62,40 +63,22 @@ function DrinksDetails() {
           [drinkId]: [],
         },
       });
+      history.push(`/bebidas/${idDrink}/in-progress`);
     }
-    history.push(`/bebidas/${idDrink}/in-progress`);
-  };
-
-  const continueClick = (idMeal) => {
-    (history.push(`/comidas/${idMeal}/in-progress`));
   };
 
   const renderButton = () => {
     const startBtnStorage = JSON.parse(localStorage.getItem('startButton'));
-
-    if (startBtnStorage) {
-      return (
-        <button
-          id="btn-start"
-          className="btn-style"
-          data-testid="start-recipe-btn"
-          type="button"
-          onClick={ () => handleClick(drinkId) }
-        >
-          Iniciar Receita
-        </button>);
-    }
     return (
       <button
-        id="btn-continue"
+        id="btn-start"
         className="btn-style"
         data-testid="start-recipe-btn"
         type="button"
-        onClick={ () => continueClick(drinkId) }
+        onClick={ () => handleClick(drinkId) }
       >
-        Continuar Receita
-      </button>
-    );
+        {startBtnStorage ? 'Iniciar Receita' : 'Continuar Receita' }
+      </button>);
   };
 
   // referencia: https://blog.dadops.co/2021/03/17/copy-and-paste-in-a-react-app/

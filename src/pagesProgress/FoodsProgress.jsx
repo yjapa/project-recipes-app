@@ -3,7 +3,7 @@ import { useParams, useLocation, useHistory } from 'react-router-dom';
 import MyContext from '../context/myContext';
 import shareIcon from '../images/shareIcon.svg';
 import '../css/pageProgress.css';
-import { checkFavorite } from '../components/FavoriteButton';
+import { checkFavorite } from '../components/CheckFavorite';
 import FavoriteFood from '../components/FavoriteFoods';
 
 function FoodsProgress() {

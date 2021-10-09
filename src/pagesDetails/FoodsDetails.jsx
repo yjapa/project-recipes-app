@@ -3,7 +3,7 @@ import { useLocation, useParams } from 'react-router-dom';
 import { useHistory } from 'react-router';
 import shareIcon from '../images/shareIcon.svg';
 import MyContext from '../context/myContext';
-import { checkFavorite } from '../components/FavoriteButton';
+import { checkFavorite } from '../components/CheckFavorite';
 import FavoriteFood from '../components/FavoriteFoods';
 
 function FoodsDetails() {
@@ -25,36 +25,12 @@ function FoodsDetails() {
     fetchData();
   }, [fetchDataByIdMeal, mealId]);
 
-  const handleClick = (idMeal) => {
-    const saveProgress = JSON.parse(localStorage.getItem('inProgressRecipes'));
-    localStorage.setItem('startButton', false);
-
-    if (saveProgress === null) {
-      localStorage.inProgressRecipes = JSON.stringify({ meals: {
-        [mealId]: [],
-      } });
-    } else {
-      localStorage.inProgressRecipes = JSON.stringify({
-        ...saveProgress,
-        meals: {
-          ...saveProgress.meals,
-          [mealId]: [],
-        },
-      });
-    }
-    (history.push(`/comidas/${idMeal}/in-progress`));
-  };
-
-  const continueClick = (idMeal) => {
-    (history.push(`/comidas/${idMeal}/in-progress`));
-  };
-
   useEffect(() => {
     const checkRecipe = () => {
-      const drinkStorage = JSON.parse(localStorage.getItem('inProgressRecipes'));
-      if (drinkStorage !== null && drinkStorage.cocktails !== undefined) {
-        const storageDrinkIds = Object.keys(drinkStorage.cocktails);
-        if (storageDrinkIds.includes(mealId)) {
+      const mealStorage = JSON.parse(localStorage.getItem('inProgressRecipes'));
+      if (mealStorage !== null && mealStorage.meals !== undefined) {
+        const storageMealIds = Object.keys(mealStorage.meals);
+        if (storageMealIds.includes(mealId)) {
           localStorage.setItem('startButton', false);
         } else {
           localStorage.setItem('startButton', true);
@@ -70,31 +46,38 @@ function FoodsDetails() {
     checkFavorite(mealId);
   }, [mealId]);
 
+  const handleClick = (idMeal) => {
+    const saveProgress = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    localStorage.setItem('startButton', false);
+    if (saveProgress === null) {
+      localStorage.inProgressRecipes = JSON.stringify({ meals: {
+        [mealId]: [],
+      } });
+      (history.push(`/comidas/${idMeal}/in-progress`));
+    } else {
+      localStorage.inProgressRecipes = JSON.stringify({
+        ...saveProgress,
+        meals: {
+          ...saveProgress.meals,
+          [mealId]: [],
+        },
+      });
+      (history.push(`/comidas/${idMeal}/in-progress`));
+    }
+  };
+
   const renderButton = () => {
     const startBtnStorage = JSON.parse(localStorage.getItem('startButton'));
-    if (startBtnStorage) {
-      return (
-        <button
-          id="btn-start"
-          className="btn-style"
-          data-testid="start-recipe-btn"
-          type="button"
-          onClick={ () => handleClick(mealId) }
-        >
-          Iniciar Receita
-        </button>);
-    }
     return (
       <button
-        id="btn-continue"
+        id="btn-start"
         className="btn-style"
         data-testid="start-recipe-btn"
         type="button"
-        onClick={ () => continueClick(mealId) }
+        onClick={ () => handleClick(mealId) }
       >
-        Continuar Receita
-      </button>
-    );
+        {startBtnStorage ? 'Iniciar Receita' : 'Continuar Receita' }
+      </button>);
   };
 
   // referencia: https://blog.dadops.co/2021/03/17/copy-and-paste-in-a-react-app/
