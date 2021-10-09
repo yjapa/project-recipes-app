@@ -176,7 +176,7 @@ function FoodsDetails() {
                 <iframe
                   title="Video"
                   data-testid="video"
-                  src={ strYoutube }
+                  src={ strYoutube.replace('watch?v=', 'embed/') }
                 />
                 { renderButton() }
               </section>
