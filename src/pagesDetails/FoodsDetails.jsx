@@ -1,5 +1,5 @@
 import React, { useEffect, useContext, useState } from 'react';
-import { Link, useLocation, useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import { useHistory } from 'react-router';
 import shareIcon from '../images/shareIcon.svg';
 import MyContext from '../context/myContext';
@@ -182,25 +182,21 @@ function FoodsDetails() {
               </section>
               <div className="recomendation-container">
                 {carouselData.slice(0, Number('6')).map((itemCarousel, i) => (
-                  <Link
-                    to={ `/bebidas/${itemCarousel.idDrink}` }
+                  <div
                     key={ `${i}-${itemCarousel}` }
+                    data-testid={ `${i}-recomendation-card` }
                   >
-                    <div
-                      data-testid={ `${i}-recomendation-card` }
+                    <h4
+                      data-testid={ `${i}-recomendation-title` }
                     >
-                      <h4
-                        data-testid={ `${i}-recomendation-title` }
-                      >
-                        { itemCarousel.strDrink }
-                      </h4>
-                      <img
-                        src={ itemCarousel.strDrinkThumb }
-                        alt="Comida Recomendada"
-                        width="150px"
-                      />
-                    </div>
-                  </Link>
+                      { itemCarousel.strDrink }
+                    </h4>
+                    <img
+                      src={ itemCarousel.strDrinkThumb }
+                      alt="Comida Recomendada"
+                      width="150px"
+                    />
+                  </div>
                 ))}
               </div>
             </div>
