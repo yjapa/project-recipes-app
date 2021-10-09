@@ -86,7 +86,7 @@ function FoodsDetails() {
       </button>);
   };
 
-  // referencia: https://blog.dadops.co/2021/03/17/copy-and-paste-in-a-react-app/
+  // referência: https://blog.dadops.co/2021/03/17/copy-and-paste-in-a-react-app/
   function copyUrl() {
     const THREESEC = 3000;
     const section = document.getElementById('sec-top');
