@@ -8,14 +8,15 @@ import { checkFavorite, renderFavorite } from '../components/FavoriteButton';
 function DrinksProgress() {
   const { pathname } = useLocation();
   const { drinkId } = useParams();
+  const [drinksById, setDrinksById] = useState([]);
   const { listIngredients,
     drinksApi: { fetchDataByIdDrink },
-    drinksById, feedDoneRecipesInLocalStorageDrinks } = useContext(MyContext);
+    feedDoneRecipesInLocalStorageDrinks } = useContext(MyContext);
   const { drinks } = drinksById;
   const ingredients = [];
   const history = useHistory();
   const [listIngredientsCocktails, setListIngredientCocktails] = useState([]);
-  const [finishRecipeCocktails, setFinishRecipeCocktails] = useState(true);
+  const [finishRecipeCocktails, setFinishRecipeCocktails] = useState(false);
   listIngredients(drinks, ingredients);
 
   const handleScratchedIngredient = ({ target }, i) => {
@@ -118,6 +119,14 @@ function DrinksProgress() {
   });
 
   useEffect(() => {
+    const fetchData = async () => {
+      const idDrink = await fetchDataByIdDrink(drinkId);
+      setDrinksById(idDrink);
+    };
+    fetchData();
+  }, [fetchDataByIdDrink, drinkId]);
+
+  useEffect(() => {
     const setLocalStorage = () => {
       const LS = {
         cocktails: {
@@ -133,15 +142,10 @@ function DrinksProgress() {
   }, [drinkId]);
 
   useEffect(() => {
-    const fetchData = async () => fetchDataByIdDrink(drinkId);
-    fetchData();
-  }, [fetchDataByIdDrink, drinkId]);
-
-  useEffect(() => {
     checkFavorite(drinkId);
   }, [drinkId]);
 
-  useEffect(() => {
+  setTimeout(() => {
     const switchFinishBtnCocktails = () => {
       const saveProgress = JSON.parse(localStorage.getItem('inProgressRecipes'));
       const checkboxLength = document.querySelectorAll('input[type=checkbox]').length;
@@ -152,7 +156,7 @@ function DrinksProgress() {
       }
     };
     switchFinishBtnCocktails();
-  }, [drinkId]);
+  });
 
   const handleClick = () => {
     feedDoneRecipesInLocalStorageDrinks(drinks);

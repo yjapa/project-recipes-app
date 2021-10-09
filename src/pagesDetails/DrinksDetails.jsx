@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useEffect, useContext, useState } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 import { useHistory } from 'react-router';
 import shareIcon from '../images/shareIcon.svg';
@@ -8,13 +8,22 @@ import { checkFavorite, renderFavorite } from '../components/FavoriteButton';
 function DrinksDetails() {
   const { pathname } = useLocation();
   const { drinkId } = useParams();
-  const { listIngredients, drinksById,
+  const [drinksById, setDrinksById] = useState([]);
+  const { listIngredients,
     drinksApi: { fetchDataByIdDrink },
   } = useContext(MyContext);
   const { drinks } = drinksById;
   const history = useHistory();
   const ingredients = [];
   listIngredients(drinks, ingredients);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const idDrink = await fetchDataByIdDrink(drinkId);
+      setDrinksById(idDrink);
+    };
+    fetchData();
+  }, [fetchDataByIdDrink, drinkId]);
 
   const favoriteStorage = () => drinks.map((item) => {
     const { idDrink, strCategory, strAlcoholic, strDrink, strDrinkThumb } = item;
@@ -68,11 +77,6 @@ function DrinksDetails() {
   useEffect(() => {
     checkFavorite(drinkId);
   }, [drinkId]);
-
-  useEffect(() => {
-    const fetchData = async () => fetchDataByIdDrink(drinkId);
-    fetchData();
-  }, [fetchDataByIdDrink, drinkId]);
 
   const handleClick = (idDrink) => {
     const saveProgress = JSON.parse(localStorage.getItem('inProgressRecipes'));

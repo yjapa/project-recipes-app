@@ -8,14 +8,15 @@ import { checkFavorite, renderFavorite } from '../components/FavoriteButton';
 function FoodsProgress() {
   const { pathname } = useLocation();
   const { mealId } = useParams();
+  const [mealsDataById, setMealsDataById] = useState([]);
   const { listIngredients,
     recipesApi: { fetchDataByIdMeal },
-    mealsDataById, feedDoneRecipesInLocalStorageFoods } = useContext(MyContext);
+    feedDoneRecipesInLocalStorageFoods } = useContext(MyContext);
   const { meals } = mealsDataById;
   const ingredients = [];
   const history = useHistory();
   const [listIngredientFoods, setListIngredientFoods] = useState([]);
-  const [finishRecipeFoods, setFinishRecipeFoods] = useState(true);
+  const [finishRecipeFoods, setFinishRecipeFoods] = useState(false);
   listIngredients(meals, ingredients);
 
   const handleScratchedIngredient = ({ target }, i) => {
@@ -50,12 +51,8 @@ function FoodsProgress() {
 
   const favoriteStorage = () => meals.map((item) => {
     const {
-      idMeal,
-      strArea,
-      strCategory,
-      strMeal,
-      strMealThumb,
-    } = item;
+      idMeal, strArea, strCategory,
+      strMeal, strMealThumb } = item;
     return ({
       id: idMeal,
       type: 'comida',
@@ -102,6 +99,7 @@ function FoodsProgress() {
       });
     }
   };
+
   setTimeout(() => {
     ingredientsInProgress();
   });
@@ -122,8 +120,12 @@ function FoodsProgress() {
       section.removeChild(advise);
     }, THREESEC);
   }
+
   useEffect(() => {
-    const fetchData = async () => fetchDataByIdMeal(mealId);
+    const fetchData = async () => {
+      const idFood = await fetchDataByIdMeal(mealId);
+      setMealsDataById(idFood);
+    };
     fetchData();
   }, [fetchDataByIdMeal, mealId]);
 
@@ -134,6 +136,7 @@ function FoodsProgress() {
           [mealId]: [],
         },
       };
+
       const saveProgress = JSON.parse(localStorage.getItem('inProgressRecipes'));
       if (saveProgress === null) {
         localStorage.inProgressRecipes = JSON.stringify(LS);
@@ -142,7 +145,7 @@ function FoodsProgress() {
     setLocalStorage();
   }, [mealId]);
 
-  useEffect(() => {
+  setTimeout(() => {
     const switchFinishBtnFoods = () => {
       const saveProgress = JSON.parse(localStorage.getItem('inProgressRecipes'));
       const checkboxLength = document.querySelectorAll('input[type=checkbox]').length;
@@ -153,7 +156,7 @@ function FoodsProgress() {
       }
     };
     switchFinishBtnFoods();
-  }, [mealId]);
+  });
 
   useEffect(() => {
     checkFavorite(mealId);

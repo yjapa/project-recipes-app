@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useEffect, useContext, useState } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 import { useHistory } from 'react-router';
 import shareIcon from '../images/shareIcon.svg';
@@ -7,14 +7,22 @@ import { checkFavorite, renderFavorite } from '../components/FavoriteButton';
 
 function FoodsDetails() {
   const { pathname } = useLocation();
+  const [mealsDataById, setMealsDataById] = useState([]);
   const { listIngredients,
-    recipesApi: { fetchDataByIdMeal },
-    mealsDataById } = useContext(MyContext);
+    recipesApi: { fetchDataByIdMeal } } = useContext(MyContext);
   const { mealId } = useParams();
   const history = useHistory();
   const { meals } = mealsDataById;
   const ingredients = [];
   listIngredients(meals, ingredients);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const idFood = await fetchDataByIdMeal(mealId);
+      setMealsDataById(idFood);
+    };
+    fetchData();
+  }, [fetchDataByIdMeal, mealId]);
 
   const handleClick = (idMeal) => {
     const saveProgress = JSON.parse(localStorage.getItem('inProgressRecipes'));
@@ -92,11 +100,6 @@ function FoodsDetails() {
   useEffect(() => {
     checkFavorite(mealId);
   }, [mealId]);
-
-  useEffect(() => {
-    const fetchData = async () => fetchDataByIdMeal(mealId);
-    fetchData();
-  }, [fetchDataByIdMeal, mealId]);
 
   const renderButton = () => {
     const startBtnStorage = JSON.parse(localStorage.getItem('startButton'));

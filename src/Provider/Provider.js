@@ -21,8 +21,8 @@ import {
 function Provider({ children }) {
   const [data, setData] = useState([]);
   const [dataDrinks, setDataDrinks] = useState([]);
-  const [mealsDataById, setMealsDataById] = useState([]);
-  const [drinksById, setDrinksById] = useState([]);
+  // const [mealsDataById, setMealsDataById] = useState([]);
+  // const [drinksById, setDrinksById] = useState([]);
   const [loading, setLoading] = useState(false);
   const [startButton, setStartButton] = useState(true);
   const [startedRecipes, setStartRecipe] = useState([]);
@@ -46,20 +46,6 @@ function Provider({ children }) {
 
   // ========================================================================================================
   // Função para juntar os Ingredientes com as Medidas - referencia grupo 24;
-
-  // const listIngredients = (DataDetails, ingredients) => {
-  //   const number = 20;
-  //   if (DataDetails && DataDetails.length !== 0) {
-  //     for (let i = 1; i <= number; i += 1) {
-  //       if (DataDetails[0][`strIngredient${i}`]) {
-  //         const ing = `${DataDetails[0][`strIngredient${i}`]}`;
-  //         const mes = `${DataDetails[0][`strMeasure${i}`]}`;
-  //         ingredients.push(`${ing} ${(mes === 'null') ? '' : mes}`);
-  //       } else break;
-  //     }
-  //   }
-  // };
-
   const listIngredients = (DataDetails, ingredients) => {
     const number = 20;
     if (DataDetails && DataDetails.length !== 0) {
@@ -103,14 +89,14 @@ function Provider({ children }) {
 
   const fetchDataByIdMeal = async (mealID) => {
     const dados = await queryRecipeByID(mealID);
-    setMealsDataById(dados);
+    return dados;
   };
 
   const fetchDataByIdDrink = async (drinkID) => {
     const dados = await queryDrinkByID(drinkID);
-    setDrinksById(dados);
+    return dados;
   };
-
+  // ========================================================================================================
   const buildArrTags = (strTags) => {
     const typeValue = typeof (strTags);
     if (typeValue === 'string') {
@@ -193,8 +179,6 @@ function Provider({ children }) {
     dataDrinks,
     setData,
     setDataDrinks,
-    mealsDataById,
-    drinksById,
     loading,
     setLoading,
     startButton,
