@@ -5,10 +5,12 @@ import shareIcon from '../images/shareIcon.svg';
 import MyContext from '../context/myContext';
 import { checkFavorite } from '../components/CheckFavorite';
 import FavoriteFood from '../components/FavoriteFoods';
+import '../css/carousel.css';
 
 function FoodsDetails() {
   const { pathname } = useLocation();
   const [mealsDataById, setMealsDataById] = useState([]);
+  const [carouselData, setCarouselData] = useState([]);
   const { listIngredients,
     recipesApi: { fetchDataByIdMeal } } = useContext(MyContext);
   const { mealId } = useParams();
@@ -19,8 +21,12 @@ function FoodsDetails() {
 
   useEffect(() => {
     const fetchData = async () => {
+      const url = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
       const idFood = await fetchDataByIdMeal(mealId);
       setMealsDataById(idFood);
+      const request = await fetch(url);
+      const json = await request.json();
+      setCarouselData(json.drinks);
     };
     fetchData();
   }, [fetchDataByIdMeal, mealId]);
@@ -180,11 +186,25 @@ function FoodsDetails() {
                 </video>
                 { renderButton() }
               </section>
-              <span
-                data-testid="0-recomendation-card"
-              >
-                Aqui vem o Carrossel
-              </span>
+              <div className="recomendation-container">
+                {carouselData.slice(0, Number('6')).map((itemCarousel, i) => (
+                  <div
+                    key={ `${i}-${itemCarousel}` }
+                    data-testid={ `${i}-recomendation-card` }
+                  >
+                    <h4
+                      data-testid={ `${i}-recomendation-title` }
+                    >
+                      { itemCarousel.strDrink }
+                    </h4>
+                    <img
+                      src={ itemCarousel.strDrinkThumb }
+                      alt="Comida Recomendada"
+                      width="150px"
+                    />
+                  </div>
+                ))}
+              </div>
             </div>
           </section>
         );

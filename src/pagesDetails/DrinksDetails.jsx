@@ -5,11 +5,13 @@ import shareIcon from '../images/shareIcon.svg';
 import MyContext from '../context/myContext';
 import { checkFavorite } from '../components/CheckFavorite';
 import FavoriteDrink from '../components/FavoriteDrink';
+import '../css/carousel.css';
 
 function DrinksDetails() {
   const { pathname } = useLocation();
   const { drinkId } = useParams();
   const [drinksById, setDrinksById] = useState([]);
+  const [carouselData, setCarouselData] = useState([]);
   const { listIngredients,
     drinksApi: { fetchDataByIdDrink },
   } = useContext(MyContext);
@@ -20,8 +22,12 @@ function DrinksDetails() {
 
   useEffect(() => {
     const fetchData = async () => {
+      const url = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
       const idDrink = await fetchDataByIdDrink(drinkId);
       setDrinksById(idDrink);
+      const request = await fetch(url);
+      const json = await request.json();
+      setCarouselData(json.drinks);
     };
     fetchData();
   }, [fetchDataByIdDrink, drinkId]);
@@ -171,11 +177,25 @@ function DrinksDetails() {
                 { renderButton() }
               </section>
             </div>
-            <span
-              data-testid="0-recomendation-card"
-            >
-              Aqui vem o Carrossel
-            </span>
+            <div className="recomendation-container">
+              {carouselData.slice(0, Number('6')).map((itemCarousel, i) => (
+                <div
+                  key={ `${i}-${itemCarousel}` }
+                  data-testid={ `${i}-recomendation-card` }
+                >
+                  <h4
+                    data-testid={ `${i}-recomendation-title` }
+                  >
+                    { itemCarousel.strDrink }
+                  </h4>
+                  <img
+                    src={ itemCarousel.strDrinkThumb }
+                    alt="Comida Recomendada"
+                    width="150px"
+                  />
+                </div>
+              ))}
+            </div>
           </section>
         );
       })}
