@@ -55,3 +55,14 @@
 .video {
   margin-left: 20px;
 }
+
+.btn-finish {
+  border-radius: 10px;
+  border-top: 1px solid black;
+  bottom: 0;
+  display: flex;
+  height: 60px;
+  justify-content: space-around;
+  left: 0;
+  width: 100%;
+}

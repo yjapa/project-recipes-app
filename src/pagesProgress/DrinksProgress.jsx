@@ -147,8 +147,8 @@ function DrinksProgress() {
               <img
                 src={ strDrinkThumb }
                 alt={ strDrink }
-                className="details-image"
                 data-testid="recipe-photo"
+                className="details-image"
               />
               <div className="container-title">
                 <div>
