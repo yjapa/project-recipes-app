@@ -1,21 +1,36 @@
-body {
-  background-color: #dc3545;
+.login-body {
+  background-color: rgb(116, 19, 19);
+  height: 100vh;
 }
 
-.container-login{
+.container-login {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-top: 90%;
 }
 
-.login_email {
-  width: 70%;
+.login-image {
+  margin: 50px 0;
+}
+
+.login-inputs {
+  margin-bottom: 20px;
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.login_btn {
   height: 30px;
-  border: none;
-  margin: 10px 0;
-  border-radius: 3px;
-  font-family: 'Numans', sans-serif;
-  padding: 0 10px;
+  border-radius: 5px;
+  width: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: black;
 }

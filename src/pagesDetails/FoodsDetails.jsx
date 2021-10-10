@@ -5,7 +5,8 @@ import shareIcon from '../images/shareIcon.svg';
 import MyContext from '../context/myContext';
 import { checkFavorite } from '../components/CheckFavorite';
 import FavoriteFood from '../components/FavoriteFoods';
-import '../css/carousel.css';
+import '../css/foodsdetails.css';
+// import '../css/carousel.css';
 
 function FoodsDetails() {
   const { pathname } = useLocation();
@@ -115,31 +116,28 @@ function FoodsDetails() {
           strYoutube,
         } = item;
         return (
-          <section key={ index }>
-            <div>
+          <div key={ index }>
+            <div className="container-details">
               <img
                 src={ strMealThumb }
                 alt={ strMeal }
-                style={ { width: '200px' } }
+                className="details-image-foods"
                 data-testid="recipe-photo"
               />
-              <section
-                id="sec-top"
-              >
-                <h1
-                  data-testid="recipe-title"
-                >
-                  {strMeal}
-                </h1>
-                <h3
-                  data-testid="recipe-category"
-                >
-                  {strCategory}
-                </h3>
+              <div className="container-title-foods">
+                <div>
+                  <h1
+                    data-testid="recipe-title"
+                    className="details-name-foods"
+                  >
+                    {strMeal}
+                  </h1>
+                </div>
                 <button
                   type="button"
                   data-testid="share-btn"
                   onClick={ copyUrl }
+                  className="icons"
                 >
                   <img
                     src={ shareIcon }
@@ -150,31 +148,41 @@ function FoodsDetails() {
                   meals={ meals }
                   typeCategory="comida"
                 />
-              </section>
+              </div>
+              <h3
+                data-testid="recipe-category"
+                className="details-optional-foods"
+              >
+                {strCategory}
+              </h3>
               <section>
-                <div>
-                  <h2>Ingredients</h2>
-                  {ingredients.map((ingredient, indexIng) => (
-                    <ul key={ indexIng }>
-                      <li
-                        data-testid={ `${indexIng}-ingredient-name-and-measure` }
-                      >
-                        {ingredient}
+                <div className="container-ingredients">
+                  <h2 className="titles">Ingredients</h2>
+                  <div className="ingredients-instructions-foods">
+                    {ingredients.map((ingredient, indexIng) => (
+                      <ul key={ indexIng }>
+                        <li
+                          data-testid={ `${indexIng}-ingredient-name-and-measure` }
+                        >
+                          {ingredient}
 
-                      </li>
-                    </ul>
-                  ))}
+                        </li>
+                      </ul>
+                    ))}
+                  </div>
                 </div>
                 <div>
-                  <h2>Instructions</h2>
+                  <h2 className="titles">Instructions</h2>
                   <p
                     data-testid="instructions"
+                    className="ingredients-instructions-foods"
                   >
                     {strInstructions}
                   </p>
                 </div>
                 <iframe
                   title="Video"
+                  className="video"
                   data-testid="video"
                   src={ strYoutube.replace('watch?v=', 'embed/') }
                 />
@@ -193,6 +201,7 @@ function FoodsDetails() {
                     </h4>
                     <img
                       src={ itemCarousel.strDrinkThumb }
+                      style={ { borderRadius: '70px' } }
                       alt="Comida Recomendada"
                       width="150px"
                     />
@@ -200,7 +209,7 @@ function FoodsDetails() {
                 ))}
               </div>
             </div>
-          </section>
+          </div>
         );
       })}
     </main>

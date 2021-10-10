@@ -6,6 +6,10 @@
   width: 360px;
 }
 
+.recomendation-container h4 {
+  text-align: center;
+}
+
 .recomendation-container div {
-  margin-left: 50px;
+  margin-left: 10px;
 }

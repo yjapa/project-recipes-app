@@ -4,7 +4,7 @@
 
 .container-drinks {
   align-items: center;
-  background-color: rgb(241, 166, 166);
+  background-color: #ff9c4be7;
   border-radius: 50% 20%;
   display: flex;
   flex-flow: wrap;
@@ -12,6 +12,10 @@
   margin: 15px;
   padding: 20px;
   text-align: center;
+}
+
+.name-drinks {
+  color: white;
 }
 
 .container-drinks h3 {

@@ -2,10 +2,21 @@ import React, { useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import MyContext from '../context/myContext';
 import '../css/login.css';
+import loginimage from '../images/loginimage.png';
 
 const Login = () => {
   const history = useHistory();
   const { loginState, setLoginState } = useContext(MyContext);
+
+  // const recipeStorage = () => {
+  //   localStorage.setItem('startButton', true);
+  //   localStorage.setItem('startedRecipes', JSON.stringify([]));
+  //   // localStorage.setItem('favorites', JSON.stringify([]));
+  // };
+
+  // useEffect(() => {
+  //   recipeStorage();
+  // }, []);
 
   const handleChange = ({ target: { name, value } }) => {
     setLoginState({
@@ -35,14 +46,22 @@ const Login = () => {
   };
 
   return (
-    <div>
+    <div className="login-body">
       <div className="container-login">
+        <div>
+          <img
+            src={ loginimage }
+            className="login-image"
+            alt="chefe-de-cozinha"
+            style={ { width: '250px' } }
+          />
+        </div>
         <div>
           <label htmlFor="email">
             <input
               data-testid="email-input"
               type="text"
-              className="login_email"
+              className="login-inputs"
               name="email"
               id="email"
               placeholder="Email"
@@ -54,6 +73,7 @@ const Login = () => {
           <label htmlFor="password">
             <input
               data-testid="password-input"
+              className="login-inputs"
               type="password"
               placeholder="Senha"
               name="password"

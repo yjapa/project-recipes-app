@@ -6,6 +6,7 @@ import MyContext from '../context/myContext';
 import { checkFavorite } from '../components/CheckFavorite';
 import FavoriteDrink from '../components/FavoriteDrink';
 import '../css/carousel.css';
+import '../css/drinksdetails.css';
 
 function DrinksDetails() {
   const { pathname } = useLocation();
@@ -27,7 +28,7 @@ function DrinksDetails() {
       setDrinksById(idDrink);
       const request = await fetch(url);
       const json = await request.json();
-      setCarouselData(json.drinks);
+      setCarouselData(json.meals);
     };
     fetchData();
   }, [fetchDataByIdDrink, drinkId]);
@@ -115,60 +116,63 @@ function DrinksDetails() {
           strInstructions,
         } = item;
         return (
-          <section key={ index }>
-            <div>
+          <div key={ index }>
+            <div className="container-details">
               <img
                 src={ strDrinkThumb }
                 alt={ strDrink }
-                style={ { width: '200px' } }
+                className="details-image"
                 data-testid="recipe-photo"
               />
-              <section
-                id="sec-top"
-              >
-                <h1
-                  data-testid="recipe-title"
-                >
-                  {strDrink}
-                </h1>
-                <h3
-                  data-testid="recipe-category"
-                >
-                  {strAlcoholic}
-                </h3>
+              <div className="container-title">
+                <div>
+                  <h1
+                    data-testid="recipe-title"
+                    className="details-name"
+                  >
+                    {strDrink}
+                  </h1>
+                </div>
                 <button
                   type="button"
                   data-testid="share-btn"
                   onClick={ copyUrl }
+                  className="icons"
                 >
-                  <img
-                    src={ shareIcon }
-                    alt="Compartilhar"
-                  />
+                  <img src={ shareIcon } alt="Compartilhar" />
                 </button>
                 <FavoriteDrink
                   drinks={ drinks }
                   typeCategory="bebida"
                 />
-              </section>
+              </div>
+              <h3
+                data-testid="recipe-category"
+                className="details-optional"
+              >
+                {strAlcoholic}
+              </h3>
               <section>
-                <div>
-                  <h2>Ingredients</h2>
-                  {ingredients.map((ingredient, indexIng) => (
-                    <ul key={ indexIng }>
-                      <li
-                        data-testid={ `${indexIng}-ingredient-name-and-measure` }
-                      >
-                        {ingredient}
+                <div className="container-ingredients">
+                  <h2 className="titles">Ingredients</h2>
+                  <div className="ingredients-instructions-drinks">
+                    {ingredients.map((ingredient, indexIng) => (
+                      <ul key={ indexIng }>
+                        <li
+                          data-testid={ `${indexIng}-ingredient-name-and-measure` }
+                        >
+                          {ingredient}
 
-                      </li>
-                    </ul>
-                  ))}
+                        </li>
+                      </ul>
+                    ))}
+                  </div>
                 </div>
                 <div>
-                  <h2>Instructions</h2>
+                  <h2 className="titles">Instructions</h2>
                   <p
                     data-testid="instructions"
+                    className="ingredients-instructions-drinks"
                   >
                     {strInstructions}
                   </p>
@@ -185,20 +189,20 @@ function DrinksDetails() {
                   <h4
                     data-testid={ `${i}-recomendation-title` }
                   >
-                    { itemCarousel.strDrink }
+                    { itemCarousel.strMeal }
                   </h4>
                   <img
-                    src={ itemCarousel.strDrinkThumb }
+                    src={ itemCarousel.strMealThumb }
                     alt="Comida Recomendada"
+                    style={ { borderRadius: '70px' } }
                     width="150px"
                   />
                 </div>
               ))}
             </div>
-          </section>
+          </div>
         );
       })}
-      ;
     </main>
   );
 }

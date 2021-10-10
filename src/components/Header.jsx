@@ -38,7 +38,7 @@ function Header({ title, searchIcone, hiddenCategory }) {
   );
 
   return (
-    <header>
+    <header className="container-header">
       <div className="top-header">
         <Link to="/perfil">
           <img

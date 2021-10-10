@@ -57,7 +57,13 @@ function Foods() {
               className="container-foods"
               data-testid={ `${index}-recipe-card` }
             >
-              <h3 data-testid={ `${index}-card-name` }>{strMeal}</h3>
+              <h3
+                className="name-foods"
+                data-testid={ `${index}-card-name` }
+              >
+                {strMeal}
+
+              </h3>
               <img
                 src={ strMealThumb }
                 alt={ strMeal }

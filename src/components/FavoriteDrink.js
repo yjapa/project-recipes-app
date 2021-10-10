@@ -45,6 +45,7 @@ function FavoriteDrink({ drinks, typeCategory }) {
       <button
         type="button"
         onClick={ recipeFavorite }
+        className="icons"
       >
         <img
           data-testid="favorite-btn"
