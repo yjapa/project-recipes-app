@@ -21,7 +21,7 @@ function IngredMeals() {
     }
     getIng();
     setDataTrue(false);
-  }, []);
+  }, [setDataTrue]);
 
   const handleClick = (strIngredient) => {
     setDataTrue(true);

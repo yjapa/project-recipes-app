@@ -18,7 +18,7 @@ import IngredMeals from './PagesExplorer/IngredMeals';
 import MealsArea from './PagesExplorer/MealsArea';
 import SurpriseDrink from './PagesExplorer/SurpriseDrink';
 import SurpriseMeal from './PagesExplorer/SurpriseMeal';
-import DrinksArea from './PagesExplorer/DrinksArea';
+import NotFound from './pages/NotFound';
 
 function Routes() {
   return (
@@ -53,7 +53,6 @@ function Routes() {
         component={ IngredDrinks }
       />
       <Route exact path="/explorar/comidas/area" component={ MealsArea } />
-      <Route exact path="/explorar/bebidas/area" component={ DrinksArea } />
       <Route
         exact
         path="/explorar/bebidas/receitaBebidaSurpresa"
@@ -68,6 +67,8 @@ function Routes() {
       <Route exact path="/explorar" component={ Explore } />
       <Route exact path="/receitas-feitas" component={ RecipesDone } />
       <Route exact path="/receitas-favoritas" component={ FavoriteRecipes } />
+      <Route exact path="" component={ NotFound } />
+
     </Switch>
   );
 }

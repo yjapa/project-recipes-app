@@ -7,16 +7,6 @@ const Login = () => {
   const history = useHistory();
   const { loginState, setLoginState } = useContext(MyContext);
 
-  // const recipeStorage = () => {
-  //   localStorage.setItem('startButton', true);
-  //   localStorage.setItem('startedRecipes', JSON.stringify([]));
-  //   // localStorage.setItem('favorites', JSON.stringify([]));
-  // };
-
-  // useEffect(() => {
-  //   recipeStorage();
-  // }, []);
-
   const handleChange = ({ target: { name, value } }) => {
     setLoginState({
       ...loginState,

@@ -1,14 +1,18 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useEffect, useContext, useState } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 import { useHistory } from 'react-router';
 import shareIcon from '../images/shareIcon.svg';
 import MyContext from '../context/myContext';
-import { checkFavorite, renderFavorite } from '../components/FavoriteButton';
+import { checkFavorite } from '../components/CheckFavorite';
+import FavoriteDrink from '../components/FavoriteDrink';
+import '../css/carousel.css';
 
 function DrinksDetails() {
   const { pathname } = useLocation();
   const { drinkId } = useParams();
-  const { listIngredients, drinksById,
+  const [drinksById, setDrinksById] = useState([]);
+  const [carouselData, setCarouselData] = useState([]);
+  const { listIngredients,
     drinksApi: { fetchDataByIdDrink },
   } = useContext(MyContext);
   const { drinks } = drinksById;
@@ -16,57 +20,38 @@ function DrinksDetails() {
   const ingredients = [];
   listIngredients(drinks, ingredients);
 
-  const favoriteStorage = () => drinks.map((item) => {
-    const { idDrink, strCategory, strAlcoholic, strDrink, strDrinkThumb } = item;
-    return ({
-      id: idDrink,
-      type: 'bebida',
-      area: '',
-      category: strCategory,
-      alcoholicOrNot: strAlcoholic,
-      name: strDrink,
-      image: strDrinkThumb,
-    });
-  });
+  useEffect(() => {
+    const fetchData = async () => {
+      const url = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
+      const idDrink = await fetchDataByIdDrink(drinkId);
+      setDrinksById(idDrink);
+      const request = await fetch(url);
+      const json = await request.json();
+      setCarouselData(json.drinks);
+    };
+    fetchData();
+  }, [fetchDataByIdDrink, drinkId]);
 
-  const favoriteClick = () => {
-    const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
-    const isFavorite = JSON.parse(localStorage.getItem('isFavorite'));
-    if (!isFavorite) {
-      localStorage.setItem('isFavorite', true);
-      if (favoriteRecipes === null) {
-        localStorage.favoriteRecipes = JSON.stringify(favoriteStorage());
-      } else {
-        const recipesArr = [...favoriteRecipes, ...favoriteStorage()];
-        localStorage.setItem('favoriteRecipes', JSON.stringify(recipesArr));
-      }
-    } else {
-      localStorage.setItem('isFavorite', false);
-      const index = favoriteRecipes.indexOf(favoriteStorage());
-      favoriteRecipes.splice(index, 1);
-      localStorage.setItem('favoriteRecipes', JSON.stringify(favoriteRecipes));
-    }
-  };
-
-  const checkRecipe = () => {
-    const drinkStorage = JSON.parse(localStorage.getItem('inProgressRecipes'));
-    if (drinkStorage !== null && drinkStorage.cocktails !== undefined) {
-      const storageDrinkIds = Object.keys(drinkStorage.cocktails);
-      if (storageDrinkIds.includes(drinkId)) {
-        localStorage.setItem('startButton', false);
+  useEffect(() => {
+    const checkRecipe = () => {
+      const drinkStorage = JSON.parse(localStorage.getItem('inProgressRecipes'));
+      if (drinkStorage !== null && drinkStorage.cocktails !== undefined) {
+        const storageDrinkIds = Object.keys(drinkStorage.cocktails);
+        if (storageDrinkIds.includes(drinkId)) {
+          localStorage.setItem('startButton', false);
+        } else {
+          localStorage.setItem('startButton', true);
+        }
       } else {
         localStorage.setItem('startButton', true);
       }
-    } else {
-      localStorage.setItem('startButton', true);
-    }
-  };
+    };
+    checkRecipe();
+  }, [drinkId]);
 
   useEffect(() => {
-    fetchDataByIdDrink(drinkId);
-    checkRecipe();
     checkFavorite(drinkId);
-  }, []);
+  }, [drinkId]);
 
   const handleClick = (idDrink) => {
     const saveProgress = JSON.parse(localStorage.getItem('inProgressRecipes'));
@@ -75,6 +60,7 @@ function DrinksDetails() {
       localStorage.inProgressRecipes = JSON.stringify({ cocktails: {
         [drinkId]: [],
       } });
+      (history.push(`/bebidas/${idDrink}/in-progress`));
     } else {
       localStorage.inProgressRecipes = JSON.stringify({
         ...saveProgress,
@@ -83,40 +69,22 @@ function DrinksDetails() {
           [drinkId]: [],
         },
       });
+      history.push(`/bebidas/${idDrink}/in-progress`);
     }
-    history.push(`/bebidas/${idDrink}/in-progress`);
-  };
-
-  const continueClick = (idMeal) => {
-    (history.push(`/comidas/${idMeal}/in-progress`));
   };
 
   const renderButton = () => {
     const startBtnStorage = JSON.parse(localStorage.getItem('startButton'));
-
-    if (startBtnStorage) {
-      return (
-        <button
-          id="btn-start"
-          className="btn-style"
-          data-testid="start-recipe-btn"
-          type="button"
-          onClick={ () => handleClick(drinkId) }
-        >
-          Iniciar Receita
-        </button>);
-    }
     return (
       <button
-        id="btn-continue"
+        id="btn-start"
         className="btn-style"
         data-testid="start-recipe-btn"
         type="button"
-        onClick={ () => continueClick(drinkId) }
+        onClick={ () => handleClick(drinkId) }
       >
-        Continuar Receita
-      </button>
-    );
+        {startBtnStorage ? 'Iniciar Receita' : 'Continuar Receita' }
+      </button>);
   };
 
   // referencia: https://blog.dadops.co/2021/03/17/copy-and-paste-in-a-react-app/
@@ -144,7 +112,6 @@ function DrinksDetails() {
           strDrink,
           strDrinkThumb,
           strAlcoholic,
-          // strArea,
           strInstructions,
         } = item;
         return (
@@ -179,7 +146,10 @@ function DrinksDetails() {
                     alt="Compartilhar"
                   />
                 </button>
-                { renderFavorite(favoriteClick) }
+                <FavoriteDrink
+                  drinks={ drinks }
+                  typeCategory="bebida"
+                />
               </section>
               <section>
                 <div>
@@ -206,11 +176,25 @@ function DrinksDetails() {
                 { renderButton() }
               </section>
             </div>
-            <span
-              data-testid="0-recomendation-card"
-            >
-              Aqui vem o Carrossel
-            </span>
+            <div className="recomendation-container">
+              {carouselData.slice(0, Number('6')).map((itemCarousel, i) => (
+                <div
+                  key={ `${i}-${itemCarousel}` }
+                  data-testid={ `${i}-recomendation-card` }
+                >
+                  <h4
+                    data-testid={ `${i}-recomendation-title` }
+                  >
+                    { itemCarousel.strDrink }
+                  </h4>
+                  <img
+                    src={ itemCarousel.strDrinkThumb }
+                    alt="Comida Recomendada"
+                    width="150px"
+                  />
+                </div>
+              ))}
+            </div>
           </section>
         );
       })}

@@ -13,7 +13,6 @@ const FavoritesRecipes = () => {
     const favoriteRecipesObj = JSON.parse(json);
     setFavoriteRecipes(favoriteRecipesObj);
     setFavoriteRecipesClone(favoriteRecipesObj);
-    // console.log('favoriteRecipesObj', favoriteRecipesObj);
   };
 
   const removeFavoriteRecipe = (strIdItem) => {
@@ -23,7 +22,6 @@ const FavoritesRecipes = () => {
     const favoriteArrayUpdated = arrayObjFavRecipes.filter((item) => (
       item.id !== strIdItem
     )); // filtra pela exceção
-    // console.log(favoriteArrayUpdated);
     localStorage.setItem('favoriteRecipes', JSON.stringify(favoriteArrayUpdated)); // atualiza o localStorage
     setFavoriteRecipes(favoriteArrayUpdated); // atualiza o estado que está no componente pai para chamar a renderização com o array atualizado
     setFavoriteRecipesClone(favoriteArrayUpdated); // atualiza o estado que está no componente pai para chamar a renderização com o array atualizado

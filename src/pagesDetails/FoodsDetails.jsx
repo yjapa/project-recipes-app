@@ -1,29 +1,65 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useEffect, useContext, useState } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 import { useHistory } from 'react-router';
 import shareIcon from '../images/shareIcon.svg';
 import MyContext from '../context/myContext';
-import { checkFavorite, renderFavorite } from '../components/FavoriteButton';
+import { checkFavorite } from '../components/CheckFavorite';
+import FavoriteFood from '../components/FavoriteFoods';
+import '../css/carousel.css';
 
 function FoodsDetails() {
   const { pathname } = useLocation();
+  const [mealsDataById, setMealsDataById] = useState([]);
+  const [carouselData, setCarouselData] = useState([]);
   const { listIngredients,
-    recipesApi: { fetchDataByIdMeal },
-    mealsDataById } = useContext(MyContext);
+    recipesApi: { fetchDataByIdMeal } } = useContext(MyContext);
   const { mealId } = useParams();
   const history = useHistory();
   const { meals } = mealsDataById;
   const ingredients = [];
   listIngredients(meals, ingredients);
 
+  useEffect(() => {
+    const fetchData = async () => {
+      const url = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
+      const idFood = await fetchDataByIdMeal(mealId);
+      setMealsDataById(idFood);
+      const request = await fetch(url);
+      const json = await request.json();
+      setCarouselData(json.drinks);
+    };
+    fetchData();
+  }, [fetchDataByIdMeal, mealId]);
+
+  useEffect(() => {
+    const checkRecipe = () => {
+      const mealStorage = JSON.parse(localStorage.getItem('inProgressRecipes'));
+      if (mealStorage !== null && mealStorage.meals !== undefined) {
+        const storageMealIds = Object.keys(mealStorage.meals);
+        if (storageMealIds.includes(mealId)) {
+          localStorage.setItem('startButton', false);
+        } else {
+          localStorage.setItem('startButton', true);
+        }
+      } else {
+        localStorage.setItem('startButton', true);
+      }
+    };
+    checkRecipe();
+  }, [mealId]);
+
+  useEffect(() => {
+    checkFavorite(mealId);
+  }, [mealId]);
+
   const handleClick = (idMeal) => {
     const saveProgress = JSON.parse(localStorage.getItem('inProgressRecipes'));
     localStorage.setItem('startButton', false);
-
     if (saveProgress === null) {
       localStorage.inProgressRecipes = JSON.stringify({ meals: {
         [mealId]: [],
       } });
+      (history.push(`/comidas/${idMeal}/in-progress`));
     } else {
       localStorage.inProgressRecipes = JSON.stringify({
         ...saveProgress,
@@ -32,95 +68,25 @@ function FoodsDetails() {
           [mealId]: [],
         },
       });
-    }
-    (history.push(`/comidas/${idMeal}/in-progress`));
-  };
-
-  const favoriteStorage = () => meals.map((item) => {
-    const { idMeal, strArea, strCategory, strMeal, strMealThumb } = item;
-    return ({
-      id: idMeal,
-      type: 'comida',
-      area: strArea,
-      category: strCategory,
-      alcoholicOrNot: '',
-      name: strMeal,
-      image: strMealThumb,
-    });
-  });
-
-  const favoriteClick = () => {
-    const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
-    const isFavorite = JSON.parse(localStorage.getItem('isFavorite'));
-    if (!isFavorite) {
-      localStorage.setItem('isFavorite', true);
-      if (favoriteRecipes === null) {
-        localStorage.favoriteRecipes = JSON.stringify(favoriteStorage());
-      } else {
-        const recipesArr = [...favoriteRecipes, ...favoriteStorage()];
-        localStorage.setItem('favoriteRecipes', JSON.stringify(recipesArr));
-      }
-    } else {
-      localStorage.setItem('isFavorite', false);
-      const index = favoriteRecipes.indexOf(favoriteStorage());
-      favoriteRecipes.splice(index, 1);
-      localStorage.setItem('favoriteRecipes', JSON.stringify(favoriteRecipes));
+      (history.push(`/comidas/${idMeal}/in-progress`));
     }
   };
-
-  const checkRecipe = () => {
-    const mealStorage = JSON.parse(localStorage.getItem('inProgressRecipes'));
-    if (mealStorage !== null && mealStorage.meals !== undefined) {
-      const storageMealIds = Object.keys(mealStorage.meals);
-      if (storageMealIds.includes(mealId)) {
-        localStorage.setItem('startButton', false);
-      } else {
-        localStorage.setItem('startButton', true);
-      }
-    } else {
-      localStorage.setItem('startButton', true);
-    }
-  };
-
-  const continueClick = (idMeal) => {
-    (history.push(`/comidas/${idMeal}/in-progress`));
-  };
-
-  useEffect(() => {
-    fetchDataByIdMeal(mealId);
-    checkRecipe();
-    checkFavorite(mealId);
-  }, []);
 
   const renderButton = () => {
     const startBtnStorage = JSON.parse(localStorage.getItem('startButton'));
-
-    if (startBtnStorage) {
-      return (
-        <button
-          id="btn-start"
-          className="btn-style"
-          data-testid="start-recipe-btn"
-          type="button"
-          onClick={ () => handleClick(mealId) }
-        >
-          Iniciar Receita
-        </button>);
-    }
     return (
       <button
-        id="btn-continue"
+        id="btn-start"
         className="btn-style"
         data-testid="start-recipe-btn"
         type="button"
-        onClick={ () => continueClick(mealId) }
+        onClick={ () => handleClick(mealId) }
       >
-        Continuar Receita
-      </button>
-    );
+        {startBtnStorage ? 'Iniciar Receita' : 'Continuar Receita' }
+      </button>);
   };
 
-  // referencia: https://blog.dadops.co/2021/03/17/copy-and-paste-in-a-react-app/
+  // referência: https://blog.dadops.co/2021/03/17/copy-and-paste-in-a-react-app/
   function copyUrl() {
     const THREESEC = 3000;
     const section = document.getElementById('sec-top');
@@ -140,7 +106,6 @@ function FoodsDetails() {
 
   return (
     <main>
-      {console.log('meals in foodDetails', meals)}
       {meals && meals.map((item, index) => {
         const {
           strMeal,
@@ -181,7 +146,10 @@ function FoodsDetails() {
                     alt="Compartilhar"
                   />
                 </button>
-                { renderFavorite(favoriteClick) }
+                <FavoriteFood
+                  meals={ meals }
+                  typeCategory="comida"
+                />
               </section>
               <section>
                 <div>
@@ -205,24 +173,32 @@ function FoodsDetails() {
                     {strInstructions}
                   </p>
                 </div>
-                <video
-                  src={ strYoutube }
+                <iframe
+                  title="Video"
                   data-testid="video"
-                >
-                  <track
-                    default
-                    kind="captions"
-                    src=""
-                  />
-                  Video
-                </video>
+                  src={ strYoutube.replace('watch?v=', 'embed/') }
+                />
                 { renderButton() }
               </section>
-              <span
-                data-testid="0-recomendation-card"
-              >
-                Aqui vem o Carrossel
-              </span>
+              <div className="recomendation-container">
+                {carouselData.slice(0, Number('6')).map((itemCarousel, i) => (
+                  <div
+                    key={ `${i}-${itemCarousel}` }
+                    data-testid={ `${i}-recomendation-card` }
+                  >
+                    <h4
+                      data-testid={ `${i}-recomendation-title` }
+                    >
+                      { itemCarousel.strDrink }
+                    </h4>
+                    <img
+                      src={ itemCarousel.strDrinkThumb }
+                      alt="Comida Recomendada"
+                      width="150px"
+                    />
+                  </div>
+                ))}
+              </div>
             </div>
           </section>
         );

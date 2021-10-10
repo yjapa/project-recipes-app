@@ -26,6 +26,9 @@ function Drinks() {
 
   useEffect(() => {
     setLocalStorageForDoneRecipes();
+  }, []);
+
+  useEffect(() => {
     const setIngredient = async () => {
       if (dataTrue === true) {
         const dataIngredients = await queryIngredientDrink(getIng);
@@ -36,7 +39,6 @@ function Drinks() {
       }
     };
     setIngredient();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const renderOne = () => {
@@ -78,7 +80,7 @@ function Drinks() {
 
   return (
     <div className="main-container">
-      <Header title="Bebidas" searchIcone />
+      <Header title="Bebidas" searchIcone hiddenCategory />
       {renderOne()}
       {renderAll()}
       <Footer />
