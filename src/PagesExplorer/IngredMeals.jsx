@@ -3,6 +3,7 @@ import { useHistory } from 'react-router';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 import MyContext from '../context/myContext';
+import '../css/exploreIngredientsFoodsAndCocktails.css';
 
 function IngredMeals() {
   const history = useHistory();
@@ -31,7 +32,7 @@ function IngredMeals() {
 
   const numbers = 12;
   return (
-    <main>
+    <main className="main-container-ingred">
       <Header title="Explorar Ingredientes" />
       {ingredients && ingredients.slice(0, numbers).map((item, index) => {
         const { strIngredient } = item;

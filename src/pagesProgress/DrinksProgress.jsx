@@ -143,61 +143,78 @@ function DrinksProgress() {
         } = item;
         return (
           <div key={ index }>
-            <section
-              id="sec-top"
-            >
+            <div className="container-details">
               <img
                 src={ strDrinkThumb }
                 alt={ strDrink }
-                style={ { width: '300px' } }
+                className="details-image"
                 data-testid="recipe-photo"
               />
-              <h2 data-testid="recipe-title">{strDrink}</h2>
-              <span data-testid="recipe-category">{strCategory}</span>
-              <button
-                type="button"
-                onClick={ copyUrl }
-              >
-                <img
-                  src={ shareIcon }
-                  alt={ shareIcon }
-                  data-testid="share-btn"
-                />
-              </button>
-              <FavoriteDrink
-                drinks={ drinks }
-                typeCategory="bebida"
-              />
-            </section>
-            <section>
-              <h3>Ingredients</h3>
-              {ingredients.map((ingredient, indexad) => (
-                <div key={ indexad }>
-                  <label
-                    htmlFor={ ingredient }
-                    className="teste"
-                    data-testid={ `${indexad}-ingredient-step` }
-                  >
-                    <input
-                      type="checkbox"
-                      id={ ingredient }
-                      value={ ingredient }
-                      onClick={ (event) => handleScratchedIngredient(event, indexad) }
-                    />
-                    {ingredient}
-                  </label>
+              <div className="container-title">
+                <div>
+                  <h2 className="details-name" data-testid="recipe-title">{strDrink}</h2>
                 </div>
-              ))}
+                <button
+                  type="button"
+                  onClick={ copyUrl }
+                  className="icons"
+                >
+                  <img
+                    src={ shareIcon }
+                    alt={ shareIcon }
+                    data-testid="share-btn"
+                  />
+                </button>
+                <FavoriteDrink
+                  drinks={ drinks }
+                  typeCategory="bebida"
+                />
+              </div>
+              <h3
+                className="details-optional"
+                data-testid="recipe-category"
+              >
+                {strCategory}
+              </h3>
+            </div>
+            <section>
+              <h3 className="titles">Ingredients</h3>
+              <div className="ingredients-instructions-drinks">
+                {ingredients.map((ingredient, indexad) => (
+                  <div key={ indexad }>
+                    <label
+                      htmlFor={ ingredient }
+                      className="teste input-checkbox"
+                      data-testid={ `${indexad}-ingredient-step` }
+
+                    >
+                      <input
+                        type="checkbox"
+                        id={ ingredient }
+                        value={ ingredient }
+                        onClick={ (event) => handleScratchedIngredient(event, indexad) }
+                      />
+                      {ingredient}
+                    </label>
+                  </div>
+                ))}
+              </div>
             </section>
             <section>
-              <h3 data-testid="instructions">Instructions</h3>
-              <p data-testid="instructions">{strInstructions}</p>
+              <h3 data-testid="instructions" className="titles">Instructions</h3>
+              <p
+                className="ingredients-instructions-drinks"
+                data-testid="instructions"
+              >
+                {strInstructions}
+              </p>
             </section>
             <button
               type="button"
               data-testid="finish-recipe-btn"
               disabled={ finishRecipeCocktails }
               onClick={ () => handleClick() }
+              className="btn-finish"
             >
               Finalizar Receita
             </button>
