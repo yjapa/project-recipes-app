@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+import '../css/exploreMealsArea.css';
+
 // referência grupo 24
 function AreaDropdown({ setUrlRequest }) {
   const [allArea, setAllArea] = useState([]);
@@ -16,7 +18,7 @@ function AreaDropdown({ setUrlRequest }) {
     fetchRequest();
   }, []);
   return (
-    <section>
+    <section className="area-dropdown">
       { (allArea.length !== 0) && (
         <select
           onChange={ ({ target: { value } }) => {

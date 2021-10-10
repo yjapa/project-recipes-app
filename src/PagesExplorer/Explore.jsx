@@ -2,6 +2,7 @@ import React from 'react';
 import { useHistory } from 'react-router';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import '../css/explore.css';
 
 function Explore() {
   const history = useHistory();
@@ -15,9 +16,9 @@ function Explore() {
   }
 
   return (
-    <main>
+    <main className="main-container-explore">
       <Header title="Explorar" />
-      <section>
+      <section className="container-explore">
         <button
           data-testid="explore-food"
           type="button"

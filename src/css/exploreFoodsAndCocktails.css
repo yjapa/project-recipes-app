@@ -1,0 +1,11 @@
+.container-main-explore {
+  display: flex;
+  flex-direction: column;
+  height: 80vh;
+  justify-content: center;
+}
+
+.container-main-explore button {
+  border-radius: 10px;
+  margin: 10px;
+}

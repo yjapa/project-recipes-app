@@ -1,0 +1,16 @@
+/* .main-container-explore {
+  background-color: rgb(116, 19, 19);
+  height: 100vh;
+} */
+
+.container-explore {
+  display: flex;
+  flex-direction: column;
+  height: 80vh;
+  justify-content: center;
+}
+
+.container-explore button {
+  border-radius: 10px;
+  margin: 10px;
+}
