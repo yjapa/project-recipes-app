@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { useHistory } from 'react-router-dom';
-import '../App.css';
 import MyContext from '../context/myContext';
+import '../css/login.css';
 
 const Login = () => {
   const history = useHistory();
@@ -46,35 +46,44 @@ const Login = () => {
 
   return (
     <div>
-      <label htmlFor="email">
-        E-mail:
-        <input
-          data-testid="email-input"
-          type="text"
-          name="email"
-          id="email"
-          placeholder="Email"
-          onChange={ handleChange }
-        />
-      </label>
-      Senha:
-      <label htmlFor="password">
-        <input
-          data-testid="password-input"
-          type="password"
-          name="password"
-          id="password"
-          onChange={ handleChange }
-        />
-      </label>
-      <button
-        data-testid="login-submit-btn"
-        type="button"
-        disabled={ dsb }
-        onClick={ handleClick }
-      >
-        Entrar
-      </button>
+      <div className="container-login">
+        <div>
+          <label htmlFor="email">
+            <input
+              data-testid="email-input"
+              type="text"
+              className="login_email"
+              name="email"
+              id="email"
+              placeholder="Email"
+              onChange={ handleChange }
+            />
+          </label>
+        </div>
+        <div>
+          <label htmlFor="password">
+            <input
+              data-testid="password-input"
+              type="password"
+              placeholder="Senha"
+              name="password"
+              id="password"
+              onChange={ handleChange }
+            />
+          </label>
+        </div>
+        <div>
+          <button
+            data-testid="login-submit-btn"
+            className="login_btn"
+            type="button"
+            disabled={ dsb }
+            onClick={ handleClick }
+          >
+            Entrar
+          </button>
+        </div>
+      </div>
     </div>
   );
 };

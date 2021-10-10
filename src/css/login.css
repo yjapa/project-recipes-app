@@ -1,0 +1,21 @@
+body {
+  background-color: #dc3545;
+}
+
+.container-login{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 90%;
+}
+
+.login_email {
+  width: 70%;
+  height: 30px;
+  border: none;
+  margin: 10px 0;
+  border-radius: 3px;
+  font-family: 'Numans', sans-serif;
+  padding: 0 10px;
+}
