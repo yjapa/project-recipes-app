@@ -32,22 +32,15 @@ header {
   width: 100%;
 }
 
-button:hover {
-  background-color: aliceblue;
-}
-
 .btn-style {
   background-color: rgb(235, 238, 235);
   bottom: 0;
-  right : 0%;
-  margin-right: 30px;
-  padding: 30px;
+  right: 30%;
   position: fixed;
-  width: 150px;
-  height: 25px;
+  padding: 10px;
+  width: 190px;
   display: flex;
   justify-content: center;
-  align-items: center;
   border-radius: 10px;
   border: solid 1px black
 }

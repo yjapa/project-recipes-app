@@ -1,7 +1,6 @@
-/* .main-container-explore {
-  background-color: rgb(116, 19, 19);
-  height: 100vh;
-} */
+.main-container-explore {
+  background-color: rgb(235, 238, 235);
+}
 
 .container-explore {
   display: flex;
@@ -11,6 +10,10 @@
 }
 
 .container-explore button {
+  background-color: rgb(226, 228, 226);
   border-radius: 10px;
+  box-shadow: 2px 5px 10px rgb(75, 72, 72);
+  font-family: Raleway , sans-serif;
   margin: 10px;
+  padding: 25px;
 }

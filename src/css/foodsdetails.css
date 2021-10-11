@@ -1,55 +1,55 @@
 .details-image-foods {
-  width: 100%;
   height: 350px;
+  width: 100%;
 }
 
 .container-title-foods {
-  display: flex;
   align-items: center;
+  display: flex;
 }
 
 .details-name-foods {
-  margin-right: 80px;
-  margin-left: 25px;
-  margin-top: 10px;
   color: black;
   font-family: Raleway , sans-serif;
+  margin-left: 25px;
+  margin-right: 80px;
+  margin-top: 10px;
 }
 
 .icons {
-  width: 50px;
-  height: 50px;
-  border: none;
-  background-color: white;
-  display: flex;
-  justify-content: center;
   align-items: center;
+  background-color: white;
+  border: none;
+  display: flex;
+  height: 50px;
+  justify-content: center;
+  width: 50px;
 }
 
 .details-optional-foods {
   color: rgb(179, 172, 172);
-  margin-left: 25px;
   font-size: 20px;
+  margin-left: 25px;
 }
 
-.ingredients-instructions-foods{
+.ingredients-instructions-foods {
   background-color: rgb(245, 112, 112);
   border-radius: 20px;
-  margin: 15px;
-  padding: 20px;
   color: black;
   font-family: Raleway , sans-serif;
-  font-weight: 400;
-  text-align: justify;
   font-size: 18px;
+  font-weight: 400;
+  margin: 15px;
+  padding: 20px;
+  text-align: justify;
 }
 
 .titles {
+  color: black;
+  font-family: Raleway , sans-serif;
   font-size: 30px;
   margin-left: 25px;
   margin-top: 20px;
-  color: black;
-  font-family: Raleway , sans-serif;
 }
 
 .video {

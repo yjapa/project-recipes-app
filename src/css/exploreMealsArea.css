@@ -3,7 +3,8 @@
 }
 
 .area-dropdown select {
-  background-color: rgb(197, 205, 214);
+  background-color: rgb(204, 203, 203);
+  box-shadow: 0 10px 10px rgb(75, 72, 72);
   color: black;
   font-family: Raleway , sans-serif;
   font-size: 20px;

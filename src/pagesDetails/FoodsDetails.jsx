@@ -6,7 +6,7 @@ import MyContext from '../context/myContext';
 import { checkFavorite } from '../components/CheckFavorite';
 import FavoriteFood from '../components/FavoriteFoods';
 import '../css/foodsdetails.css';
-// import '../css/carousel.css';
+import '../css/carousel.css';
 
 function FoodsDetails() {
   const { pathname } = useLocation();
