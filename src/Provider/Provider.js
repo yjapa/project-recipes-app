@@ -21,8 +21,6 @@ import {
 function Provider({ children }) {
   const [data, setData] = useState([]);
   const [dataDrinks, setDataDrinks] = useState([]);
-  // const [mealsDataById, setMealsDataById] = useState([]);
-  // const [drinksById, setDrinksById] = useState([]);
   const [loading, setLoading] = useState(false);
   const [startButton, setStartButton] = useState(true);
   const [startedRecipes, setStartRecipe] = useState([]);

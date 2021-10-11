@@ -13,8 +13,7 @@ function Foods() {
     setData,
     dataTrue,
     recipesApi: { queryIngredient },
-    getIng,
-  } = useContext(MyContext);
+    getIng } = useContext(MyContext);
 
   const history = useHistory();
 
