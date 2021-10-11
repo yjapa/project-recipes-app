@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import shareIcon from '../images/shareIcon.svg';
+import '../css/recipesdone.css';
 
 const CardRecipeDone = (
   {
@@ -32,34 +33,53 @@ const CardRecipeDone = (
   };
 
   return (
-    <div Key={ Key }>
-      <div>
-        <Link
-          to={ detailsPath(strType, strID) }
-        >
+    <div className="container-done" Key={ Key }>
+      <Link to={ detailsPath(strType, strID) }>
+        <div>
           <img
             alt={ sourceImage }
             data-testid={ `${indexProps}-horizontal-image` }
             src={ sourceImage }
-            style={ { width: '180px' } }
+            style={ { width: '150px', borderRadius: '5px' } }
           />
-          <p data-testid={ `${indexProps}-horizontal-name` }>{ strRecipeName }</p>
+        </div>
+      </Link>
+      <div>
+        <Link to={ detailsPath(strType, strID) }>
+          <div>
+            <p
+              className="titles-done"
+              data-testid={ `${indexProps}-horizontal-name` }
+            >
+              { strRecipeName }
+            </p>
+            <p
+              className="details-optional-done"
+              data-testid={ `${indexProps}-horizontal-top-text` }
+            >
+              { strType === 'comida' ? `${strArea} - ${strCategory}` : strAlcoholicOrNot }
+            </p>
+          </div>
         </Link>
-        <p data-testid={ `${indexProps}-horizontal-top-text` }>
-          { strType === 'comida' ? `${strArea} - ${strCategory}` : strAlcoholicOrNot }
-        </p>
-        <p data-testid={ `${indexProps}-horizontal-done-date` }>{ dtFinishDate }</p>
-        <button type="button" onClick={ handleClickShareIcon }>
-          <img
-            alt="search-icon"
-            data-testid={ `${indexProps}-horizontal-share-btn` }
-            src={ shareIcon }
-          />
-        </button>
-        <span>{ boolLinkCopied ? 'Link copiado!' : null}</span>
+        <div className="footer-done">
+          <button type="button" onClick={ handleClickShareIcon } className="icons">
+            <img
+              alt="search-icon"
+              data-testid={ `${indexProps}-horizontal-share-btn` }
+              src={ shareIcon }
+            />
+          </button>
+          <div className="container-done-footer">
+            <span className="link">{ boolLinkCopied ? 'Link copiado!' : null}</span>
+            <p
+              data-testid={ `${indexProps}-horizontal-done-date` }
+            >
+              { dtFinishDate }
+            </p>
+          </div>
+        </div>
       </div>
       <div>
-        {console.log('arrTags dentro do card', arrTags)}
         { arrTags && arrTags.map((tagName, index) => (
           <div
             data-testid={ `${indexProps}-${tagName}-horizontal-tag` }

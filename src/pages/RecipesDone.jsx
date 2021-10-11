@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Header from '../components/Header';
 import CardRecipeDone from '../components/CardRecipeDone';
+import '../css/recipesdone.css';
 
 const RecipesDone = () => {
   // Estado do componente que contém o array de receitas feitas (array para renderização via map)
@@ -36,7 +37,7 @@ const RecipesDone = () => {
   return (
     <div>
       <Header title="Receitas Feitas" />
-      <div>
+      <div className="container-buttons-done">
         <button
           data-testid="filter-by-all-btn"
           type="button"

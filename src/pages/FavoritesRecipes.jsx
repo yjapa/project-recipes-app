@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Header from '../components/Header';
 import CardFavorite from '../components/CardFavorite';
+import '../css/favoriterecipes.css';
 
 const FavoritesRecipes = () => {
   // estado do componente que contém o array de receitas favoritas que será renderizado nos cards;
@@ -49,7 +50,7 @@ const FavoritesRecipes = () => {
   return (
     <div>
       <Header title="Receitas Favoritas" />
-      <div>
+      <div className="container-buttons-favorite">
         <button
           data-testid="filter-by-all-btn"
           type="button"

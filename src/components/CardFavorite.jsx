@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import shareIcon from '../images/shareIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
 // import FavoritesRecipes from '../pages/FavoritesRecipes';
+import '../css/favoriterecipes.css';
 
 const CardFavorite = (
   {
@@ -34,40 +35,61 @@ const CardFavorite = (
   };
 
   return (
-    <div>
-      <div key={ key }>
-        <Link
-          to={ detailsPath(strType, strID) }
-        >
+
+    <div className="container-done-favorite" key={ key }>
+      <Link to={ detailsPath(strType, strID) }>
+        <div>
           <img
             alt={ sourceImage }
             data-testid={ `${indexProps}-horizontal-image` }
             src={ sourceImage }
-            style={ { width: '180px' } }
+            style={ { width: '150px', borderRadius: '5px' } }
           />
-          <p data-testid={ `${indexProps}-horizontal-name` }>{ strRecipeName }</p>
-        </Link>
-        <p data-testid={ `${indexProps}-horizontal-top-text` }>
-          { strType === 'comida' ? `${strArea} - ${strCategory}` : strAlcoholicOrNot }
-        </p>
-        <button type="button" onClick={ handleClickShareIcon }>
-          <img
-            alt="search-icon"
-            data-testid={ `${indexProps}-horizontal-share-btn` }
-            src={ shareIcon }
-          />
-        </button>
-        <span>{ boolLinkCopied ? 'Link copiado!' : null}</span>
-        <button type="button" onClick={ () => fnRemoveFavoriteRecipe(strID.toString()) }>
-          <img
-            alt="black-heart"
-            src={ blackHeartIcon }
-            data-testid={ `${indexProps}-horizontal-favorite-btn` }
-          />
-        </button>
+        </div>
+      </Link>
+      <div />
+      <div>
+        <div>
+          <p
+            className="titles-favorite"
+            data-testid={ `${indexProps}-horizontal-name` }
+          >
+            { strRecipeName }
+          </p>
+          <p
+            className="details-optional-favorite"
+            data-testid={ `${indexProps}-horizontal-top-text` }
+          >
+            { strType === 'comida' ? `${strArea} - ${strCategory}` : strAlcoholicOrNot }
+          </p>
+        </div>
+        <div className="container-footer-favorite">
+          <button
+            type="button"
+            onClick={ handleClickShareIcon }
+            className="icons-favorite"
+          >
+            <img
+              alt="search-icon"
+              data-testid={ `${indexProps}-horizontal-share-btn` }
+              src={ shareIcon }
+            />
+          </button>
+          <button
+            className="icons"
+            type="button"
+            onClick={ () => fnRemoveFavoriteRecipe(strID.toString()) }
+          >
+            <img
+              alt="black-heart"
+              src={ blackHeartIcon }
+              data-testid={ `${indexProps}-horizontal-favorite-btn` }
+            />
+          </button>
+        </div>
+        <span className="link-favorite">{ boolLinkCopied ? 'Link copiado!' : null}</span>
       </div>
     </div>
-
   );
 };
 
