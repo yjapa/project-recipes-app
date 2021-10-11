@@ -9,8 +9,8 @@
 }
 
 .container-title {
-  display: flex;
   align-items: center;
+  display: flex;
 }
 
 .details-name {
