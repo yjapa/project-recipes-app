@@ -1,61 +1,61 @@
 .details-image {
-  width: 100%;
   height: 350px;
+  width: 100%;
 }
 
 .container-title {
-  display: flex;
   align-items: center;
+  display: flex;
 }
 
 .details-name {
-  margin-right: 150px;
   margin-left: 25px;
+  margin-right: 150px;
   margin-top: 10px;
 }
 
 .icons {
-  width: 50px;
-  height: 50px;
-  border: none;
-  background-color: white;
-  display: flex;
-  justify-content: center;
   align-items: center;
+  background-color: white;
+  border: none;
+  display: flex;
+  height: 50px;
+  justify-content: center;
+  width: 50px;
 }
 
 .details-optional {
   color: rgb(179, 172, 172);
-  margin-left: 25px;
   font-size: 20px;
+  margin-left: 25px;
 }
 
-.ingredients-instructions-drinks{
+.ingredients-instructions-drinks {
   background-color: #ff9c4be7;
   border-radius: 20px;
-  margin: 15px;
-  padding: 20px;
   color: black;
   font-family: Raleway , sans-serif;
-  font-weight: 400;
-  text-align: justify;
   font-size: 20px;
+  font-weight: 400;
+  margin: 15px;
+  padding: 20px;
+  text-align: justify;
 }
 
 .titles {
+  color: black;
+  font-family: Raleway , sans-serif;
   font-size: 30px;
   margin-left: 25px;
   margin-top: 20px;
-  color: black;
-  font-family: Raleway , sans-serif;
 }
 
-input[type=checkbox] {
-  transform: scale(1.4);
+input {
   margin-right: 15px;
+  transform: scale(1.4);
 }
 
-.input-checkbox { 
+.input-checkbox {
   font-size: 20px;
 }
 

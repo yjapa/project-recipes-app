@@ -1,5 +1,6 @@
 .title {
   font-family: Raleway , sans-serif;
+  font-size: 25px;
   font-weight: 500;
   margin-top: 10px;
 }
@@ -9,4 +10,3 @@
   border: none;
   padding: 5px;
 }
-

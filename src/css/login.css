@@ -4,10 +4,10 @@
 }
 
 .container-login {
+  align-items: center;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
 }
 
 .login-image {
@@ -15,22 +15,22 @@
 }
 
 .login-inputs {
-  margin-bottom: 20px;
-  width: 100%;
-  padding: 12px 20px;
-  margin: 8px 0;
-  display: inline-block;
   border: 1px solid #ccc;
   border-radius: 4px;
   box-sizing: border-box;
+  display: inline-block;
+  margin: 8px 0;
+  margin-bottom: 20px;
+  padding: 12px 20px;
+  width: 100%;
 }
 
 .login_btn {
-  height: 30px;
-  border-radius: 5px;
-  width: 100px;
-  display: flex;
-  justify-content: center;
   align-items: center;
+  border-radius: 5px;
   color: black;
+  display: flex;
+  height: 30px;
+  justify-content: center;
+  width: 100px;
 }

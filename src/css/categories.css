@@ -11,9 +11,9 @@
   border-radius: 5px;
   box-shadow: 2px 5px 10px rgb(75, 72, 72);
   font-family: Raleway , sans-serif;
-  padding: 6px;
-  width: 140px;
+  font-size: 13px;
   margin-bottom: 20px;
   margin-right: 10px;
-  font-size: 13px;
+  padding: 6px;
+  width: 140px;
 }
