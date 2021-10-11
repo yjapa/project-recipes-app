@@ -125,14 +125,14 @@ function DrinksDetails() {
                 data-testid="recipe-photo"
               />
               <div className="container-title">
-                <div>
-                  <h1
-                    data-testid="recipe-title"
-                    className="details-name"
-                  >
-                    {strDrink}
-                  </h1>
-                </div>
+                {/* <div> */}
+                <h1
+                  data-testid="recipe-title"
+                  className="details-name"
+                >
+                  {strDrink}
+                </h1>
+                {/* </div> */}
                 <button
                   type="button"
                   data-testid="share-btn"

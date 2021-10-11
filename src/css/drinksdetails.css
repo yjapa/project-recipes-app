@@ -1,11 +1,16 @@
+.container-details {
+  display: flex;
+  flex-direction: column;
+}
+
 .details-image {
   height: 350px;
   width: 100%;
 }
 
 .container-title {
-  align-items: center;
   display: flex;
+  align-items: center;
 }
 
 .details-name {
