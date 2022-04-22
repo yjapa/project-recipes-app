@@ -79,7 +79,7 @@ const CardRecipeDone = (
           </div>
         </div>
       </div>
-      <div>
+      {/* <div>
         { arrTags && arrTags.map((tagName, index) => (
           <div
             data-testid={ `${indexProps}-${tagName}-horizontal-tag` }
@@ -88,7 +88,7 @@ const CardRecipeDone = (
             { tagName }
           </div>
         )) }
-      </div>
+      </div> */}
     </div>
   );
 };

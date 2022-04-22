@@ -190,7 +190,7 @@ function FoodsProgress() {
                   <div key={ i }>
                     <label
                       htmlFor={ ingredient }
-                      className="teste"
+                      className="teste input-checkbox"
                       data-testid={ `${i}-ingredient-step` }
                     >
                       <input
