@@ -29,7 +29,7 @@ npm start
 ## Autores:
 
 * [Filipe Cândido](https://github.com/Fedolfo)
-* Gildo Santos Sousa
-* João Victor Almeida
-* Vitor Ferreira
-* Wesley Yudi
+* [Gildo Santos Sousa](https://github.com/GildoSantos-gif)
+* [João Victor Almeida](https://github.com/PadawanFK)
+* [Vitor Ferreira](https://github.com/vitorgonzaga)
+* [Wesley Yudi](https://github.com/yjapa)
