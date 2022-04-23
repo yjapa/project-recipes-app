@@ -26,7 +26,7 @@ Para rodar o projeto, utilize na pasta raiz o comando:
 npm start
 ```
 
-## Autores:
+## Desenvolvedores:
 
 * [Filipe Cândido](https://github.com/Fedolfo)
 * [Gildo Santos Sousa](https://github.com/GildoSantos-gif)
