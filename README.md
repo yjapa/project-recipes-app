@@ -28,7 +28,7 @@ npm start
 
 ## Autores:
 
-* Filipe Cândido
+* [Filipe Cândido](https://github.com/Fedolfo)
 * Gildo Santos Sousa
 * João Victor Almeida
 * Vitor Ferreira
