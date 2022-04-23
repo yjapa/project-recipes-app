@@ -16,7 +16,7 @@ Front-end:
 Após clonar o projeto, utilize na pasta raiz o comando:
 
 ```bash
-npm start
+npm install
 ```
 ## Executando aplicação
 
